@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso HTML5 | GodsPlan Coding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+        }
+
+        .font-mono { font-family: 'Fira Code', monospace; }
+
+        /* Scrollbar delgada */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        /* Syntax Highlighting Simulado */
+        .code-tag { color: #f97316; } /* Orange for tags */
+        .code-attr { color: #93c5fd; } /* Blue for attributes */
+        .code-str { color: #86efac; } /* Green for strings */
+        .code-comment { color: #64748b; font-style: italic; }
+        
+        .nav-item.active {
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 3px solid #f97316;
+            color: #fff;
+        }
+
+        /* Animación de contenido */
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- Header Compacto -->
+    <header class="h-14 border-b border-slate-800 bg-slate-950 flex items-center justify-between px-4 shrink-0 z-20">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </a>
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded bg-orange-500/10 flex items-center justify-center text-orange-500">
+                    <i data-lucide="layout-template" class="w-5 h-5"></i>
+                </div>
+                <span class="font-bold text-sm sm:text-base">Curso HTML5 <span class="text-slate-500 font-normal hidden sm:inline">| Fundamentos</span></span>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <div class="hidden sm:flex items-center text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
+                <div class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></div>
+                Progreso: <span id="progress-text" class="ml-1 text-white font-mono">0%</span>
+            </div>
+            <!-- Avatar Usuario -->
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 border border-white/10"></div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex-grow flex overflow-hidden">
+        
+        <!-- Sidebar (Temario) -->
+        <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 transform transition-transform duration-300 absolute md:relative z-10 h-full md:translate-x-0 -translate-x-full" id="sidebar">
+            <div class="p-4 border-b border-slate-800/50">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Módulos</h3>
+            </div>
+            <nav class="flex-grow overflow-y-auto p-2 space-y-1" id="module-list">
+                <!-- Se llena con JS -->
+            </nav>
+            <div class="p-4 border-t border-slate-800 text-center">
+                <button class="text-xs text-slate-500 hover:text-white flex items-center justify-center w-full">
+                    <i data-lucide="help-circle" class="w-3 h-3 mr-1"></i> ¿Necesitas ayuda?
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenido Central + Editor -->
+        <main class="flex-grow flex flex-col md:flex-row overflow-hidden relative w-full">
+            
+            <!-- Botón toggle sidebar (Mobile) -->
+            <button onclick="toggleSidebar()" class="md:hidden absolute top-4 left-4 z-20 p-2 bg-slate-800 rounded-lg text-white shadow-lg">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Teoría (Scrollable) -->
+            <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth" id="content-area">
+                <!-- Contenido Dinámico Aquí -->
+                <div class="max-w-3xl mx-auto fade-in">
+                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 1</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6">¿Qué rayos es HTML?</h1>
+                    
+                    <div class="prose prose-invert prose-slate max-w-none">
+                        <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                            Imagina que vas a construir una casa. Antes de pintar las paredes (CSS) o ponerle electricidad (JavaScript), necesitas los cimientos, las vigas y las paredes de ladrillo.
+                        </p>
+                        <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                            Eso es <strong>HTML</strong> (HyperText Markup Language). Es el esqueleto de cualquier página web. No se encarga de que se vea "bonito", se encarga de que <em>exista</em>.
+                        </p>
+
+                        <div class="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r-lg mb-8">
+                            <h4 class="text-blue-400 font-bold text-sm mb-1 flex items-center">
+                                <i data-lucide="info" class="w-4 h-4 mr-2"></i> Dato Curioso
+                            </h4>
+                            <p class="text-sm text-blue-200">
+                                HTML no es un lenguaje de programación (no hace cálculos). Es un <strong>lenguaje de marcado</strong>. Usamos "etiquetas" para decirle al navegador qué es cada cosa.
+                            </p>
+                        </div>
+
+                        <h2 class="text-2xl font-bold mb-4 mt-8">La Anatomía de una Etiqueta</h2>
+                        <p class="text-slate-400 mb-4">
+                            Casi todo en HTML funciona como un sándwich. Tienes una etiqueta de apertura, el contenido en medio, y una etiqueta de cierre.
+                        </p>
+
+                        <div class="bg-slate-900 rounded-xl border border-slate-800 p-6 font-mono text-sm md:text-base mb-8 shadow-xl">
+                            <div class="flex items-center justify-center space-x-1">
+                                <span class="text-orange-500">&lt;p&gt;</span>
+                                <span class="text-white">Hola, soy un párrafo</span>
+                                <span class="text-orange-500">&lt;/p&gt;</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-500 mt-2 px-4 md:px-12">
+                                <span>Apertura</span>
+                                <span>Contenido</span>
+                                <span>Cierre</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navegación Inferior -->
+                    <div class="flex justify-between items-center mt-12 pt-8 border-t border-slate-800">
+                        <button disabled class="px-4 py-2 rounded-lg bg-slate-900 text-slate-600 cursor-not-allowed flex items-center">
+                            <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i> Anterior
+                        </button>
+                        <button onclick="loadModule(1)" class="px-6 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold flex items-center shadow-lg shadow-orange-500/20 transition-all">
+                            Siguiente: Estructura Básica <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Derecho (Preview Código) -->
+            <div class="hidden lg:flex w-[400px] xl:w-[500px] bg-[#0d1117] border-l border-slate-800 flex-col shrink-0">
+                <div class="h-10 border-b border-slate-800 flex items-center px-4 bg-slate-900/50">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center">
+                        <i data-lucide="code-2" class="w-3 h-3 mr-2"></i> index.html
+                    </span>
+                </div>
+                
+                <!-- Editor Simulado -->
+                <div class="flex-1 p-4 font-mono text-sm overflow-auto text-slate-300 leading-relaxed" id="code-preview">
+                    <!-- Código dinámico -->
+                    <div class="code-line"><span class="code-comment">&lt;!-- Esto es un comentario --&gt;</span></div>
+                    <div class="code-line"><span class="code-tag">&lt;h1&gt;</span>Hola Mundo<span class="code-tag">&lt;/h1&gt;</span></div>
+                    <div class="code-line"><span class="code-tag">&lt;p&gt;</span>Este es mi primer sitio web.<span class="code-tag">&lt;/p&gt;</span></div>
+                    <div class="code-line mt-4"><span class="code-tag">&lt;button&gt;</span>Click aquí<span class="code-tag">&lt;/button&gt;</span></div>
+                </div>
+
+                <!-- Preview Result (Mini Browser) -->
+                <div class="h-1/2 border-t border-slate-800 flex flex-col bg-white">
+                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-3 space-x-2">
+                        <div class="flex space-x-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                        </div>
+                        <div class="flex-1 bg-white h-5 rounded border border-slate-200 text-[10px] text-slate-400 flex items-center px-2">
+                            localhost:3000
+                        </div>
+                    </div>
+                    <div class="flex-1 p-4 text-slate-900" id="browser-preview">
+                        <h1 class="text-2xl font-bold mb-2">Hola Mundo</h1>
+                        <p class="mb-4">Este es mi primer sitio web.</p>
+                        <button class="px-3 py-1 bg-slate-200 rounded border border-slate-300 text-sm">Click aquí</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Datos del Curso
+        const modules = [
+            {
+                id: 0,
+                title: "Introducción",
+                icon: "play-circle",
+                content: `
+                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 1</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6">¿Qué rayos es HTML?</h1>
+                    <div class="prose prose-invert prose-slate max-w-none">
+                        <p class="text-lg text-slate-300 leading-relaxed mb-6">Imagina que construyes una casa. HTML son los cimientos y las paredes. CSS es la pintura. JS es la electricidad.</p>
+                        <p><strong>HTML</strong> (HyperText Markup Language) es el esqueleto de la web. Usamos "etiquetas" para definir elementos.</p>
+                        <div class="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r-lg mb-8">
+                            <h4 class="text-blue-400 font-bold text-sm mb-1">Regla de Oro</h4>
+                            <p class="text-sm text-blue-200">Casi todas las etiquetas se abren <code>&lt;p&gt;</code> y se cierran <code>&lt;/p&gt;</code>.</p>
+                        </div>
+                    </div>
+                `,
+                code: `
+<span class="code-comment">&lt;!-- Elementos básicos --&gt;</span>
+<span class="code-tag">&lt;h1&gt;</span>Soy un Título<span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>Soy un párrafo de texto simple.<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;button&gt;</span>Soy un botón<span class="code-tag">&lt;/button&gt;</span>
+                `,
+                preview: `
+                    <h1 class="text-2xl font-bold mb-2">Soy un Título</h1>
+                    <p class="mb-4">Soy un párrafo de texto simple.</p>
+                    <button class="px-3 py-1 bg-slate-200 rounded border border-slate-300 text-sm">Soy un botón</button>
+                `
+            },
+            {
+                id: 1,
+                title: "Estructura Básica",
+                icon: "layout",
+                content: `
+                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 2</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6">El Esqueleto Obligatorio</h1>
+                    <div class="prose prose-invert prose-slate max-w-none">
+                        <p class="text-lg text-slate-300 mb-6">Todo archivo HTML necesita una estructura mínima para que el navegador lo entienda.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-400 mb-6">
+                            <li><strong>&lt;!DOCTYPE html&gt;</strong>: Le dice al navegador "Hey, esto es HTML moderno".</li>
+                            <li><strong>&lt;html&gt;</strong>: La raíz de todo.</li>
+                            <li><strong>&lt;head&gt;</strong>: Lo que NO se ve (configuraciones, título de pestaña).</li>
+                            <li><strong>&lt;body&gt;</strong>: Lo que SÍ se ve (el contenido).</li>
+                        </ul>
+                    </div>
+                `,
+                code: `
+<span class="code-comment">&lt;!DOCTYPE html&gt;</span>
+<span class="code-tag">&lt;html&gt;</span>
+  <span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;title&gt;</span>Mi Página<span class="code-tag">&lt;/title&gt;</span>
+  <span class="code-tag">&lt;/head&gt;</span>
+  <span class="code-tag">&lt;body&gt;</span>
+    <span class="code-tag">&lt;h1&gt;</span>¡Hola Mundo!<span class="code-tag">&lt;/h1&gt;</span>
+  <span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span>
+                `,
+                preview: `
+                    <div class="h-full flex items-center justify-center text-center">
+                        <div>
+                            <h1 class="text-3xl font-bold mb-2">¡Hola Mundo!</h1>
+                            <p class="text-sm text-slate-500">(Así se ve el body)</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                title: "Títulos y Textos",
+                icon: "type",
+                content: `
+                     <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 3</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6">Jerarquía de Textos</h1>
+                    <div class="prose prose-invert prose-slate max-w-none">
+                        <p class="text-lg text-slate-300 mb-6">Google ama el orden. Usa los encabezados (h1 a h6) para estructurar tu contenido, no solo para cambiar el tamaño de letra.</p>
+                        <ul class="list-none space-y-3 mb-6">
+                            <li class="flex items-center"><span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-mono mr-3">&lt;h1&gt;</span> El título principal (Solo 1 por página).</li>
+                            <li class="flex items-center"><span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-mono mr-3">&lt;h2&gt;</span> Subtítulos de secciones.</li>
+                            <li class="flex items-center"><span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-mono mr-3">&lt;p&gt;</span> Párrafos de texto normal.</li>
+                        </ul>
+                    </div>
+                `,
+                code: `
+<span class="code-tag">&lt;h1&gt;</span>Noticias del Día<span class="code-tag">&lt;/h1&gt;</span>
+
+<span class="code-tag">&lt;h2&gt;</span>Deportes<span class="code-tag">&lt;/h2&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>El equipo local ganó ayer...<span class="code-tag">&lt;/p&gt;</span>
+
+<span class="code-tag">&lt;h2&gt;</span>Clima<span class="code-tag">&lt;/h2&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>Se esperan lluvias fuertes...<span class="code-tag">&lt;/p&gt;</span>
+                `,
+                preview: `
+                    <h1 class="text-3xl font-bold mb-4 border-b pb-2">Noticias del Día</h1>
+                    <h2 class="text-xl font-bold mb-2 text-slate-700">Deportes</h2>
+                    <p class="mb-4 text-sm">El equipo local ganó ayer...</p>
+                    <h2 class="text-xl font-bold mb-2 text-slate-700">Clima</h2>
+                    <p class="mb-4 text-sm">Se esperan lluvias fuertes...</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Enlaces (Links)",
+                icon: "link",
+                content: `
+                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 4</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6">Conectando la Web</h1>
+                    <div class="prose prose-invert prose-slate max-w-none">
+                        <p class="text-lg text-slate-300 mb-6">La magia de la web son los hipervínculos. Usamos la etiqueta <code>&lt;a&gt;</code> (Anchor).</p>
+                        <p class="mb-4">Necesita un atributo obligatorio: <strong>href</strong> (Hypertext Reference), que indica a dónde ir.</p>
+                        <div class="bg-slate-900 p-4 rounded-lg font-mono text-sm border border-slate-800">
+                             &lt;a <span class="text-blue-400">href</span>=<span class="text-green-400">"sitio.com"</span>&gt;Click&lt;/a&gt;
+                        </div>
+                    </div>
+                `,
+                code: `
+<span class="code-tag">&lt;h2&gt;</span>Mis Redes<span class="code-tag">&lt;/h2&gt;</span>
+
+<span class="code-tag">&lt;p&gt;</span>
+  Visita mi <span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-str">"https://google.com"</span> <span class="code-attr">target</span>=<span class="code-str">"_blank"</span><span class="code-tag">&gt;</span>
+    Perfil de Google
+  <span class="code-tag">&lt;/a&gt;</span>
+<span class="code-tag">&lt;/p&gt;</span>
+                `,
+                preview: `
+                    <h2 class="text-xl font-bold mb-4">Mis Redes</h2>
+                    <p class="text-sm">
+                        Visita mi 
+                        <a href="#" class="text-blue-600 underline hover:text-blue-800">Perfil de Google</a>
+                    </p>
+                `
+            },
+            {
+                id: 4,
+                title: "Imágenes",
+                icon: "image",
+                content: `
+                     <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 5</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6">Una imagen vale más...</h1>
+                    <div class="prose prose-invert prose-slate max-w-none">
+                        <p class="text-lg text-slate-300 mb-6">La etiqueta <code>&lt;img&gt;</code> es especial: <strong>no tiene cierre</strong>.</p>
+                        <p>Atributos clave:</p>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-400">
+                            <li><strong>src:</strong> La ruta de la imagen (URL o archivo).</li>
+                            <li><strong>alt:</strong> Texto alternativo (para ciegos o si falla la imagen). ¡Es vital!</li>
+                        </ul>
+                    </div>
+                `,
+                code: `
+<span class="code-tag">&lt;h2&gt;</span>Galería<span class="code-tag">&lt;/h2&gt;</span>
+
+<span class="code-tag">&lt;img</span> 
+  <span class="code-attr">src</span>=<span class="code-str">"https://picsum.photos/200/150"</span> 
+  <span class="code-attr">alt</span>=<span class="code-str">"Paisaje aleatorio"</span> 
+<span class="code-tag">/&gt;</span>
+                `,
+                preview: `
+                    <h2 class="text-xl font-bold mb-4">Galería</h2>
+                    <img src="https://picsum.photos/200/150" alt="Paisaje" class="rounded-lg shadow-md hover:opacity-90 cursor-pointer">
+                `
+            }
+        ];
+
+        let currentModuleId = 0;
+
+        function renderSidebar() {
+            const list = document.getElementById('module-list');
+            list.innerHTML = modules.map(mod => `
+                <button onclick="loadModule(${mod.id})" 
+                    class="nav-item w-full text-left px-3 py-2.5 rounded-md flex items-center space-x-3 text-sm transition-all text-slate-400 hover:bg-slate-900 hover:text-white ${mod.id === currentModuleId ? 'active' : ''}">
+                    <i data-lucide="${mod.icon}" class="w-4 h-4 ${mod.id === currentModuleId ? 'text-orange-500' : 'opacity-70'}"></i>
+                    <span>${mod.title}</span>
+                </button>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function loadModule(id) {
+            if (id >= modules.length) return; // Límite alcanzado
+            
+            currentModuleId = id;
+            renderSidebar();
+            
+            const mod = modules[id];
+            const contentArea = document.getElementById('content-area');
+            const codePreview = document.getElementById('code-preview');
+            const browserPreview = document.getElementById('browser-preview');
+            const progressText = document.getElementById('progress-text');
+
+            // Actualizar contenido con animación
+            contentArea.innerHTML = `
+                <div class="max-w-3xl mx-auto fade-in pb-10">
+                    ${mod.content}
+                    
+                    <div class="flex justify-between items-center mt-12 pt-8 border-t border-slate-800">
+                        <button onclick="loadModule(${id - 1})" ${id === 0 ? 'disabled' : ''} 
+                            class="px-4 py-2 rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:border-slate-700 hover:text-white transition-all flex items-center disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i> Anterior
+                        </button>
+                        
+                        ${id < modules.length - 1 ? `
+                            <button onclick="loadModule(${id + 1})" class="px-6 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold flex items-center shadow-lg shadow-orange-500/20 transition-all">
+                                Siguiente <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+                            </button>
+                        ` : `
+                            <button class="px-6 py-2 rounded-lg bg-green-600 hover:bg-green-500 text-white font-bold flex items-center shadow-lg shadow-green-500/20">
+                                <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i> Finalizar Curso
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+
+            // Actualizar simuladores
+            codePreview.innerHTML = mod.code;
+            browserPreview.innerHTML = mod.preview;
+
+            // Calcular progreso
+            const progress = Math.round(((id + 1) / modules.length) * 100);
+            progressText.innerText = `${progress}%`;
+
+            // Scroll al top
+            contentArea.scrollTop = 0;
+            lucide.createIcons();
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        // Inicializar
+        renderSidebar();
+    </script>
+</body>
+</html>
