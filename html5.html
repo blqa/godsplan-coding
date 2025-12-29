@@ -57,6 +57,7 @@
         .token-val { color: #a3e635; } 
         .token-comment { color: #64748b; font-style: italic; }
         .token-punct { color: #94a3b8; }
+        .token-js { color: #fbbf24; }
 
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
@@ -88,11 +89,11 @@
     <header class="h-16 border-b border-dark-border bg-dark-bg/80 backdrop-blur-md flex items-center justify-between px-6 z-50 shrink-0">
         <div class="flex items-center gap-3">
             <div class="bg-gradient-to-tr from-brand-600 to-indigo-600 p-2 rounded-lg shadow-lg shadow-brand-500/20">
-                <i data-lucide="book-open" class="text-white w-5 h-5"></i>
+                <i data-lucide="layers" class="text-white w-5 h-5"></i>
             </div>
             <div>
                 <h1 class="font-bold text-white tracking-tight leading-tight">Master HTML5</h1>
-                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Edición Completa</p>
+                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Edición Completa + APIs</p>
             </div>
         </div>
 
@@ -117,7 +118,7 @@
             <div class="p-4 border-b border-dark-border bg-dark-surface/30">
                 <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Índice del Curso</h2>
             </div>
-            <nav id="module-list" class="flex-1 overflow-y-auto py-2 space-y-0.5">
+            <nav id="module-list" class="flex-1 overflow-y-auto py-2 space-y-0.5 custom-scrollbar">
                 <!-- Se llena con JS -->
             </nav>
             
@@ -129,7 +130,7 @@
                     </div>
                     <div>
                         <div class="text-sm font-medium text-white">Estudiante</div>
-                        <div class="text-xs text-slate-500">Modo Aprendizaje</div>
+                        <div class="text-xs text-slate-500">Nivel Intermedio</div>
                     </div>
                 </div>
             </div>
@@ -177,7 +178,7 @@
 
                             <!-- Code Input -->
                             <div class="relative code-editor-area">
-                                <div class="absolute top-3 right-3 text-[10px] text-slate-500 font-mono pointer-events-none">HTML</div>
+                                <div class="absolute top-3 right-3 text-[10px] text-slate-500 font-mono pointer-events-none">HTML/JS</div>
                                 <textarea id="code-input" spellcheck="false" 
                                     class="w-full h-40 bg-transparent p-5 font-mono text-sm text-slate-200 resize-y border-none focus:ring-0 leading-relaxed"
                                     placeholder="<!-- Escribe tu código aquí... -->"></textarea>
@@ -267,7 +268,7 @@
     <!-- Data & Logic -->
     <script>
         // -------------------------------------------------------------------
-        // BASE DE CONOCIMIENTO (Actualizada)
+        // BASE DE CONOCIMIENTO (Actualizada con temas avanzados)
         // -------------------------------------------------------------------
         
         const curriculum = [
@@ -291,7 +292,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Mi Primera Web HTML5</title>
+    <title>Web Moderna</title>
 </head>
 <body>
     <h1>Hola Mundo</h1>
@@ -405,106 +406,86 @@
                 }
             },
             {
-                id: "multimedia",
-                title: "4. Audio y Video",
-                icon: "play-circle",
+                id: "svg",
+                title: "4. Vectores (SVG)",
+                icon: "pen-tool",
                 content: `
-                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 4</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Multimedia Sin Plugins</h1>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">NUEVO: Capítulo 4</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Gráficos Vectoriales</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>Adiós Flash. HTML5 introduce etiquetas nativas.</p>
+                        <p>A diferencia de <code>canvas</code>, SVG está basado en XML y no pierde calidad al hacer zoom. Es ideal para iconos y logotipos.</p>
                         <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
-                            <li><strong>controls:</strong> Muestra la UI del reproductor.</li>
-                            <li><strong>poster:</strong> Imagen de portada.</li>
+                            <li><strong>&lt;svg&gt;:</strong> Contenedor raíz. Define <code>width</code>, <code>height</code> y <code>viewBox</code>.</li>
+                            <li><strong>Formas:</strong> <code>&lt;circle&gt;</code>, <code>&lt;rect&gt;</code>, <code>&lt;path&gt;</code>.</li>
+                            <li><strong>Estilos:</strong> Usa atributos como <code>fill</code> (relleno) y <code>stroke</code> (borde).</li>
                         </ul>
                     </div>
                 `,
-                codeRef: `<video controls width="300" poster="portada.jpg">
-    <source src="video.mp4" type="video/mp4">
-    <p>Tu navegador no soporta video.</p>
-</video>`,
+                codeRef: `<svg width="100" height="100">
+  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+</svg>`,
                 exercise: {
-                    instruction: "Inserta un <video> con controles y ancho de 400.",
+                    instruction: "Crea un SVG de 100x100 que contenga un rectángulo (<rect>). El rectángulo debe tener un ancho (width) y alto (height) de 50.",
                     difficulty: "Avanzado",
                     validate: (code) => {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(code, "text/html");
-                        const video = doc.querySelector('video');
-                        if (!video) return { valid: false, msg: "Falta la etiqueta <video>." };
-                        if (!video.hasAttribute('controls')) return { valid: false, msg: "Faltan los 'controls'." };
-                        if (video.getAttribute('width') !== '400') return { valid: false, msg: "El ancho debe ser 400." };
-                        return { valid: true, msg: "¡Perfecto! Video nativo listo." };
+                        const svg = doc.querySelector('svg');
+                        const rect = doc.querySelector('rect');
+                        
+                        if (!svg) return { valid: false, msg: "Falta la etiqueta <svg>." };
+                        if (!rect) return { valid: false, msg: "Falta la etiqueta <rect> dentro del SVG." };
+                        if (rect.getAttribute('width') !== '50' || rect.getAttribute('height') !== '50') return { valid: false, msg: "El rectángulo debe ser de 50x50." };
+                        
+                        return { valid: true, msg: "¡Perfecto! Has creado un gráfico vectorial." };
                     }
                 },
                 quiz: {
-                    q: "¿Qué etiqueta define múltiples formatos dentro de video?",
-                    options: ["<track>", "<source>", "<file>"],
+                    q: "¿Cuál es la principal ventaja de SVG sobre Canvas?",
+                    options: ["Es más rápido para juegos", "Escala sin perder calidad", "Usa JavaScript para dibujar"],
                     correct: 1
                 }
             },
-            // --- NUEVOS MÓDULOS ---
             {
-                id: "canvas",
-                title: "5. Gráficos (Canvas)",
-                icon: "palette",
+                id: "storage",
+                title: "5. Web Storage API",
+                icon: "database",
                 content: `
-                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 5</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Dibujando con Code</h1>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">NUEVO: Capítulo 5</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Persistencia de Datos</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>El elemento <code>&lt;canvas&gt;</code> es un lienzo en blanco para dibujar gráficos vía JavaScript (2D o 3D).</p>
-                        <p class="mb-4">Pasos:</p>
-                        <ol class="list-decimal pl-5 space-y-2 mb-6 text-sm">
-                            <li>Crear la etiqueta con <code>id</code>, <code>width</code> y <code>height</code>.</li>
-                            <li>Usar JS: <code>getContext('2d')</code>.</li>
-                            <li>Dibujar: <code>fillRect()</code>, <code>beginPath()</code>.</li>
-                        </ol>
+                        <p>HTML5 permite guardar datos en el navegador del usuario de forma sencilla, reemplazando a las cookies para almacenamiento simple.</p>
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 mb-4">
+                            <h4 class="text-blue-400 font-bold mb-2">Métodos Principales:</h4>
+                            <ul class="font-mono text-xs space-y-2 text-slate-300">
+                                <li>localStorage.setItem('clave', 'valor');</li>
+                                <li>var x = localStorage.getItem('clave');</li>
+                            </ul>
+                        </div>
                     </div>
                 `,
-                codeRef: `<canvas id="miLienzo" width="200" height="100"></canvas>
-<script>
-  var c = document.getElementById("miLienzo");
-  var ctx = c.getContext("2d");
-  ctx.fillStyle = "#FF0000";
-  ctx.fillRect(10, 10, 80, 80);
+                codeRef: `<script>
+  // Guardar nombre
+  localStorage.setItem("usuario", "Ana");
+  
+  // Recuperar y mostrar
+  document.write("Hola " + localStorage.getItem("usuario"));
 <\/script>`,
                 exercise: {
-                    instruction: "Crea un <canvas> con id='game-area', width='300' y height='200'.",
-                    placeholder: '<canvas id="..." ...></canvas>',
-                    difficulty: "Intermedio",
+                    instruction: "Escribe un script que guarde el valor 'HTML5' en localStorage con la clave 'curso'.",
+                    placeholder: "<script>\n  localStorage.setItem(..., ...);\n<\/script>",
+                    difficulty: "Experto",
                     validate: (code) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(code, "text/html");
-                        const canvas = doc.querySelector('canvas');
-
-                        if (!canvas) return { valid: false, msg: "Falta la etiqueta <canvas>." };
-                        if (canvas.id !== 'game-area') return { valid: false, msg: "El id debe ser 'game-area'." };
-                        if (canvas.getAttribute('width') !== '300') return { valid: false, msg: "El ancho debe ser 300." };
-                        if (canvas.getAttribute('height') !== '200') return { valid: false, msg: "El alto debe ser 200." };
-
-                        // MAGIC: Auto-paint to show it works
-                        const iframe = document.getElementById('preview-frame');
-                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        // Inject script to paint immediately
-                        const script = iframeDoc.createElement('script');
-                        script.textContent = `
-                            var c = document.getElementById("game-area");
-                            if(c) {
-                                var ctx = c.getContext("2d");
-                                ctx.fillStyle = "#0ea5e9";
-                                ctx.fillRect(50, 50, 200, 100);
-                                ctx.font = "20px Arial";
-                                ctx.fillStyle = "white";
-                                ctx.fillText("¡Canvas Activo!", 80, 110);
-                            }
-                        `;
-                        iframeDoc.body.appendChild(script);
-
-                        return { valid: true, msg: "¡Lienzo preparado! He dibujado algo azul con JS para probarlo." };
+                        if (!code.includes('<script>')) return { valid: false, msg: "Debes incluir las etiquetas <script>." };
+                        if (!code.includes('localStorage.setItem')) return { valid: false, msg: "Usa localStorage.setItem()." };
+                        if (!code.includes("'curso'") && !code.includes('"curso"')) return { valid: false, msg: "La clave debe ser 'curso'." };
+                        if (!code.includes("'HTML5'") && !code.includes('"HTML5"')) return { valid: false, msg: "El valor debe ser 'HTML5'." };
+                        return { valid: true, msg: "¡Datos guardados! Revisa la consola del navegador." };
                     }
                 },
                 quiz: {
-                    q: "¿Qué método de JS inicia el dibujo?",
-                    options: ["getDrawingArea()", "getContext('2d')", "createGraphics()"],
+                    q: "¿Cuánto tiempo duran los datos en localStorage?",
+                    options: ["Hasta cerrar el navegador", "Hasta que se borren manualmente", "24 horas"],
                     correct: 1
                 }
             },
@@ -545,11 +526,54 @@
                 }
             },
             {
+                id: "a11y",
+                title: "7. Accesibilidad (WAI-ARIA)",
+                icon: "accessibility",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">NUEVO: Capítulo 7</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Web Para Todos</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>Una web moderna debe ser accesible. HTML5 trabaja junto con ARIA para ayudar a lectores de pantalla.</p>
+                        <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
+                            <li><strong>aria-label:</strong> Etiqueta invisible para describir elementos (como botones con solo iconos).</li>
+                            <li><strong>role:</strong> Define qué hace un elemento (ej: <code>role="alert"</code>).</li>
+                        </ul>
+                    </div>
+                `,
+                codeRef: `<button aria-label="Cerrar ventana" onclick="close()">
+  X
+</button>
+
+<div role="alert">
+  ¡Error de conexión!
+</div>`,
+                exercise: {
+                    instruction: "Crea un botón que tenga solo una 'X' como texto, pero incluye un atributo 'aria-label' que diga 'Cerrar'.",
+                    difficulty: "Intermedio",
+                    validate: (code) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(code, "text/html");
+                        const btn = doc.querySelector('button');
+                        
+                        if (!btn) return { valid: false, msg: "Falta la etiqueta <button>." };
+                        if (!btn.hasAttribute('aria-label')) return { valid: false, msg: "Falta el atributo aria-label." };
+                        if (btn.getAttribute('aria-label') !== 'Cerrar') return { valid: false, msg: "El aria-label debe ser 'Cerrar'." };
+                        
+                        return { valid: true, msg: "¡Excelente! Tu sitio es más inclusivo." };
+                    }
+                },
+                quiz: {
+                    q: "¿Para qué sirve aria-label?",
+                    options: ["Para dar estilos CSS", "Para describir elementos a lectores de pantalla", "Para SEO"],
+                    correct: 1
+                }
+            },
+            {
                 id: "responsive",
-                title: "7. Imágenes Responsive",
+                title: "8. Imágenes Responsive",
                 icon: "image",
                 content: `
-                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 7</span>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 8</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Etiqueta &lt;picture&gt;</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
                         <p>Permite servir diferentes imágenes según el tamaño de pantalla del dispositivo, ahorrando datos en móviles.</p>
@@ -558,7 +582,6 @@
                 `,
                 codeRef: `<picture>
   <source media="(min-width: 650px)" srcset="grande.jpg">
-  <source media="(min-width: 465px)" srcset="mediana.jpg">
   <img src="pequeña.jpg" alt="Descripción">
 </picture>`,
                 exercise: {
@@ -601,9 +624,9 @@
             list.innerHTML = curriculum.map((item, idx) => `
                 <button onclick="loadLesson(${idx})" 
                     class="nav-item w-full text-left px-5 py-3.5 flex items-center gap-3 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all border-l-2 border-transparent ${idx === currentIndex ? 'active' : ''}">
-                    <i data-lucide="${item.icon}" class="w-4 h-4"></i>
-                    ${item.title}
-                    ${idx < currentIndex ? '<i data-lucide="check" class="ml-auto w-3 h-3 text-green-500"></i>' : ''}
+                    <i data-lucide="${item.icon}" class="w-4 h-4 shrink-0"></i>
+                    <span class="truncate">${item.title}</span>
+                    ${idx < currentIndex ? '<i data-lucide="check" class="ml-auto w-3 h-3 text-green-500 shrink-0"></i>' : ''}
                 </button>
             `).join('');
             lucide.createIcons();
@@ -625,22 +648,7 @@
             codeRef.innerHTML = syntaxHighlight(data.codeRef);
             
             // Preview
-            const iframe = document.getElementById('preview-frame');
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.open();
-            doc.write(`
-                <style>
-                    body { font-family: system-ui, sans-serif; padding: 20px; color: #333; } 
-                    h1 { color: #0284c7; }
-                    input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; width: 100%; }
-                    button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; }
-                    canvas { border: 2px dashed #ccc; background: #f8fafc; }
-                    details { border: 1px solid #ddd; padding: 10px; border-radius: 5px; cursor: pointer; }
-                    summary { font-weight: bold; color: #0284c7; outline: none; }
-                </style>
-                ${data.codeRef}
-            `);
-            doc.close();
+            updatePreview(data.codeRef);
 
             // Exercise Setup
             document.getElementById('workspace-area').classList.remove('hidden');
@@ -661,29 +669,33 @@
             lucide.createIcons();
         }
 
-        function validateCode() {
-            const data = curriculum[currentIndex].exercise;
-            const userCode = document.getElementById('code-input').value;
-            
-            // Update Preview with User Code First
+        function updatePreview(code) {
             const iframe = document.getElementById('preview-frame');
             const doc = iframe.contentDocument || iframe.contentWindow.document;
             
-            // Preserve styles, replace body
             const styles = `
                 <style>
                     body { font-family: system-ui, sans-serif; padding: 20px; color: #333; } 
                     h1 { color: #0284c7; }
                     input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; width: 100%; }
-                    button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; }
-                    canvas { border: 2px dashed #0284c7; background: #f0f9ff; }
+                    button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+                    canvas, svg { border: 2px dashed #0284c7; background: #f0f9ff; margin: 10px 0; }
                     details { border: 1px solid #ddd; padding: 10px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
                     summary { font-weight: bold; color: #0284c7; }
+                    [role="alert"] { padding: 10px; background: #fee2e2; color: #b91c1c; border-radius: 4px; margin-top: 10px; }
                 </style>`;
             
             doc.open();
-            doc.write(styles + userCode);
+            doc.write(styles + code);
             doc.close();
+        }
+
+        function validateCode() {
+            const data = curriculum[currentIndex].exercise;
+            const userCode = document.getElementById('code-input').value;
+            
+            // Update Preview
+            updatePreview(userCode);
 
             // Validate
             const result = data.validate(userCode);
@@ -762,7 +774,7 @@
                 loadLesson(currentIndex + 1);
             } else {
                 confetti({ particleCount: 300, spread: 100, origin: { y: 0.5 } });
-                alert("¡Curso Maestro HTML5 Completado!");
+                alert("¡Master Class Completada!");
             }
         }
 
@@ -782,7 +794,8 @@
                     const attrs = p3.replace(/(\w+)=(".*?")/g, '<span class="token-attr">$1</span>=<span class="token-val">$2</span>');
                     return `<span class="token-punct">${p1}</span><span class="token-tag">${p2}</span>${attrs}<span class="token-punct">${p4}</span>`;
                 })
-                .replace(/(&lt;!--.*?--&gt;)/g, '<span class="token-comment">$1</span>');
+                .replace(/(&lt;!--.*?--&gt;)/g, '<span class="token-comment">$1</span>')
+                .replace(/(var|let|const|document|localStorage|return)/g, '<span class="token-js">$1</span>');
         }
 
     </script>
