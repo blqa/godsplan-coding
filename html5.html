@@ -228,12 +228,19 @@
                             <!-- Action Bar -->
                             <div class="p-4 bg-[#1e293b] border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
                                 <div id="feedback-msg" class="w-full sm:w-auto text-xs font-medium px-3 py-1.5 rounded transition-all opacity-0 text-center sm:text-left"></div>
-                                <button onclick="validateCode()" class="w-full sm:w-auto group relative px-5 py-2 bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-brand-600/20 transition-all flex items-center justify-center gap-2 overflow-hidden">
-                                    <div class="absolute inset-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                                    <span class="relative z-10 flex items-center gap-2">
-                                        <i data-lucide="play" class="w-4 h-4 fill-current"></i> Verificar Código
-                                    </span>
-                                </button>
+                                <div class="flex gap-2 w-full sm:w-auto">
+                                    <!-- Botón de Ayuda (Oculto por defecto) -->
+                                    <button onclick="showHint()" id="btn-help" class="hidden px-4 py-2 bg-slate-700 hover:bg-yellow-600/20 hover:text-yellow-400 text-slate-300 border border-slate-600 hover:border-yellow-500/50 text-sm font-semibold rounded-lg transition-all items-center justify-center gap-2">
+                                        <i data-lucide="life-buoy" class="w-4 h-4"></i> <span class="hidden sm:inline">Pista</span>
+                                    </button>
+                                    
+                                    <button onclick="validateCode()" class="flex-1 sm:flex-none group relative px-5 py-2 bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-brand-600/20 transition-all flex items-center justify-center gap-2 overflow-hidden">
+                                        <div class="absolute inset-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                        <span class="relative z-10 flex items-center gap-2">
+                                            <i data-lucide="play" class="w-4 h-4 fill-current"></i> Verificar
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -329,7 +336,7 @@
         // 1. CONFIGURACIÓN Y ESTADO
         // -------------------------------------------------------------------
         
-        const STORAGE_KEY = 'html5_masterclass_pro_v2';
+        const STORAGE_KEY = 'html5_masterclass_pro_v3'; // Nueva versión de storage
         
         let state = {
             currentIndex: 0,
@@ -626,7 +633,6 @@
                     correct: 2
                 }
             },
-            // --- NUEVAS LECCIONES ---
             {
                 id: "multimedia",
                 title: "9. Multimedia Nativo",
@@ -704,6 +710,63 @@
                 quiz: {
                     q: "¿Qué método de JS se usa para empezar a dibujar en el canvas?",
                     options: ["getDrawing()", "getContext('2d')", "startCanvas()"],
+                    correct: 1
+                }
+            },
+            // --- NUEVA LECCIÓN: EXAMEN FINAL ---
+            {
+                id: "exam",
+                title: "11. Examen Final",
+                icon: "award",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Desafío Maestro</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Proyecto Final</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>Has llegado al final. Es hora de demostrar que puedes combinarlo todo.</p>
+                        <p class="mt-4">Tu misión es construir una <strong>Pequeña Landing Page</strong> que combine Estructura, Semántica, Formularios y Multimedia.</p>
+                        <div class="bg-yellow-500/10 border-l-4 border-yellow-500 p-4 mt-4 rounded-r-lg">
+                            <h4 class="text-yellow-400 font-bold text-sm mb-1">Nota:</h4>
+                            <p class="text-xs">Si te atascas, usa el botón de "Pista" que aparecerá abajo. ¡Tú puedes!</p>
+                        </div>
+                    </div>
+                `,
+                codeRef: `<!-- Ejemplo de estructura completa -->
+<header>
+  <h1>Mi Producto</h1>
+  <nav><a href="#">Comprar</a></nav>
+</header>
+<main>
+  <video src="demo.mp4" controls></video>
+  <form>
+    <input type="email" placeholder="Suscríbete">
+    <button>Enviar</button>
+  </form>
+</main>
+<footer>© 2024</footer>`,
+                exercise: {
+                    instruction: "Crea una página que tenga: <header> con <h1>, <nav> con <a>, <main> con un <video>, un formulario con <input> y <button>, y finalmente un <footer>.",
+                    placeholder: "<header>\n  <h1>...</h1>\n  <nav>...</nav>\n</header>\n<main>\n  ...\n</main>\n<footer>...</footer>",
+                    difficulty: "Maestro",
+                    hint: "Recuerda el orden lógico: Header arriba (con h1 y nav), Main en el medio (con el video y el form), y Footer abajo. ¡No olvides cerrar todas las etiquetas!",
+                    validate: (code) => {
+                        const doc = new DOMParser().parseFromString(code, "text/html");
+                        
+                        // Validaciones paso a paso
+                        if (!doc.querySelector('header')) return { valid: false, msg: "Falta la etiqueta <header>." };
+                        if (!doc.querySelector('header h1')) return { valid: false, msg: "El <header> debe tener un título <h1>." };
+                        if (!doc.querySelector('nav a')) return { valid: false, msg: "Falta la navegación <nav> con un enlace <a>." };
+                        if (!doc.querySelector('main')) return { valid: false, msg: "Falta la sección principal <main>." };
+                        if (!doc.querySelector('video')) return { valid: false, msg: "Falta el <video> (puede estar en main)." };
+                        if (!doc.querySelector('input')) return { valid: false, msg: "Falta el campo <input>." };
+                        if (!doc.querySelector('button')) return { valid: false, msg: "Falta el <button>." };
+                        if (!doc.querySelector('footer')) return { valid: false, msg: "Falta el pie de página <footer>." };
+
+                        return { valid: true, msg: "¡INCREÍBLE! Has construido una página web semántica y funcional. ¡Felicidades, Graduado!" };
+                    }
+                },
+                quiz: {
+                    q: "¿Qué define mejor a HTML5 según lo aprendido?",
+                    options: ["Solo sirve para textos", "Es semántico, multimedia e interactivo", "Es un lenguaje de programación difícil"],
                     correct: 1
                 }
             }
@@ -823,6 +886,16 @@
             codeInput.placeholder = data.exercise.placeholder || "<!-- Tu código aquí -->";
             document.getElementById('difficulty-badge').innerText = data.exercise.difficulty;
             
+            // Lógica del Botón de Ayuda
+            const helpBtn = document.getElementById('btn-help');
+            if (data.exercise.hint) {
+                helpBtn.classList.remove('hidden');
+                helpBtn.classList.add('flex');
+            } else {
+                helpBtn.classList.add('hidden');
+                helpBtn.classList.remove('flex');
+            }
+
             const fb = document.getElementById('feedback-msg');
             fb.style.opacity = '0';
             fb.innerText = '';
@@ -859,6 +932,17 @@
         // -------------------------------------------------------------------
         // 5. VALIDACIÓN Y QUIZ (Lógica Mejorada)
         // -------------------------------------------------------------------
+        
+        // Nueva Función para mostrar pistas
+        function showHint() {
+            const data = curriculum[state.currentIndex].exercise;
+            if (data.hint) {
+                const fb = document.getElementById('feedback-msg');
+                fb.innerText = "💡 Pista: " + data.hint;
+                fb.className = "w-full sm:w-auto text-xs font-bold px-3 py-2 rounded bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 flex-1";
+                fb.style.opacity = '1';
+            }
+        }
 
         function validateCode() {
             const data = curriculum[state.currentIndex].exercise;
