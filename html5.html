@@ -3,439 +3,792 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso HTML5 | GodsPlan Coding</title>
+    <title>Master HTML5 | Curso Interactivo</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconos Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Confetti para el final -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #020617;
+            background-color: #0f172a;
             color: #e2e8f0;
         }
 
-        .font-mono { font-family: 'Fira Code', monospace; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Scrollbar delgada */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
+        /* Syntax Highlighting Colors */
+        .token-tag { color: #f472b6; } /* Pink */
+        .token-attr { color: #60a5fa; font-style: italic; } /* Blue */
+        .token-val { color: #a3e635; } /* Lime */
+        .token-comment { color: #64748b; } /* Slate */
+        .token-punct { color: #94a3b8; }
+
+        .preview-iframe {
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
-        /* Syntax Highlighting Simulado */
-        .code-tag { color: #f97316; } /* Orange for tags */
-        .code-attr { color: #93c5fd; } /* Blue for attributes */
-        .code-str { color: #86efac; } /* Green for strings */
-        .code-comment { color: #64748b; font-style: italic; }
-        
-        .nav-item.active {
-            background: rgba(249, 115, 22, 0.1);
-            border-left: 3px solid #f97316;
-            color: #fff;
+        .module-item.active {
+            background: linear-gradient(90deg, rgba(59,130,246,0.15) 0%, transparent 100%);
+            border-left: 3px solid #3b82f6;
+            color: white;
         }
 
-        /* Animación de contenido */
-        .fade-in { animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .module-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Animaciones */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in { animation: slideIn 0.4s ease-out forwards; }
+
+        .glass-header {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden">
+<body class="h-screen flex flex-col overflow-hidden selection:bg-blue-500/30">
 
-    <!-- Header Compacto -->
-    <header class="h-14 border-b border-slate-800 bg-slate-950 flex items-center justify-between px-4 shrink-0 z-20">
-        <div class="flex items-center space-x-3">
-            <a href="index.html" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
-            </a>
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded bg-orange-500/10 flex items-center justify-center text-orange-500">
-                    <i data-lucide="layout-template" class="w-5 h-5"></i>
-                </div>
-                <span class="font-bold text-sm sm:text-base">Curso HTML5 <span class="text-slate-500 font-normal hidden sm:inline">| Fundamentos</span></span>
+    <!-- Header -->
+    <header class="h-16 glass-header flex items-center justify-between px-6 shrink-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20">
+                <i data-lucide="file-code-2" class="text-white w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-tight">Master HTML5</h1>
+                <p class="text-xs text-slate-400">Curso Interactivo Full Stack</p>
             </div>
         </div>
-        
-        <div class="flex items-center space-x-4">
-            <div class="hidden sm:flex items-center text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
-                <div class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></div>
-                Progreso: <span id="progress-text" class="ml-1 text-white font-mono">0%</span>
+
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex flex-col items-end">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase text-slate-400 mb-1">
+                    <span>Progreso del Curso</span>
+                    <span id="progress-percent" class="text-blue-400">0%</span>
+                </div>
+                <div class="w-48 h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-blue-500 transition-all duration-500 w-0"></div>
+                </div>
             </div>
-            <!-- Avatar Usuario -->
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 border border-white/10"></div>
+            <a href="https://github.com" target="_blank" class="p-2 hover:bg-slate-800 rounded-full transition-colors">
+                <i data-lucide="github" class="w-5 h-5 text-slate-400"></i>
+            </a>
         </div>
     </header>
 
-    <!-- Main Layout -->
+    <!-- Main Content -->
     <div class="flex-grow flex overflow-hidden">
         
         <!-- Sidebar (Temario) -->
-        <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 transform transition-transform duration-300 absolute md:relative z-10 h-full md:translate-x-0 -translate-x-full" id="sidebar">
-            <div class="p-4 border-b border-slate-800/50">
-                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Módulos</h3>
+        <aside class="w-72 bg-[#0b1121] border-r border-slate-800 flex flex-col shrink-0 transform transition-transform duration-300 absolute md:relative z-40 h-full -translate-x-full md:translate-x-0" id="sidebar">
+            <div class="p-4 border-b border-slate-800">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Módulos de Aprendizaje</h2>
             </div>
-            <nav class="flex-grow overflow-y-auto p-2 space-y-1" id="module-list">
-                <!-- Se llena con JS -->
+            <nav class="flex-grow overflow-y-auto py-2" id="module-list">
+                <!-- Items generados por JS -->
             </nav>
-            <div class="p-4 border-t border-slate-800 text-center">
-                <button class="text-xs text-slate-500 hover:text-white flex items-center justify-center w-full">
-                    <i data-lucide="help-circle" class="w-3 h-3 mr-1"></i> ¿Necesitas ayuda?
-                </button>
+            
+            <div class="p-4 border-t border-slate-800 bg-slate-900/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-xs">US</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-white truncate">Estudiante</p>
+                        <p class="text-xs text-slate-500 truncate">Plan Gratuito</p>
+                    </div>
+                </div>
             </div>
         </aside>
 
-        <!-- Contenido Central + Editor -->
-        <main class="flex-grow flex flex-col md:flex-row overflow-hidden relative w-full">
+        <!-- Área de Trabajo -->
+        <main class="flex-grow flex flex-col lg:flex-row overflow-hidden relative w-full bg-[#0f172a]">
             
-            <!-- Botón toggle sidebar (Mobile) -->
-            <button onclick="toggleSidebar()" class="md:hidden absolute top-4 left-4 z-20 p-2 bg-slate-800 rounded-lg text-white shadow-lg">
+            <!-- Botón Móvil -->
+            <button onclick="toggleSidebar()" class="md:hidden absolute top-4 left-4 z-30 p-2 bg-blue-600 rounded-lg text-white shadow-lg">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
 
-            <!-- Teoría (Scrollable) -->
-            <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth" id="content-area">
-                <!-- Contenido Dinámico Aquí -->
-                <div class="max-w-3xl mx-auto fade-in">
-                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 1</span>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-6">¿Qué rayos es HTML?</h1>
+            <!-- 1. Columna Teoría y Quiz -->
+            <section class="flex-1 overflow-y-auto scroll-smooth relative" id="content-scroll">
+                <div class="max-w-3xl mx-auto p-6 md:p-10 pb-24 min-h-full flex flex-col">
                     
-                    <div class="prose prose-invert prose-slate max-w-none">
-                        <p class="text-lg text-slate-300 leading-relaxed mb-6">
-                            Imagina que vas a construir una casa. Antes de pintar las paredes (CSS) o ponerle electricidad (JavaScript), necesitas los cimientos, las vigas y las paredes de ladrillo.
-                        </p>
-                        <p class="text-lg text-slate-300 leading-relaxed mb-6">
-                            Eso es <strong>HTML</strong> (HyperText Markup Language). Es el esqueleto de cualquier página web. No se encarga de que se vea "bonito", se encarga de que <em>exista</em>.
-                        </p>
-
-                        <div class="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r-lg mb-8">
-                            <h4 class="text-blue-400 font-bold text-sm mb-1 flex items-center">
-                                <i data-lucide="info" class="w-4 h-4 mr-2"></i> Dato Curioso
-                            </h4>
-                            <p class="text-sm text-blue-200">
-                                HTML no es un lenguaje de programación (no hace cálculos). Es un <strong>lenguaje de marcado</strong>. Usamos "etiquetas" para decirle al navegador qué es cada cosa.
-                            </p>
-                        </div>
-
-                        <h2 class="text-2xl font-bold mb-4 mt-8">La Anatomía de una Etiqueta</h2>
-                        <p class="text-slate-400 mb-4">
-                            Casi todo en HTML funciona como un sándwich. Tienes una etiqueta de apertura, el contenido en medio, y una etiqueta de cierre.
-                        </p>
-
-                        <div class="bg-slate-900 rounded-xl border border-slate-800 p-6 font-mono text-sm md:text-base mb-8 shadow-xl">
-                            <div class="flex items-center justify-center space-x-1">
-                                <span class="text-orange-500">&lt;p&gt;</span>
-                                <span class="text-white">Hola, soy un párrafo</span>
-                                <span class="text-orange-500">&lt;/p&gt;</span>
-                            </div>
-                            <div class="flex justify-between text-xs text-slate-500 mt-2 px-4 md:px-12">
-                                <span>Apertura</span>
-                                <span>Contenido</span>
-                                <span>Cierre</span>
-                            </div>
-                        </div>
+                    <!-- Contenido Dinámico -->
+                    <div id="lesson-content" class="animate-slide-in flex-grow">
+                        <!-- Aquí se inyecta la teoría -->
                     </div>
 
-                    <!-- Navegación Inferior -->
-                    <div class="flex justify-between items-center mt-12 pt-8 border-t border-slate-800">
-                        <button disabled class="px-4 py-2 rounded-lg bg-slate-900 text-slate-600 cursor-not-allowed flex items-center">
-                            <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i> Anterior
+                    <!-- Área de Quiz -->
+                    <div id="quiz-area" class="mt-12 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl hidden animate-slide-in">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-yellow-500/10 rounded-lg text-yellow-500">
+                                <i data-lucide="help-circle" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-white">Desafío Rápido</h3>
+                        </div>
+                        <p id="quiz-question" class="text-slate-300 mb-6 text-lg"></p>
+                        <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                            <!-- Opciones generadas por JS -->
+                        </div>
+                        <div id="quiz-feedback" class="mt-4 hidden p-3 rounded-lg text-sm font-medium text-center"></div>
+                    </div>
+
+                    <!-- Navegación -->
+                    <div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-800">
+                        <button id="btn-prev" onclick="prevModule()" class="px-5 py-2.5 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior
                         </button>
-                        <button onclick="loadModule(1)" class="px-6 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold flex items-center shadow-lg shadow-orange-500/20 transition-all">
-                            Siguiente: Estructura Básica <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+                        
+                        <button id="btn-next" onclick="nextModule()" class="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 disabled:bg-slate-700 disabled:shadow-none transition-all">
+                            Siguiente Lección <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
-                </div>
-            </div>
 
-            <!-- Panel Derecho (Preview Código) -->
-            <div class="hidden lg:flex w-[400px] xl:w-[500px] bg-[#0d1117] border-l border-slate-800 flex-col shrink-0">
-                <div class="h-10 border-b border-slate-800 flex items-center px-4 bg-slate-900/50">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center">
-                        <i data-lucide="code-2" class="w-3 h-3 mr-2"></i> index.html
-                    </span>
                 </div>
+            </section>
+
+            <!-- 2. Columna Editor y Preview -->
+            <section class="hidden lg:flex w-[45%] xl:w-[40%] bg-[#1e293b] border-l border-slate-800 flex-col shrink-0 relative z-10">
                 
-                <!-- Editor Simulado -->
-                <div class="flex-1 p-4 font-mono text-sm overflow-auto text-slate-300 leading-relaxed" id="code-preview">
-                    <!-- Código dinámico -->
-                    <div class="code-line"><span class="code-comment">&lt;!-- Esto es un comentario --&gt;</span></div>
-                    <div class="code-line"><span class="code-tag">&lt;h1&gt;</span>Hola Mundo<span class="code-tag">&lt;/h1&gt;</span></div>
-                    <div class="code-line"><span class="code-tag">&lt;p&gt;</span>Este es mi primer sitio web.<span class="code-tag">&lt;/p&gt;</span></div>
-                    <div class="code-line mt-4"><span class="code-tag">&lt;button&gt;</span>Click aquí<span class="code-tag">&lt;/button&gt;</span></div>
+                <!-- Tab Bar -->
+                <div class="h-10 bg-[#0f172a] border-b border-slate-800 flex items-center px-2">
+                    <div class="flex items-center px-4 py-1.5 bg-[#1e293b] border-t-2 border-blue-500 text-xs text-blue-400 font-mono rounded-t">
+                        <i data-lucide="code" class="w-3 h-3 mr-2"></i> index.html
+                    </div>
+                    <div class="ml-auto flex items-center gap-2 text-[10px] text-slate-500 uppercase font-bold tracking-wider px-2">
+                        <span>Vista en vivo</span>
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    </div>
                 </div>
 
-                <!-- Preview Result (Mini Browser) -->
-                <div class="h-1/2 border-t border-slate-800 flex flex-col bg-white">
-                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-3 space-x-2">
-                        <div class="flex space-x-1.5">
+                <!-- Editor de Código (Solo lectura pero estilizado) -->
+                <div class="flex-1 relative overflow-hidden flex flex-col h-1/2 border-b-4 border-slate-900 group">
+                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                        <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-1 rounded">HTML</span>
+                    </div>
+                    <pre class="flex-1 p-4 font-mono text-sm overflow-auto leading-relaxed bg-[#1e293b] text-slate-300" id="code-editor"></pre>
+                </div>
+
+                <!-- Browser Preview -->
+                <div class="flex-1 flex flex-col bg-white h-1/2">
+                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-2">
+                        <div class="flex gap-1.5">
                             <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
                             <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
                         </div>
-                        <div class="flex-1 bg-white h-5 rounded border border-slate-200 text-[10px] text-slate-400 flex items-center px-2">
-                            localhost:3000
+                        <div class="flex-1 bg-white h-5 rounded border border-slate-200 flex items-center justify-center shadow-sm">
+                            <span class="text-[9px] text-slate-400 font-mono">localhost:3000/index.html</span>
                         </div>
                     </div>
-                    <div class="flex-1 p-4 text-slate-900" id="browser-preview">
-                        <h1 class="text-2xl font-bold mb-2">Hola Mundo</h1>
-                        <p class="mb-4">Este es mi primer sitio web.</p>
-                        <button class="px-3 py-1 bg-slate-200 rounded border border-slate-300 text-sm">Click aquí</button>
+                    <div class="flex-1 relative bg-white">
+                        <iframe id="preview-frame" class="preview-iframe"></iframe>
                     </div>
                 </div>
-            </div>
+            </section>
 
         </main>
     </div>
 
+    <!-- Script Principal -->
     <script>
-        lucide.createIcons();
-
-        // Datos del Curso
-        const modules = [
+        // ----------------------------------------------------
+        // 1. BASE DE DATOS DEL CURSO (DATA)
+        // ----------------------------------------------------
+        const courseData = [
             {
                 id: 0,
-                title: "Introducción",
-                icon: "play-circle",
+                title: "Introducción a HTML5",
+                icon: "globe",
                 content: `
-                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 1</span>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-6">¿Qué rayos es HTML?</h1>
-                    <div class="prose prose-invert prose-slate max-w-none">
-                        <p class="text-lg text-slate-300 leading-relaxed mb-6">Imagina que construyes una casa. HTML son los cimientos y las paredes. CSS es la pintura. JS es la electricidad.</p>
-                        <p><strong>HTML</strong> (HyperText Markup Language) es el esqueleto de la web. Usamos "etiquetas" para definir elementos.</p>
-                        <div class="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r-lg mb-8">
-                            <h4 class="text-blue-400 font-bold text-sm mb-1">Regla de Oro</h4>
-                            <p class="text-sm text-blue-200">Casi todas las etiquetas se abren <code>&lt;p&gt;</code> y se cierran <code>&lt;/p&gt;</code>.</p>
-                        </div>
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 1</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">¿Qué es HTML?</h1>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        HTML (HyperText Markup Language) no es un lenguaje de programación, es un <strong>lenguaje de marcado</strong>. 
+                        Imagina que es el esqueleto de una página web. Define dónde van los títulos, los párrafos, las imágenes y los botones.
+                    </p>
+                    <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700 mb-8">
+                        <h3 class="font-bold text-white mb-2 flex items-center"><i data-lucide="info" class="w-4 h-4 mr-2 text-blue-400"></i> Analogía de la Casa</h3>
+                        <p class="text-slate-400 text-sm">
+                            Si una web fuera una casa:
+                            <br>🧱 <strong>HTML</strong> serían los ladrillos y vigas (Estructura).
+                            <br>🎨 <strong>CSS</strong> sería la pintura y decoración (Estilo).
+                            <br>💡 <strong>JavaScript</strong> sería la electricidad y funciones (Interactividad).
+                        </p>
                     </div>
+                    <p class="text-slate-300">A la derecha verás tu primer código HTML. Una etiqueta simple como <code>&lt;h1&gt;</code> crea un título grande.</p>
                 `,
-                code: `
-<span class="code-comment">&lt;!-- Elementos básicos --&gt;</span>
-<span class="code-tag">&lt;h1&gt;</span>Soy un Título<span class="code-tag">&lt;/h1&gt;</span>
-<span class="code-tag">&lt;p&gt;</span>Soy un párrafo de texto simple.<span class="code-tag">&lt;/p&gt;</span>
-<span class="code-tag">&lt;button&gt;</span>Soy un botón<span class="code-tag">&lt;/button&gt;</span>
-                `,
-                preview: `
-                    <h1 class="text-2xl font-bold mb-2">Soy un Título</h1>
-                    <p class="mb-4">Soy un párrafo de texto simple.</p>
-                    <button class="px-3 py-1 bg-slate-200 rounded border border-slate-300 text-sm">Soy un botón</button>
-                `
+                code: `<h1>Hola Mundo</h1>
+<p>Bienvenidos a mi primera página web.</p>
+<button>Click aquí</button>`,
+                quiz: {
+                    question: "¿Qué significa HTML?",
+                    options: ["High Tech Multi Language", "HyperText Markup Language", "Home Tool Markup Language"],
+                    correct: 1
+                }
             },
             {
                 id: 1,
                 title: "Estructura Básica",
-                icon: "layout",
+                icon: "layout-template",
                 content: `
-                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 2</span>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-6">El Esqueleto Obligatorio</h1>
-                    <div class="prose prose-invert prose-slate max-w-none">
-                        <p class="text-lg text-slate-300 mb-6">Todo archivo HTML necesita una estructura mínima para que el navegador lo entienda.</p>
-                        <ul class="list-disc pl-5 space-y-2 text-slate-400 mb-6">
-                            <li><strong>&lt;!DOCTYPE html&gt;</strong>: Le dice al navegador "Hey, esto es HTML moderno".</li>
-                            <li><strong>&lt;html&gt;</strong>: La raíz de todo.</li>
-                            <li><strong>&lt;head&gt;</strong>: Lo que NO se ve (configuraciones, título de pestaña).</li>
-                            <li><strong>&lt;body&gt;</strong>: Lo que SÍ se ve (el contenido).</li>
-                        </ul>
-                    </div>
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 2</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">El Esqueleto Obligatorio</h1>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        Todo archivo HTML necesita una estructura estándar para que el navegador lo entienda correctamente.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex gap-4">
+                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit whitespace-nowrap">&lt;!DOCTYPE html&gt;</span>
+                            <span class="text-slate-400 text-sm">Le dice al navegador que usamos HTML5 moderno.</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit">&lt;html&gt;</span>
+                            <span class="text-slate-400 text-sm">La raíz de todo el documento.</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit">&lt;head&gt;</span>
+                            <span class="text-slate-400 text-sm">Configuraciones invisibles (título de pestaña, SEO, estilos).</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit">&lt;body&gt;</span>
+                            <span class="text-slate-400 text-sm">Todo lo que el usuario ve en pantalla.</span>
+                        </li>
+                    </ul>
                 `,
-                code: `
-<span class="code-comment">&lt;!DOCTYPE html&gt;</span>
-<span class="code-tag">&lt;html&gt;</span>
-  <span class="code-tag">&lt;head&gt;</span>
-    <span class="code-tag">&lt;title&gt;</span>Mi Página<span class="code-tag">&lt;/title&gt;</span>
-  <span class="code-tag">&lt;/head&gt;</span>
-  <span class="code-tag">&lt;body&gt;</span>
-    <span class="code-tag">&lt;h1&gt;</span>¡Hola Mundo!<span class="code-tag">&lt;/h1&gt;</span>
-  <span class="code-tag">&lt;/body&gt;</span>
-<span class="code-tag">&lt;/html&gt;</span>
-                `,
-                preview: `
-                    <div class="h-full flex items-center justify-center text-center">
-                        <div>
-                            <h1 class="text-3xl font-bold mb-2">¡Hola Mundo!</h1>
-                            <p class="text-sm text-slate-500">(Así se ve el body)</p>
-                        </div>
-                    </div>
-                `
+                code: `<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mi Sitio Web</title>
+  </head>
+  <body>
+    <h1>Este es el cuerpo</h1>
+    <p>Todo el contenido visible va aquí.</p>
+  </body>
+</html>`,
+                quiz: {
+                    question: "¿Dónde se coloca el contenido visible para el usuario?",
+                    options: ["En la etiqueta <head>", "En la etiqueta <body>", "En la etiqueta <title>"],
+                    correct: 1
+                }
             },
             {
                 id: 2,
-                title: "Títulos y Textos",
+                title: "Encabezados y Párrafos",
                 icon: "type",
                 content: `
-                     <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 3</span>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-6">Jerarquía de Textos</h1>
-                    <div class="prose prose-invert prose-slate max-w-none">
-                        <p class="text-lg text-slate-300 mb-6">Google ama el orden. Usa los encabezados (h1 a h6) para estructurar tu contenido, no solo para cambiar el tamaño de letra.</p>
-                        <ul class="list-none space-y-3 mb-6">
-                            <li class="flex items-center"><span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-mono mr-3">&lt;h1&gt;</span> El título principal (Solo 1 por página).</li>
-                            <li class="flex items-center"><span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-mono mr-3">&lt;h2&gt;</span> Subtítulos de secciones.</li>
-                            <li class="flex items-center"><span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-mono mr-3">&lt;p&gt;</span> Párrafos de texto normal.</li>
-                        </ul>
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 3</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">Jerarquía de Texto</h1>
+                    <p class="text-lg text-slate-300 mb-6">
+                        HTML ofrece 6 niveles de títulos, desde <code>&lt;h1&gt;</code> (el más importante) hasta <code>&lt;h6&gt;</code>.
+                    </p>
+                    <div class="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg mb-6">
+                        <p class="text-yellow-200 text-sm"><strong>⚠️ Regla de Oro SEO:</strong> Solo debe haber UN <code>&lt;h1&gt;</code> por página. Es el título principal del documento.</p>
                     </div>
+                    <p class="text-slate-300">Para texto normal, usamos la etiqueta de párrafo <code>&lt;p&gt;</code>.</p>
                 `,
-                code: `
-<span class="code-tag">&lt;h1&gt;</span>Noticias del Día<span class="code-tag">&lt;/h1&gt;</span>
+                code: `<h1>Noticias del Día (h1)</h1>
 
-<span class="code-tag">&lt;h2&gt;</span>Deportes<span class="code-tag">&lt;/h2&gt;</span>
-<span class="code-tag">&lt;p&gt;</span>El equipo local ganó ayer...<span class="code-tag">&lt;/p&gt;</span>
+<h2>Sección de Deportes (h2)</h2>
+<p>El equipo local ganó el campeonato.</p>
 
-<span class="code-tag">&lt;h2&gt;</span>Clima<span class="code-tag">&lt;/h2&gt;</span>
-<span class="code-tag">&lt;p&gt;</span>Se esperan lluvias fuertes...<span class="code-tag">&lt;/p&gt;</span>
-                `,
-                preview: `
-                    <h1 class="text-3xl font-bold mb-4 border-b pb-2">Noticias del Día</h1>
-                    <h2 class="text-xl font-bold mb-2 text-slate-700">Deportes</h2>
-                    <p class="mb-4 text-sm">El equipo local ganó ayer...</p>
-                    <h2 class="text-xl font-bold mb-2 text-slate-700">Clima</h2>
-                    <p class="mb-4 text-sm">Se esperan lluvias fuertes...</p>
-                `
+<h3>Fútbol (h3)</h3>
+<p>Detalles del partido...</p>
+
+<h2>Sección de Clima (h2)</h2>
+<p>Soleado con probabilidad de lluvia.</p>`,
+                quiz: {
+                    question: "¿Cuántas etiquetas <h1> debería haber idealmente en una página?",
+                    options: ["Todas las que quiera", "Solo una", "Ninguna"],
+                    correct: 1
+                }
             },
             {
                 id: 3,
                 title: "Enlaces (Links)",
                 icon: "link",
                 content: `
-                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 4</span>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-6">Conectando la Web</h1>
-                    <div class="prose prose-invert prose-slate max-w-none">
-                        <p class="text-lg text-slate-300 mb-6">La magia de la web son los hipervínculos. Usamos la etiqueta <code>&lt;a&gt;</code> (Anchor).</p>
-                        <p class="mb-4">Necesita un atributo obligatorio: <strong>href</strong> (Hypertext Reference), que indica a dónde ir.</p>
-                        <div class="bg-slate-900 p-4 rounded-lg font-mono text-sm border border-slate-800">
-                             &lt;a <span class="text-blue-400">href</span>=<span class="text-green-400">"sitio.com"</span>&gt;Click&lt;/a&gt;
-                        </div>
-                    </div>
-                `,
-                code: `
-<span class="code-tag">&lt;h2&gt;</span>Mis Redes<span class="code-tag">&lt;/h2&gt;</span>
-
-<span class="code-tag">&lt;p&gt;</span>
-  Visita mi <span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-str">"https://google.com"</span> <span class="code-attr">target</span>=<span class="code-str">"_blank"</span><span class="code-tag">&gt;</span>
-    Perfil de Google
-  <span class="code-tag">&lt;/a&gt;</span>
-<span class="code-tag">&lt;/p&gt;</span>
-                `,
-                preview: `
-                    <h2 class="text-xl font-bold mb-4">Mis Redes</h2>
-                    <p class="text-sm">
-                        Visita mi 
-                        <a href="#" class="text-blue-600 underline hover:text-blue-800">Perfil de Google</a>
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 4</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">La Web Interconectada</h1>
+                    <p class="text-lg text-slate-300 mb-6">
+                        La etiqueta <code>&lt;a&gt;</code> (Anchor) crea hipervínculos. Es lo que hace que la web sea una "red".
                     </p>
-                `
+                    <p class="text-slate-300 mb-4">Requiere el atributo <strong>href</strong> (Hypertext Reference) para saber a dónde ir.</p>
+                    <ul class="space-y-2 text-slate-400 text-sm mb-6">
+                        <li>• <strong>Enlaces absolutos:</strong> Van a otro sitio web (https://google.com).</li>
+                        <li>• <strong>Enlaces relativos:</strong> Van a otra página de tu mismo sitio (contacto.html).</li>
+                        <li>• <strong>target="_blank":</strong> Abre el enlace en una pestaña nueva.</li>
+                    </ul>
+                `,
+                code: `<h2>Mis Enlaces Favoritos</h2>
+
+<p>Busca información en <a href="https://google.com" target="_blank">Google</a>.</p>
+
+<p>O mira este enlace falso a <a href="#">Contacto</a>.</p>
+
+<button onclick="alert('¡Click!')">
+  <a href="#" style="color:black; text-decoration:none;">Botón Enlace</a>
+</button>`,
+                quiz: {
+                    question: "¿Qué atributo define el destino del enlace?",
+                    options: ["src", "link", "href"],
+                    correct: 2
+                }
             },
             {
                 id: 4,
-                title: "Imágenes",
+                title: "Imágenes Multimedia",
                 icon: "image",
                 content: `
-                     <span class="text-orange-400 text-xs font-bold uppercase tracking-wide mb-2 block">Capítulo 5</span>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-6">Una imagen vale más...</h1>
-                    <div class="prose prose-invert prose-slate max-w-none">
-                        <p class="text-lg text-slate-300 mb-6">La etiqueta <code>&lt;img&gt;</code> es especial: <strong>no tiene cierre</strong>.</p>
-                        <p>Atributos clave:</p>
-                        <ul class="list-disc pl-5 space-y-2 text-slate-400">
-                            <li><strong>src:</strong> La ruta de la imagen (URL o archivo).</li>
-                            <li><strong>alt:</strong> Texto alternativo (para ciegos o si falla la imagen). ¡Es vital!</li>
-                        </ul>
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 5</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">Insertando Imágenes</h1>
+                    <p class="text-lg text-slate-300 mb-6">
+                        Usamos la etiqueta <code>&lt;img&gt;</code>. Es una etiqueta de cierre automático (no tiene <code>&lt;/img&gt;</code>).
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <code class="text-blue-400">src="..."</code>
+                            <p class="text-xs text-slate-400 mt-1">Source. La URL de la imagen.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <code class="text-blue-400">alt="..."</code>
+                            <p class="text-xs text-slate-400 mt-1">Texto alternativo. Vital para accesibilidad y si la imagen falla.</p>
+                        </div>
                     </div>
                 `,
-                code: `
-<span class="code-tag">&lt;h2&gt;</span>Galería<span class="code-tag">&lt;/h2&gt;</span>
+                code: `<h2>Galería de Viajes</h2>
 
-<span class="code-tag">&lt;img</span> 
-  <span class="code-attr">src</span>=<span class="code-str">"https://picsum.photos/200/150"</span> 
-  <span class="code-attr">alt</span>=<span class="code-str">"Paisaje aleatorio"</span> 
-<span class="code-tag">/&gt;</span>
+<!-- Imagen desde URL externa -->
+<img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+     alt="Paisaje de montaña" 
+     width="100%" 
+     style="border-radius: 8px;">
+
+<p>Una hermosa vista de las montañas.</p>`,
+                quiz: {
+                    question: "¿Por qué es importante el atributo 'alt'?",
+                    options: ["Para que la imagen cargue más rápido", "Para accesibilidad (lectores de pantalla) y SEO", "Para ponerle un borde a la imagen"],
+                    correct: 1
+                }
+            },
+            {
+                id: 5,
+                title: "Listas",
+                icon: "list",
+                content: `
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 6</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">Organizando Datos</h1>
+                    <p class="text-lg text-slate-300 mb-6">Hay dos tipos principales de listas:</p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="border-l-4 border-pink-500 pl-4">
+                            <h3 class="font-bold text-white">Desordenadas (&lt;ul&gt;)</h3>
+                            <p class="text-slate-400 text-sm">Usan "bullets" o puntos. El orden no importa (ej: lista de compras).</p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h3 class="font-bold text-white">Ordenadas (&lt;ol&gt;)</h3>
+                            <p class="text-slate-400 text-sm">Usan números. El orden importa (ej: pasos de una receta).</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300">Dentro de ambas, cada elemento es un <code>&lt;li&gt;</code> (List Item).</p>
                 `,
-                preview: `
-                    <h2 class="text-xl font-bold mb-4">Galería</h2>
-                    <img src="https://picsum.photos/200/150" alt="Paisaje" class="rounded-lg shadow-md hover:opacity-90 cursor-pointer">
-                `
+                code: `<h3>Ingredientes (ul)</h3>
+<ul>
+  <li>Harina</li>
+  <li>Huevos</li>
+  <li>Leche</li>
+</ul>
+
+<h3>Pasos de Preparación (ol)</h3>
+<ol>
+  <li>Mezclar harina y huevos.</li>
+  <li>Añadir leche poco a poco.</li>
+  <li>Hornear por 20 minutos.</li>
+</ol>`,
+                quiz: {
+                    question: "¿Qué etiqueta se usa para cada elemento individual de una lista?",
+                    options: ["<ol>", "<ul>", "<li>"],
+                    correct: 2
+                }
+            },
+            {
+                id: 6,
+                title: "Formularios",
+                icon: "check-square",
+                content: `
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 7</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">Interactividad de Usuario</h1>
+                    <p class="text-lg text-slate-300 mb-6">
+                        Los formularios permiten al usuario enviar datos. La etiqueta clave es <code>&lt;input&gt;</code>.
+                    </p>
+                    <p class="text-slate-300 mb-4">El atributo <code>type</code> cambia radicalmente el input:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-mono text-center mb-6">
+                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="text"</span>
+                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="password"</span>
+                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="email"</span>
+                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="date"</span>
+                    </div>
+                `,
+                code: `<h3>Registro de Usuario</h3>
+
+<form>
+  <label>Nombre:</label><br>
+  <input type="text" placeholder="Tu nombre"><br><br>
+  
+  <label>Contraseña:</label><br>
+  <input type="password" placeholder="Secreto"><br><br>
+  
+  <label>Fecha Nacimiento:</label><br>
+  <input type="date"><br><br>
+  
+  <button type="button" onclick="alert('Enviando...')">Registrarse</button>
+</form>`,
+                quiz: {
+                    question: "¿Qué type usarías para un campo de contraseña?",
+                    options: ["secure", "hidden", "password"],
+                    correct: 2
+                }
+            },
+            {
+                id: 7,
+                title: "Semántica y Estructura",
+                icon: "box",
+                content: `
+                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 8</span>
+                    <h1 class="text-4xl font-extrabold text-white mb-6">HTML Semántico</h1>
+                    <p class="text-lg text-slate-300 mb-6">
+                        Antes usábamos <code>&lt;div&gt;</code> para todo. HTML5 introdujo etiquetas con significado para ayudar a Google y a los lectores de pantalla a entender tu web.
+                    </p>
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 relative overflow-hidden">
+                        <div class="flex flex-col gap-2 text-center text-xs font-mono text-slate-400 uppercase">
+                            <div class="border border-dashed border-slate-500 p-2 rounded bg-slate-900">&lt;header&gt;</div>
+                            <div class="flex gap-2">
+                                <div class="border border-dashed border-slate-500 p-8 rounded bg-slate-900 w-1/4">&lt;nav&gt;</div>
+                                <div class="border border-dashed border-slate-500 p-8 rounded bg-slate-900 w-3/4">&lt;main&gt;</div>
+                            </div>
+                            <div class="border border-dashed border-slate-500 p-2 rounded bg-slate-900">&lt;footer&gt;</div>
+                        </div>
+                    </div>
+                `,
+                code: `<header style="background:#eee; padding:10px;">
+  <h1>Mi Blog Personal</h1>
+</header>
+
+<div style="display:flex; margin-top:10px; gap:10px;">
+  <nav style="background:#ddd; padding:10px; width:30%;">
+    <ul>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+  </nav>
+
+  <main style="background:#f9f9f9; padding:10px; flex:1;">
+    <article>
+      <h2>Mi primer post</h2>
+      <p>Hoy aprendí semántica...</p>
+    </article>
+  </main>
+</div>
+
+<footer style="background:#333; color:white; padding:10px; margin-top:10px;">
+  &copy; 2025 Derechos Reservados
+</footer>`,
+                quiz: {
+                    question: "¿Qué etiqueta representa el contenido principal y único de la página?",
+                    options: ["<content>", "<main>", "<body>"],
+                    correct: 1
+                }
             }
         ];
 
-        let currentModuleId = 0;
+        // ----------------------------------------------------
+        // 2. LÓGICA DE LA APLICACIÓN
+        // ----------------------------------------------------
+        
+        let currentModule = 0;
+        let progress = 0;
+        let moduleStatus = new Array(courseData.length).fill('locked'); // locked, unlocked, completed
+        moduleStatus[0] = 'unlocked'; // Primer módulo abierto
 
-        function renderSidebar() {
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadSidebar();
+            loadLesson(0);
+        });
+
+        // Cargar Sidebar
+        function loadSidebar() {
             const list = document.getElementById('module-list');
-            list.innerHTML = modules.map(mod => `
-                <button onclick="loadModule(${mod.id})" 
-                    class="nav-item w-full text-left px-3 py-2.5 rounded-md flex items-center space-x-3 text-sm transition-all text-slate-400 hover:bg-slate-900 hover:text-white ${mod.id === currentModuleId ? 'active' : ''}">
-                    <i data-lucide="${mod.icon}" class="w-4 h-4 ${mod.id === currentModuleId ? 'text-orange-500' : 'opacity-70'}"></i>
-                    <span>${mod.title}</span>
+            list.innerHTML = courseData.map((mod, index) => {
+                const status = moduleStatus[index];
+                const isLocked = status === 'locked';
+                const isActive = index === currentModule;
+                const icon = status === 'completed' ? 'check-circle' : (isLocked ? 'lock' : mod.icon);
+                const iconColor = status === 'completed' ? 'text-green-500' : (isActive ? 'text-blue-400' : 'text-slate-500');
+
+                return `
+                <button onclick="${isLocked ? '' : `loadLesson(${index})`}" 
+                    class="module-item w-full text-left px-4 py-3 flex items-center gap-3 transition-all hover:bg-[#1e293b] ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}">
+                    <i data-lucide="${icon}" class="w-4 h-4 ${iconColor}"></i>
+                    <div>
+                        <p class="text-sm font-medium ${isActive ? 'text-white' : 'text-slate-400'}">${mod.title}</p>
+                    </div>
                 </button>
-            `).join('');
+                `;
+            }).join('');
             lucide.createIcons();
         }
 
-        function loadModule(id) {
-            if (id >= modules.length) return; // Límite alcanzado
+        // Cargar Lección
+        function loadLesson(index) {
+            currentModule = index;
+            const data = courseData[index];
             
-            currentModuleId = id;
-            renderSidebar();
+            // 1. Actualizar Contenido
+            const contentDiv = document.getElementById('lesson-content');
+            contentDiv.innerHTML = data.content;
+
+            // 2. Actualizar Código y Preview
+            const editor = document.getElementById('code-editor');
+            editor.innerHTML = highlightHTML(data.code);
+            updatePreview(data.code);
+
+            // 3. Configurar Quiz
+            setupQuiz(data.quiz);
+
+            // 4. UI Updates
+            loadSidebar();
+            updateProgressBar();
             
-            const mod = modules[id];
-            const contentArea = document.getElementById('content-area');
-            const codePreview = document.getElementById('code-preview');
-            const browserPreview = document.getElementById('browser-preview');
-            const progressText = document.getElementById('progress-text');
+            // Reset scroll
+            document.getElementById('content-scroll').scrollTop = 0;
+            
+            // Botones de navegación
+            const btnNext = document.getElementById('btn-next');
+            btnNext.disabled = moduleStatus[index] !== 'completed';
+            
+            if (index === courseData.length - 1 && moduleStatus[index] === 'completed') {
+                btnNext.innerHTML = 'Obtener Certificado <i data-lucide="award" class="w-4 h-4 ml-2"></i>';
+                btnNext.onclick = showCertificate;
+            } else {
+                btnNext.innerHTML = 'Siguiente Lección <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>';
+                btnNext.onclick = nextModule;
+            }
 
-            // Actualizar contenido con animación
-            contentArea.innerHTML = `
-                <div class="max-w-3xl mx-auto fade-in pb-10">
-                    ${mod.content}
-                    
-                    <div class="flex justify-between items-center mt-12 pt-8 border-t border-slate-800">
-                        <button onclick="loadModule(${id - 1})" ${id === 0 ? 'disabled' : ''} 
-                            class="px-4 py-2 rounded-lg bg-slate-900 text-slate-400 border border-slate-800 hover:border-slate-700 hover:text-white transition-all flex items-center disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i> Anterior
-                        </button>
-                        
-                        ${id < modules.length - 1 ? `
-                            <button onclick="loadModule(${id + 1})" class="px-6 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold flex items-center shadow-lg shadow-orange-500/20 transition-all">
-                                Siguiente <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
-                            </button>
-                        ` : `
-                            <button class="px-6 py-2 rounded-lg bg-green-600 hover:bg-green-500 text-white font-bold flex items-center shadow-lg shadow-green-500/20">
-                                <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i> Finalizar Curso
-                            </button>
-                        `}
-                    </div>
-                </div>
-            `;
+            document.getElementById('btn-prev').disabled = index === 0;
 
-            // Actualizar simuladores
-            codePreview.innerHTML = mod.code;
-            browserPreview.innerHTML = mod.preview;
-
-            // Calcular progreso
-            const progress = Math.round(((id + 1) / modules.length) * 100);
-            progressText.innerText = `${progress}%`;
-
-            // Scroll al top
-            contentArea.scrollTop = 0;
             lucide.createIcons();
+        }
+
+        // Sistema de Quiz
+        function setupQuiz(quizData) {
+            const quizArea = document.getElementById('quiz-area');
+            const questionEl = document.getElementById('quiz-question');
+            const optionsEl = document.getElementById('quiz-options');
+            const feedbackEl = document.getElementById('quiz-feedback');
+
+            // Resetear estado visual
+            quizArea.classList.remove('hidden');
+            feedbackEl.classList.add('hidden');
+            feedbackEl.className = 'mt-4 hidden p-3 rounded-lg text-sm font-medium text-center';
+
+            // Si ya está completado, mostrarlo resuelto
+            if (moduleStatus[currentModule] === 'completed') {
+                quizArea.classList.add('hidden'); // Ocultar quiz si ya se pasó
+                // Opcional: Podrías dejarlo visible pero deshabilitado
+                document.getElementById('btn-next').disabled = false;
+                return;
+            }
+
+            questionEl.innerText = quizData.question;
+            
+            optionsEl.innerHTML = quizData.options.map((opt, i) => `
+                <button onclick="checkAnswer(${i}, ${quizData.correct})" 
+                    class="quiz-opt w-full text-left p-3 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors text-sm">
+                    ${opt}
+                </button>
+            `).join('');
+        }
+
+        function checkAnswer(selected, correct) {
+            const feedbackEl = document.getElementById('quiz-feedback');
+            const btnNext = document.getElementById('btn-next');
+            const options = document.querySelectorAll('.quiz-opt');
+
+            feedbackEl.classList.remove('hidden');
+
+            if (selected === correct) {
+                // Correcto
+                feedbackEl.innerText = "¡Correcto! Has desbloqueado la siguiente lección.";
+                feedbackEl.classList.add('bg-green-500/20', 'text-green-400', 'border', 'border-green-500/30');
+                
+                options[selected].classList.add('bg-green-600', 'text-white', 'border-green-500');
+                
+                // Desbloquear siguiente nivel
+                moduleStatus[currentModule] = 'completed';
+                if (currentModule + 1 < courseData.length) {
+                    if (moduleStatus[currentModule + 1] === 'locked') {
+                        moduleStatus[currentModule + 1] = 'unlocked';
+                    }
+                }
+                
+                btnNext.disabled = false;
+                loadSidebar(); // Actualizar iconos
+                updateProgressBar();
+
+                // Efecto visual simple
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.8 },
+                    disableForReducedMotion: true
+                });
+
+            } else {
+                // Incorrecto
+                feedbackEl.innerText = "Ups, respuesta incorrecta. Inténtalo de nuevo.";
+                feedbackEl.classList.add('bg-red-500/20', 'text-red-400', 'border', 'border-red-500/30');
+                options[selected].classList.add('bg-red-900/50', 'border-red-500');
+            }
+        }
+
+        // Navegación
+        function nextModule() {
+            if (currentModule < courseData.length - 1) {
+                loadLesson(currentModule + 1);
+            }
+        }
+
+        function prevModule() {
+            if (currentModule > 0) {
+                loadLesson(currentModule - 1);
+            }
+        }
+
+        // Función para colorear sintaxis HTML simple
+        function highlightHTML(code) {
+            // Escapar HTML primero
+            let safeCode = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            // Colorear Tags
+            safeCode = safeCode.replace(/&lt;(\/?)(\w+)(.*?)&gt;/g, (match, slash, tag, attrs) => {
+                // Procesar atributos dentro del tag
+                const processedAttrs = attrs.replace(/(\w+)=(".*?")/g, '<span class="token-attr">$1</span>=<span class="token-val">$2</span>');
+                return `<span class="token-punct">&lt;${slash}</span><span class="token-tag">${tag}</span>${processedAttrs}<span class="token-punct">&gt;</span>`;
+            });
+
+            // Colorear comentarios
+            safeCode = safeCode.replace(/&lt;!--(.*?)--&gt;/g, '<span class="token-comment">&lt;!--$1--&gt;</span>');
+
+            return safeCode;
+        }
+
+        // Actualizar el Iframe
+        function updatePreview(code) {
+            const iframe = document.getElementById('preview-frame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <style>
+                    body { font-family: sans-serif; padding: 20px; color: #333; }
+                    h1 { color: #1e293b; }
+                </style>
+                ${code}
+            `);
+            doc.close();
+        }
+
+        function updateProgressBar() {
+            const completed = moduleStatus.filter(s => s === 'completed').length;
+            const total = courseData.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-percent').innerText = `${percentage}%`;
         }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const isClosed = sidebar.classList.contains('-translate-x-full');
-            
-            if (isClosed) {
-                sidebar.classList.remove('-translate-x-full');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-            }
+            sidebar.classList.toggle('-translate-x-full');
         }
 
-        // Inicializar
-        renderSidebar();
+        // Pantalla Final
+        function showCertificate() {
+            const contentDiv = document.getElementById('lesson-content');
+            const quizArea = document.getElementById('quiz-area');
+            const nav = document.querySelector('.flex.justify-between.mt-10'); // Footer nav
+
+            quizArea.style.display = 'none';
+            nav.style.display = 'none';
+
+            contentDiv.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center h-full py-20 fade-in">
+                    <div class="w-24 h-24 bg-yellow-500 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-yellow-500/40 animate-bounce">
+                        <i data-lucide="trophy" class="w-12 h-12 text-white"></i>
+                    </div>
+                    <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-4">
+                        ¡Felicidades!
+                    </h1>
+                    <p class="text-xl text-slate-300 mb-8 max-w-md">
+                        Has completado el curso "Master HTML5". Ya conoces la estructura fundamental de la web.
+                    </p>
+                    
+                    <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 shadow-2xl max-w-lg w-full mb-8 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+                        <h2 class="text-2xl font-serif text-white mb-2">Certificado de Finalización</h2>
+                        <p class="text-slate-400 mb-6">Otorgado a: <span class="text-blue-400 font-bold">Estudiante Web</span></p>
+                        <div class="flex justify-between items-end">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1051/1051275.png" class="w-12 opacity-50">
+                            <div class="text-right">
+                                <p class="text-xs text-slate-500">GodsPlan Coding</p>
+                                <p class="text-xs text-slate-500">${new Date().toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="location.reload()" class="text-slate-400 hover:text-white underline">
+                        Reiniciar Curso
+                    </button>
+                </div>
+            `;
+            
+            // Fuegos artificiales masivos
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+            }, 250);
+            
+            lucide.createIcons();
+        }
+
     </script>
 </body>
 </html>
