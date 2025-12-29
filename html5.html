@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML5: La Guía Definitiva | Curso Interactivo</title>
+    <title>HTML5: Master Class Completa | Curso Interactivo</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,7 +92,7 @@
             </div>
             <div>
                 <h1 class="font-bold text-white tracking-tight leading-tight">Master HTML5</h1>
-                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Basado en el libro de J.D. Gauchat</p>
+                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Edición Completa</p>
             </div>
         </div>
 
@@ -267,7 +267,7 @@
     <!-- Data & Logic -->
     <script>
         // -------------------------------------------------------------------
-        // BASE DE CONOCIMIENTO: Basado en "El gran libro de HTML5" (Gauchat)
+        // BASE DE CONOCIMIENTO (Actualizada)
         // -------------------------------------------------------------------
         
         const curriculum = [
@@ -282,12 +282,9 @@
                         <p>Según Gauchat, HTML5 no es solo nuevas etiquetas, es una nueva forma de estructurar la web. Todo comienza con una declaración simplificada.</p>
                         <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
                             <li><strong>DOCTYPE:</strong> En HTML5 es simplemente <code>&lt;!DOCTYPE html&gt;</code>.</li>
-                            <li><strong>Charset:</strong> Definir <code>&lt;meta charset="utf-8"&gt;</code> es vital para caracteres especiales.</li>
+                            <li><strong>Charset:</strong> Definir <code>&lt;meta charset="utf-8"&gt;</code> es vital.</li>
                             <li><strong>Lang:</strong> Siempre define el idioma en la etiqueta <code>html</code>.</li>
                         </ul>
-                        <div class="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r mb-6">
-                            <p class="text-sm text-blue-200"><strong>Dato curioso:</strong> El navegador renderiza la página en "Quirks Mode" (modo compatible) si olvidas el DOCTYPE, lo que puede romper tu diseño CSS.</p>
-                        </div>
                     </div>
                 `,
                 codeRef: `<!DOCTYPE html>
@@ -326,24 +323,12 @@
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 2</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Adiós al &lt;div&gt; Soup</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>Una de las premisas del libro es dar significado al contenido. Un <code>div</code> no dice nada sobre lo que contiene. HTML5 introduce etiquetas con significado semántico:</p>
+                        <p>Una de las premisas del libro es dar significado al contenido. HTML5 introduce etiquetas con significado semántico:</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 text-sm">
-                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                                <code class="text-pink-400 font-bold">&lt;header&gt;</code>
-                                <p class="mt-1 text-slate-400">Cabecera, logos, navegación principal.</p>
-                            </div>
-                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                                <code class="text-pink-400 font-bold">&lt;nav&gt;</code>
-                                <p class="mt-1 text-slate-400">Bloques de enlaces de navegación.</p>
-                            </div>
-                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                                <code class="text-pink-400 font-bold">&lt;section&gt;</code>
-                                <p class="mt-1 text-slate-400">Agrupación temática de contenido.</p>
-                            </div>
-                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
-                                <code class="text-pink-400 font-bold">&lt;footer&gt;</code>
-                                <p class="mt-1 text-slate-400">Pie de página, copyright, datos de contacto.</p>
-                            </div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700"><code class="text-pink-400 font-bold">&lt;header&gt;</code><p class="mt-1 text-slate-400">Cabecera, logos.</p></div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700"><code class="text-pink-400 font-bold">&lt;nav&gt;</code><p class="mt-1 text-slate-400">Navegación principal.</p></div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700"><code class="text-pink-400 font-bold">&lt;section&gt;</code><p class="mt-1 text-slate-400">Agrupación temática.</p></div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700"><code class="text-pink-400 font-bold">&lt;footer&gt;</code><p class="mt-1 text-slate-400">Pie de página.</p></div>
                         </div>
                     </div>
                 `,
@@ -351,16 +336,13 @@
     <h1>Mi Blog</h1>
     <nav>
         <a href="#">Inicio</a>
-        <a href="#">Artículos</a>
     </nav>
 </header>
 <section>
     <h2>Último post</h2>
-    <p>Contenido del artículo...</p>
+    <p>Contenido...</p>
 </section>
-<footer>
-    <p>&copy; 2024</p>
-</footer>`,
+<footer><p>&copy; 2024</p></footer>`,
                 exercise: {
                     instruction: "Crea una barra de navegación semántica. Usa la etiqueta <nav> y dentro coloca dos enlaces <a>.",
                     difficulty: "Intermedio",
@@ -368,10 +350,8 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(code, "text/html");
                         const nav = doc.querySelector('nav');
-                        
                         if (!nav) return { valid: false, msg: "No encontré la etiqueta <nav>." };
                         if (nav.querySelectorAll('a').length < 2) return { valid: false, msg: "Debes incluir al menos dos enlaces <a> dentro del <nav>." };
-                        
                         return { valid: true, msg: "¡Excelente uso de la semántica!" };
                     }
                 },
@@ -389,44 +369,37 @@
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 3</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Formularios Inteligentes</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>Antes de HTML5, validar un email requería Javascript complejo. El libro destaca cómo los nuevos atributos hacen el trabajo duro por nosotros.</p>
-                        <p class="mb-4">Nuevos tipos de input esenciales:</p>
+                        <p>Nuevos tipos de input esenciales que validan automáticamente:</p>
                         <ul class="space-y-2 text-sm mb-6">
-                            <li><code class="text-yellow-300">type="email"</code>: Valida formato de correo y cambia el teclado en móviles.</li>
-                            <li><code class="text-yellow-300">type="date"</code>: Despliega un calendario nativo.</li>
-                            <li><code class="text-yellow-300">type="range"</code>: Un control deslizante (slider).</li>
-                            <li><code class="text-yellow-300">required</code>: Impide enviar el formulario si está vacío.</li>
-                            <li><code class="text-yellow-300">placeholder</code>: Texto de ayuda visual.</li>
+                            <li><code class="text-yellow-300">type="email"</code>: Valida formato de correo.</li>
+                            <li><code class="text-yellow-300">type="date"</code>: Despliega un calendario.</li>
+                            <li><code class="text-yellow-300">required</code>: Campo obligatorio.</li>
+                            <li><code class="text-yellow-300">placeholder</code>: Texto de ayuda.</li>
                         </ul>
                     </div>
                 `,
                 codeRef: `<form>
     <label>Email:</label>
     <input type="email" required placeholder="tu@email.com">
-    
-    <label>Fecha de Nacimiento:</label>
     <input type="date">
-    
     <button type="submit">Enviar</button>
 </form>`,
                 exercise: {
-                    instruction: "Crea un campo de entrada para email que sea obligatorio (required) y tenga un texto de ayuda (placeholder) 'usuario@web.com'.",
+                    instruction: "Crea un input para email que sea obligatorio (required) y tenga placeholder 'usuario@web.com'.",
                     difficulty: "Intermedio",
                     validate: (code) => {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(code, "text/html");
                         const input = doc.querySelector('input');
-
                         if (!input) return { valid: false, msg: "Falta la etiqueta <input>." };
                         if (input.getAttribute('type') !== 'email') return { valid: false, msg: "El tipo debe ser 'email'." };
                         if (!input.hasAttribute('required')) return { valid: false, msg: "Falta el atributo 'required'." };
                         if (input.getAttribute('placeholder') !== 'usuario@web.com') return { valid: false, msg: "El placeholder debe ser exactamente 'usuario@web.com'." };
-
-                        return { valid: true, msg: "¡Correcto! Has usado las validaciones nativas." };
+                        return { valid: true, msg: "¡Correcto! Validación nativa activa." };
                     }
                 },
                 quiz: {
-                    q: "¿Qué atributo muestra un texto gris de ayuda dentro del input?",
+                    q: "¿Qué atributo muestra un texto gris de ayuda?",
                     options: ["value", "helper", "placeholder"],
                     correct: 2
                 }
@@ -439,14 +412,11 @@
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 4</span>
                     <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Multimedia Sin Plugins</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>El libro marca el fin de la era Flash. HTML5 introduce etiquetas nativas para reproducir contenido multimedia.</p>
-                        <p>La etiqueta <code>&lt;video&gt;</code> acepta atributos poderosos:</p>
+                        <p>Adiós Flash. HTML5 introduce etiquetas nativas.</p>
                         <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
-                            <li><strong>controls:</strong> Muestra play/pause/volumen.</li>
-                            <li><strong>poster:</strong> Imagen de portada antes de reproducir.</li>
-                            <li><strong>loop:</strong> Repite el video infinitamente.</li>
+                            <li><strong>controls:</strong> Muestra la UI del reproductor.</li>
+                            <li><strong>poster:</strong> Imagen de portada.</li>
                         </ul>
-                        <p>Dentro de la etiqueta video, usamos <code>&lt;source&gt;</code> para proveer formatos alternativos.</p>
                     </div>
                 `,
                 codeRef: `<video controls width="300" poster="portada.jpg">
@@ -454,23 +424,158 @@
     <p>Tu navegador no soporta video.</p>
 </video>`,
                 exercise: {
-                    instruction: "Inserta un reproductor de video con controles visibles y define el ancho en 400px.",
+                    instruction: "Inserta un <video> con controles y ancho de 400.",
                     difficulty: "Avanzado",
                     validate: (code) => {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(code, "text/html");
                         const video = doc.querySelector('video');
-
                         if (!video) return { valid: false, msg: "Falta la etiqueta <video>." };
-                        if (!video.hasAttribute('controls')) return { valid: false, msg: "Falta el atributo 'controls' para que el usuario pueda interactuar." };
-                        if (video.getAttribute('width') !== '400') return { valid: false, msg: "El ancho (width) debe ser 400." };
-
-                        return { valid: true, msg: "¡Perfecto! Ya no necesitas Flash Player." };
+                        if (!video.hasAttribute('controls')) return { valid: false, msg: "Faltan los 'controls'." };
+                        if (video.getAttribute('width') !== '400') return { valid: false, msg: "El ancho debe ser 400." };
+                        return { valid: true, msg: "¡Perfecto! Video nativo listo." };
                     }
                 },
                 quiz: {
-                    q: "¿Qué etiqueta se usa para definir múltiples formatos de archivo dentro de video?",
+                    q: "¿Qué etiqueta define múltiples formatos dentro de video?",
                     options: ["<track>", "<source>", "<file>"],
+                    correct: 1
+                }
+            },
+            // --- NUEVOS MÓDULOS ---
+            {
+                id: "canvas",
+                title: "5. Gráficos (Canvas)",
+                icon: "palette",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 5</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Dibujando con Code</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>El elemento <code>&lt;canvas&gt;</code> es un lienzo en blanco para dibujar gráficos vía JavaScript (2D o 3D).</p>
+                        <p class="mb-4">Pasos:</p>
+                        <ol class="list-decimal pl-5 space-y-2 mb-6 text-sm">
+                            <li>Crear la etiqueta con <code>id</code>, <code>width</code> y <code>height</code>.</li>
+                            <li>Usar JS: <code>getContext('2d')</code>.</li>
+                            <li>Dibujar: <code>fillRect()</code>, <code>beginPath()</code>.</li>
+                        </ol>
+                    </div>
+                `,
+                codeRef: `<canvas id="miLienzo" width="200" height="100"></canvas>
+<script>
+  var c = document.getElementById("miLienzo");
+  var ctx = c.getContext("2d");
+  ctx.fillStyle = "#FF0000";
+  ctx.fillRect(10, 10, 80, 80);
+<\/script>`,
+                exercise: {
+                    instruction: "Crea un <canvas> con id='game-area', width='300' y height='200'.",
+                    placeholder: '<canvas id="..." ...></canvas>',
+                    difficulty: "Intermedio",
+                    validate: (code) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(code, "text/html");
+                        const canvas = doc.querySelector('canvas');
+
+                        if (!canvas) return { valid: false, msg: "Falta la etiqueta <canvas>." };
+                        if (canvas.id !== 'game-area') return { valid: false, msg: "El id debe ser 'game-area'." };
+                        if (canvas.getAttribute('width') !== '300') return { valid: false, msg: "El ancho debe ser 300." };
+                        if (canvas.getAttribute('height') !== '200') return { valid: false, msg: "El alto debe ser 200." };
+
+                        // MAGIC: Auto-paint to show it works
+                        const iframe = document.getElementById('preview-frame');
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        // Inject script to paint immediately
+                        const script = iframeDoc.createElement('script');
+                        script.textContent = `
+                            var c = document.getElementById("game-area");
+                            if(c) {
+                                var ctx = c.getContext("2d");
+                                ctx.fillStyle = "#0ea5e9";
+                                ctx.fillRect(50, 50, 200, 100);
+                                ctx.font = "20px Arial";
+                                ctx.fillStyle = "white";
+                                ctx.fillText("¡Canvas Activo!", 80, 110);
+                            }
+                        `;
+                        iframeDoc.body.appendChild(script);
+
+                        return { valid: true, msg: "¡Lienzo preparado! He dibujado algo azul con JS para probarlo." };
+                    }
+                },
+                quiz: {
+                    q: "¿Qué método de JS inicia el dibujo?",
+                    options: ["getDrawingArea()", "getContext('2d')", "createGraphics()"],
+                    correct: 1
+                }
+            },
+            {
+                id: "details",
+                title: "6. Interactividad",
+                icon: "layers",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 6</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Acordeones Nativos</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>HTML5 trajo widgets interactivos sin necesidad de librerías JS.</p>
+                        <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
+                            <li><strong>&lt;details&gt;:</strong> Contenedor que se abre/cierra.</li>
+                            <li><strong>&lt;summary&gt;:</strong> El título visible donde haces clic.</li>
+                        </ul>
+                    </div>
+                `,
+                codeRef: `<details>
+  <summary>¿Más info?</summary>
+  <p>Texto oculto que aparece al clic.</p>
+</details>`,
+                exercise: {
+                    instruction: "Crea un acordeón con <details>. El <summary> debe decir 'Ayuda' y dentro pon un párrafo cualquiera.",
+                    difficulty: "Fácil",
+                    validate: (code) => {
+                        const clean = code.toLowerCase();
+                        if (!clean.includes('<details>')) return { valid: false, msg: "Falta <details>." };
+                        if (!clean.includes('<summary>')) return { valid: false, msg: "Falta <summary>." };
+                        if (!clean.includes('ayuda')) return { valid: false, msg: "El summary debe decir 'Ayuda'." };
+                        return { valid: true, msg: "¡Funciona! Pruébalo en la previsualización." };
+                    }
+                },
+                quiz: {
+                    q: "¿Qué etiqueta es visible siempre en un details?",
+                    options: ["<title>", "<header>", "<summary>"],
+                    correct: 2
+                }
+            },
+            {
+                id: "responsive",
+                title: "7. Imágenes Responsive",
+                icon: "image",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 7</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Etiqueta &lt;picture&gt;</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>Permite servir diferentes imágenes según el tamaño de pantalla del dispositivo, ahorrando datos en móviles.</p>
+                        <p>Se usa <code>&lt;picture&gt;</code> envolviendo varios <code>&lt;source&gt;</code> y un <code>&lt;img&gt;</code> final como fallback.</p>
+                    </div>
+                `,
+                codeRef: `<picture>
+  <source media="(min-width: 650px)" srcset="grande.jpg">
+  <source media="(min-width: 465px)" srcset="mediana.jpg">
+  <img src="pequeña.jpg" alt="Descripción">
+</picture>`,
+                exercise: {
+                    instruction: "Escribe una estructura <picture> que contenga al menos un <source> y una imagen <img> obligatoria al final.",
+                    difficulty: "Avanzado",
+                    validate: (code) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(code, "text/html");
+                        if (!doc.querySelector('picture')) return { valid: false, msg: "Falta <picture>." };
+                        if (!doc.querySelector('source')) return { valid: false, msg: "Falta al menos un <source>." };
+                        if (!doc.querySelector('img')) return { valid: false, msg: "Siempre debes incluir un <img> al final como fallback." };
+                        return { valid: true, msg: "¡Excelente! Tus imágenes ahora se adaptan." };
+                    }
+                },
+                quiz: {
+                    q: "¿Qué etiqueta se carga si el navegador no soporta picture?",
+                    options: ["<fallback>", "<img>", "<source>"],
                     correct: 1
                 }
             }
@@ -509,7 +614,7 @@
             const data = curriculum[index];
             
             // UI Updates
-            renderSidebar(); // Update active class
+            renderSidebar(); 
             
             // Content
             const contentDiv = document.getElementById('lesson-content');
@@ -529,6 +634,9 @@
                     h1 { color: #0284c7; }
                     input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; width: 100%; }
                     button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; }
+                    canvas { border: 2px dashed #ccc; background: #f8fafc; }
+                    details { border: 1px solid #ddd; padding: 10px; border-radius: 5px; cursor: pointer; }
+                    summary { font-weight: bold; color: #0284c7; outline: none; }
                 </style>
                 ${data.codeRef}
             `);
@@ -537,7 +645,7 @@
             // Exercise Setup
             document.getElementById('workspace-area').classList.remove('hidden');
             document.getElementById('exercise-instruction').innerText = data.exercise.instruction;
-            document.getElementById('code-input').value = ""; // Reset input
+            document.getElementById('code-input').value = ""; 
             document.getElementById('code-input').placeholder = data.exercise.placeholder || "<!-- Tu código aquí -->";
             document.getElementById('difficulty-badge').innerText = data.exercise.difficulty;
             
@@ -556,6 +664,28 @@
         function validateCode() {
             const data = curriculum[currentIndex].exercise;
             const userCode = document.getElementById('code-input').value;
+            
+            // Update Preview with User Code First
+            const iframe = document.getElementById('preview-frame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            // Preserve styles, replace body
+            const styles = `
+                <style>
+                    body { font-family: system-ui, sans-serif; padding: 20px; color: #333; } 
+                    h1 { color: #0284c7; }
+                    input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; width: 100%; }
+                    button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; }
+                    canvas { border: 2px dashed #0284c7; background: #f0f9ff; }
+                    details { border: 1px solid #ddd; padding: 10px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
+                    summary { font-weight: bold; color: #0284c7; }
+                </style>`;
+            
+            doc.open();
+            doc.write(styles + userCode);
+            doc.close();
+
+            // Validate
             const result = data.validate(userCode);
             const fb = document.getElementById('feedback-msg');
             
@@ -564,22 +694,10 @@
             
             if (result.valid) {
                 fb.className = "text-xs font-bold px-3 py-2 rounded bg-green-500/20 text-green-400 border border-green-500/30 flex-1 mr-4";
-                
-                // Show Quiz
                 setupQuiz(curriculum[currentIndex].quiz);
-                
-                // Confetti for mini-win
-                confetti({
-                    particleCount: 30,
-                    spread: 50,
-                    origin: { y: 0.7, x: 0.3 },
-                    disableForReducedMotion: true,
-                    colors: ['#0ea5e9', '#22c55e']
-                });
+                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7, x: 0.3 }, colors: ['#0ea5e9', '#22c55e'] });
             } else {
                 fb.className = "text-xs font-bold px-3 py-2 rounded bg-red-500/20 text-red-400 border border-red-500/30 flex-1 mr-4";
-                
-                // Shake effect
                 const editor = document.querySelector('.code-editor-area');
                 editor.classList.add('animate-pulse');
                 setTimeout(() => editor.classList.remove('animate-pulse'), 500);
@@ -598,7 +716,6 @@
                 </button>
             `).join('');
             
-            // Auto scroll to quiz
             setTimeout(() => {
                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 300);
@@ -611,22 +728,15 @@
                 buttons[selected].classList.add('bg-green-600', 'text-white', '!border-green-400');
                 buttons[selected].innerHTML += ' <i data-lucide="check" class="inline w-3 h-3 ml-2"></i>';
                 
-                // Unlock next button logic
                 document.getElementById('btn-next').disabled = false;
                 document.getElementById('btn-next').classList.replace('bg-slate-700', 'bg-brand-600');
                 
-                // Global Progress
                 if (progress < ((currentIndex + 1) * progressStep)) {
                     progress = (currentIndex + 1) * progressStep;
                     updateProgress();
                 }
                 
-                // Big Confetti
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
             } else {
                 buttons[selected].classList.add('bg-red-900/50', 'text-red-300', '!border-red-500/50');
@@ -638,15 +748,9 @@
             document.getElementById('progress-bar').style.width = `${progress}%`;
             document.getElementById('progress-text').innerText = `${Math.round(progress)}%`;
             
-            // Nav buttons state
             document.getElementById('btn-prev').disabled = currentIndex === 0;
             
             const nextBtn = document.getElementById('btn-next');
-            // Check if current level is passed (logic simplified for demo)
-            // In a real app we'd check a 'passed' flag in the data object
-            // Here we default to disabled until quiz is done, UNLESS we are navigating back to review
-            // For now, let's keep it simple: Next is enabled only if we passed quiz OR if it's strictly a review
-            // To force learning, we keep it disabled here and enable in checkQuiz
             if (currentIndex === 0 && progress === 0) {
                  nextBtn.disabled = true;
                  nextBtn.classList.replace('bg-brand-600', 'bg-slate-700');
@@ -657,21 +761,20 @@
             if (currentIndex < curriculum.length - 1) {
                 loadLesson(currentIndex + 1);
             } else {
-                alert("¡Curso completado! Felicidades.");
+                confetti({ particleCount: 300, spread: 100, origin: { y: 0.5 } });
+                alert("¡Curso Maestro HTML5 Completado!");
             }
         }
 
         function prevLesson() {
             if (currentIndex > 0) {
                 loadLesson(currentIndex - 1);
-                // Allow navigation freely backwards
                 const nextBtn = document.getElementById('btn-next');
                 nextBtn.disabled = false;
                 nextBtn.classList.replace('bg-slate-700', 'bg-brand-600');
             }
         }
 
-        // Simple syntax highlighter for the reference code
         function syntaxHighlight(code) {
             return code
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
