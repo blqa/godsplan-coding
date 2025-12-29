@@ -3,790 +3,683 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master HTML5 | Curso Interactivo</title>
+    <title>HTML5: La Guía Definitiva | Curso Interactivo</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Iconos Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Confetti para el final -->
+    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #e2e8f0;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            bg: '#0f172a', // Slate 900
+                            surface: '#1e293b', // Slate 800
+                            border: '#334155', // Slate 700
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
         }
+    </script>
 
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .font-mono { font-family: 'Fira Code', monospace; }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-        /* Syntax Highlighting Colors */
-        .token-tag { color: #f472b6; } /* Pink */
-        .token-attr { color: #60a5fa; font-style: italic; } /* Blue */
-        .token-val { color: #a3e635; } /* Lime */
-        .token-comment { color: #64748b; } /* Slate */
+        /* Syntax Highlight Basics */
+        .token-tag { color: #f472b6; } 
+        .token-attr { color: #60a5fa; }
+        .token-val { color: #a3e635; } 
+        .token-comment { color: #64748b; font-style: italic; }
         .token-punct { color: #94a3b8; }
 
-        .preview-iframe {
-            background-color: white;
-            width: 100%;
-            height: 100%;
-            border: none;
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
         }
 
-        .module-item.active {
-            background: linear-gradient(90deg, rgba(59,130,246,0.15) 0%, transparent 100%);
-            border-left: 3px solid #3b82f6;
-            color: white;
-        }
-
-        .module-item.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .code-editor-area {
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         /* Animaciones */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-slide-in { animation: slideIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        .glass-header {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .nav-item.active {
+            background: linear-gradient(to right, rgba(14, 165, 233, 0.1), transparent);
+            border-left: 3px solid #0ea5e9;
+            color: #38bdf8;
         }
+        
+        textarea:focus { outline: none; }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden selection:bg-blue-500/30">
+<body class="h-screen flex flex-col overflow-hidden">
 
     <!-- Header -->
-    <header class="h-16 glass-header flex items-center justify-between px-6 shrink-0 z-50">
+    <header class="h-16 border-b border-dark-border bg-dark-bg/80 backdrop-blur-md flex items-center justify-between px-6 z-50 shrink-0">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20">
-                <i data-lucide="file-code-2" class="text-white w-6 h-6"></i>
+            <div class="bg-gradient-to-tr from-brand-600 to-indigo-600 p-2 rounded-lg shadow-lg shadow-brand-500/20">
+                <i data-lucide="book-open" class="text-white w-5 h-5"></i>
             </div>
             <div>
-                <h1 class="font-bold text-lg tracking-tight">Master HTML5</h1>
-                <p class="text-xs text-slate-400">Curso Interactivo Full Stack</p>
+                <h1 class="font-bold text-white tracking-tight leading-tight">Master HTML5</h1>
+                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Basado en el libro de J.D. Gauchat</p>
             </div>
         </div>
 
         <div class="flex items-center gap-6">
-            <div class="hidden md:flex flex-col items-end">
-                <div class="flex items-center gap-2 text-xs font-semibold uppercase text-slate-400 mb-1">
-                    <span>Progreso del Curso</span>
-                    <span id="progress-percent" class="text-blue-400">0%</span>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase text-slate-400 mb-1.5">
+                    <span>Progreso</span>
+                    <span id="progress-text" class="text-brand-500">0%</span>
                 </div>
-                <div class="w-48 h-2 bg-slate-800 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="h-full bg-blue-500 transition-all duration-500 w-0"></div>
+                <div class="w-32 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-brand-500 w-0 transition-all duration-700 ease-out"></div>
                 </div>
             </div>
-            <a href="https://github.com" target="_blank" class="p-2 hover:bg-slate-800 rounded-full transition-colors">
-                <i data-lucide="github" class="w-5 h-5 text-slate-400"></i>
-            </a>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="flex-grow flex overflow-hidden">
+    <!-- Layout Principal -->
+    <div class="flex-1 flex overflow-hidden">
         
-        <!-- Sidebar (Temario) -->
-        <aside class="w-72 bg-[#0b1121] border-r border-slate-800 flex flex-col shrink-0 transform transition-transform duration-300 absolute md:relative z-40 h-full -translate-x-full md:translate-x-0" id="sidebar">
-            <div class="p-4 border-b border-slate-800">
-                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Módulos de Aprendizaje</h2>
+        <!-- Sidebar -->
+        <aside class="w-72 bg-dark-bg border-r border-dark-border flex flex-col shrink-0 transition-all duration-300 absolute md:relative z-40 h-full -translate-x-full md:translate-x-0" id="sidebar">
+            <div class="p-4 border-b border-dark-border bg-dark-surface/30">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Índice del Curso</h2>
             </div>
-            <nav class="flex-grow overflow-y-auto py-2" id="module-list">
-                <!-- Items generados por JS -->
+            <nav id="module-list" class="flex-1 overflow-y-auto py-2 space-y-0.5">
+                <!-- Se llena con JS -->
             </nav>
             
-            <div class="p-4 border-t border-slate-800 bg-slate-900/50">
+            <!-- User Profile footer -->
+            <div class="p-4 border-t border-dark-border mt-auto">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-xs">US</div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-white truncate">Estudiante</p>
-                        <p class="text-xs text-slate-500 truncate">Plan Gratuito</p>
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
+                        DEV
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium text-white">Estudiante</div>
+                        <div class="text-xs text-slate-500">Modo Aprendizaje</div>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Área de Trabajo -->
-        <main class="flex-grow flex flex-col lg:flex-row overflow-hidden relative w-full bg-[#0f172a]">
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col lg:flex-row min-w-0 bg-dark-bg relative">
             
-            <!-- Botón Móvil -->
-            <button onclick="toggleSidebar()" class="md:hidden absolute top-4 left-4 z-30 p-2 bg-blue-600 rounded-lg text-white shadow-lg">
+            <!-- Mobile Toggle -->
+            <button onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')" class="md:hidden absolute top-4 left-4 z-50 p-2 bg-brand-600 rounded shadow-lg text-white">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
 
-            <!-- 1. Columna Teoría y Quiz -->
-            <section class="flex-1 overflow-y-auto scroll-smooth relative" id="content-scroll">
-                <div class="max-w-3xl mx-auto p-6 md:p-10 pb-24 min-h-full flex flex-col">
+            <!-- Left: Theory & Exercise -->
+            <section class="flex-1 overflow-y-auto scroll-smooth custom-scrollbar relative" id="scroll-container">
+                <div class="max-w-3xl mx-auto p-6 lg:p-12 pb-32">
                     
-                    <!-- Contenido Dinámico -->
-                    <div id="lesson-content" class="animate-slide-in flex-grow">
-                        <!-- Aquí se inyecta la teoría -->
-                    </div>
+                    <!-- Content Injection -->
+                    <div id="lesson-content" class="animate-fade-in mb-12"></div>
 
-                    <!-- Área de Quiz -->
-                    <div id="quiz-area" class="mt-12 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl hidden animate-slide-in">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="p-2 bg-yellow-500/10 rounded-lg text-yellow-500">
-                                <i data-lucide="help-circle" class="w-5 h-5"></i>
+                    <!-- Interactive Workspace -->
+                    <div id="workspace-area" class="hidden animate-fade-in space-y-8">
+                        
+                        <!-- Exercise Card -->
+                        <div class="rounded-xl overflow-hidden border border-brand-500/30 shadow-2xl shadow-brand-900/20 bg-[#162032]">
+                            <!-- Toolbar -->
+                            <div class="bg-[#1e293b] px-4 py-3 flex justify-between items-center border-b border-slate-700">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="code-2" class="w-4 h-4 text-brand-400"></i>
+                                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Editor de Desafíos</span>
+                                </div>
+                                <span id="difficulty-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-700 text-slate-300 uppercase border border-slate-600">
+                                    Básico
+                                </span>
                             </div>
-                            <h3 class="font-bold text-lg text-white">Desafío Rápido</h3>
+
+                            <!-- Instructions -->
+                            <div class="bg-gradient-to-b from-[#1e293b] to-[#162032] p-5 border-b border-slate-800">
+                                <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+                                    <i data-lucide="terminal" class="w-4 h-4 text-yellow-500"></i>
+                                    Instrucción:
+                                </h3>
+                                <p id="exercise-instruction" class="text-slate-300 text-sm leading-relaxed"></p>
+                            </div>
+
+                            <!-- Code Input -->
+                            <div class="relative code-editor-area">
+                                <div class="absolute top-3 right-3 text-[10px] text-slate-500 font-mono pointer-events-none">HTML</div>
+                                <textarea id="code-input" spellcheck="false" 
+                                    class="w-full h-40 bg-transparent p-5 font-mono text-sm text-slate-200 resize-y border-none focus:ring-0 leading-relaxed"
+                                    placeholder="<!-- Escribe tu código aquí... -->"></textarea>
+                            </div>
+
+                            <!-- Action Bar -->
+                            <div class="p-4 bg-[#1e293b] border-t border-slate-700 flex justify-between items-center">
+                                <div id="feedback-msg" class="text-xs font-medium px-3 py-1.5 rounded transition-all opacity-0"></div>
+                                <button onclick="validateCode()" class="group relative px-5 py-2 bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-brand-600/20 transition-all flex items-center gap-2 overflow-hidden">
+                                    <div class="absolute inset-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                    <span class="relative z-10 flex items-center gap-2">
+                                        <i data-lucide="play" class="w-4 h-4 fill-current"></i> Verificar Código
+                                    </span>
+                                </button>
+                            </div>
                         </div>
-                        <p id="quiz-question" class="text-slate-300 mb-6 text-lg"></p>
-                        <div id="quiz-options" class="grid grid-cols-1 gap-3">
-                            <!-- Opciones generadas por JS -->
+
+                        <!-- Quiz Section (Hidden initially) -->
+                        <div id="quiz-container" class="hidden bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-purple-400">
+                                    <i data-lucide="help-circle" class="w-6 h-6"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-bold text-white mb-2">Pregunta Rápida</h3>
+                                    <p id="quiz-question" class="text-slate-300 mb-4 text-sm"></p>
+                                    <div id="quiz-options" class="space-y-2"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="quiz-feedback" class="mt-4 hidden p-3 rounded-lg text-sm font-medium text-center"></div>
+
                     </div>
 
-                    <!-- Navegación -->
-                    <div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-800">
-                        <button id="btn-prev" onclick="prevModule()" class="px-5 py-2.5 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <!-- Navigation -->
+                    <div class="mt-12 flex justify-between items-center pt-8 border-t border-slate-800">
+                        <button onclick="prevLesson()" id="btn-prev" class="px-4 py-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors flex items-center gap-2 text-sm font-medium disabled:opacity-30 disabled:pointer-events-none">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior
                         </button>
-                        
-                        <button id="btn-next" onclick="nextModule()" class="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/20 flex items-center gap-2 disabled:opacity-50 disabled:bg-slate-700 disabled:shadow-none transition-all">
-                            Siguiente Lección <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <button onclick="nextLesson()" id="btn-next" class="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all flex items-center gap-2 text-sm font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                            Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
 
                 </div>
             </section>
 
-            <!-- 2. Columna Editor y Preview -->
-            <section class="hidden lg:flex w-[45%] xl:w-[40%] bg-[#1e293b] border-l border-slate-800 flex-col shrink-0 relative z-10">
+            <!-- Right: Live Preview & Code Reference -->
+            <section class="hidden lg:flex w-[45%] xl:w-[40%] flex-col border-l border-dark-border bg-[#0b1120] relative z-10">
                 
-                <!-- Tab Bar -->
-                <div class="h-10 bg-[#0f172a] border-b border-slate-800 flex items-center px-2">
-                    <div class="flex items-center px-4 py-1.5 bg-[#1e293b] border-t-2 border-blue-500 text-xs text-blue-400 font-mono rounded-t">
-                        <i data-lucide="code" class="w-3 h-3 mr-2"></i> index.html
+                <!-- Tab Header -->
+                <div class="h-10 bg-dark-bg border-b border-dark-border flex items-end px-2 gap-1">
+                    <div class="px-4 py-2 bg-[#1e293b] text-blue-400 text-xs font-mono border-t-2 border-blue-500 rounded-t-md flex items-center gap-2">
+                        <i data-lucide="file-code" class="w-3 h-3"></i> index.html
                     </div>
-                    <div class="ml-auto flex items-center gap-2 text-[10px] text-slate-500 uppercase font-bold tracking-wider px-2">
-                        <span>Vista en vivo</span>
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div class="ml-auto flex items-center px-3 py-2 gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Live Preview</span>
                     </div>
                 </div>
 
-                <!-- Editor de Código (Solo lectura pero estilizado) -->
-                <div class="flex-1 relative overflow-hidden flex flex-col h-1/2 border-b-4 border-slate-900 group">
-                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                        <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-1 rounded">HTML</span>
+                <!-- Read-only Code View -->
+                <div class="h-1/2 overflow-hidden bg-[#1e293b] border-b-4 border-dark-bg flex flex-col">
+                    <div class="flex justify-between items-center px-4 py-2 border-b border-slate-700/50 bg-[#1e293b]">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">Código de Referencia</span>
                     </div>
-                    <pre class="flex-1 p-4 font-mono text-sm overflow-auto leading-relaxed bg-[#1e293b] text-slate-300" id="code-editor"></pre>
+                    <pre id="reference-code" class="flex-1 p-5 font-mono text-xs md:text-sm text-slate-300 overflow-auto custom-scrollbar"></pre>
                 </div>
 
                 <!-- Browser Preview -->
-                <div class="flex-1 flex flex-col bg-white h-1/2">
-                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-2">
+                <div class="h-1/2 flex flex-col bg-white">
+                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-2 shrink-0">
                         <div class="flex gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div>
                         </div>
-                        <div class="flex-1 bg-white h-5 rounded border border-slate-200 flex items-center justify-center shadow-sm">
-                            <span class="text-[9px] text-slate-400 font-mono">localhost:3000/index.html</span>
+                        <div class="flex-1 bg-white h-5 rounded border border-slate-200 flex items-center px-2">
+                            <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 mr-1.5"></i>
+                            <span class="text-[9px] text-slate-400 font-sans">localhost:8080</span>
                         </div>
                     </div>
-                    <div class="flex-1 relative bg-white">
-                        <iframe id="preview-frame" class="preview-iframe"></iframe>
-                    </div>
+                    <iframe id="preview-frame" class="flex-1 w-full border-none bg-white"></iframe>
                 </div>
             </section>
-
         </main>
     </div>
 
-    <!-- Script Principal -->
+    <!-- Data & Logic -->
     <script>
-        // ----------------------------------------------------
-        // 1. BASE DE DATOS DEL CURSO (DATA)
-        // ----------------------------------------------------
-        const courseData = [
+        // -------------------------------------------------------------------
+        // BASE DE CONOCIMIENTO: Basado en "El gran libro de HTML5" (Gauchat)
+        // -------------------------------------------------------------------
+        
+        const curriculum = [
             {
-                id: 0,
-                title: "Introducción a HTML5",
-                icon: "globe",
+                id: "intro",
+                title: "1. Estructura Global",
+                icon: "layout",
                 content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 1</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">¿Qué es HTML?</h1>
-                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
-                        HTML (HyperText Markup Language) no es un lenguaje de programación, es un <strong>lenguaje de marcado</strong>. 
-                        Imagina que es el esqueleto de una página web. Define dónde van los títulos, los párrafos, las imágenes y los botones.
-                    </p>
-                    <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700 mb-8">
-                        <h3 class="font-bold text-white mb-2 flex items-center"><i data-lucide="info" class="w-4 h-4 mr-2 text-blue-400"></i> Analogía de la Casa</h3>
-                        <p class="text-slate-400 text-sm">
-                            Si una web fuera una casa:
-                            <br>🧱 <strong>HTML</strong> serían los ladrillos y vigas (Estructura).
-                            <br>🎨 <strong>CSS</strong> sería la pintura y decoración (Estilo).
-                            <br>💡 <strong>JavaScript</strong> sería la electricidad y funciones (Interactividad).
-                        </p>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 1</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">El Documento HTML5</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>Según Gauchat, HTML5 no es solo nuevas etiquetas, es una nueva forma de estructurar la web. Todo comienza con una declaración simplificada.</p>
+                        <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
+                            <li><strong>DOCTYPE:</strong> En HTML5 es simplemente <code>&lt;!DOCTYPE html&gt;</code>.</li>
+                            <li><strong>Charset:</strong> Definir <code>&lt;meta charset="utf-8"&gt;</code> es vital para caracteres especiales.</li>
+                            <li><strong>Lang:</strong> Siempre define el idioma en la etiqueta <code>html</code>.</li>
+                        </ul>
+                        <div class="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r mb-6">
+                            <p class="text-sm text-blue-200"><strong>Dato curioso:</strong> El navegador renderiza la página en "Quirks Mode" (modo compatible) si olvidas el DOCTYPE, lo que puede romper tu diseño CSS.</p>
+                        </div>
                     </div>
-                    <p class="text-slate-300">A la derecha verás tu primer código HTML. Una etiqueta simple como <code>&lt;h1&gt;</code> crea un título grande.</p>
                 `,
-                code: `<h1>Hola Mundo</h1>
-<p>Bienvenidos a mi primera página web.</p>
-<button>Click aquí</button>`,
-                quiz: {
-                    question: "¿Qué significa HTML?",
-                    options: ["High Tech Multi Language", "HyperText Markup Language", "Home Tool Markup Language"],
-                    correct: 1
-                }
-            },
-            {
-                id: 1,
-                title: "Estructura Básica",
-                icon: "layout-template",
-                content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 2</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">El Esqueleto Obligatorio</h1>
-                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
-                        Todo archivo HTML necesita una estructura estándar para que el navegador lo entienda correctamente.
-                    </p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex gap-4">
-                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit whitespace-nowrap">&lt;!DOCTYPE html&gt;</span>
-                            <span class="text-slate-400 text-sm">Le dice al navegador que usamos HTML5 moderno.</span>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit">&lt;html&gt;</span>
-                            <span class="text-slate-400 text-sm">La raíz de todo el documento.</span>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit">&lt;head&gt;</span>
-                            <span class="text-slate-400 text-sm">Configuraciones invisibles (título de pestaña, SEO, estilos).</span>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="px-2 py-1 bg-slate-800 rounded text-pink-400 font-mono text-xs h-fit">&lt;body&gt;</span>
-                            <span class="text-slate-400 text-sm">Todo lo que el usuario ve en pantalla.</span>
-                        </li>
-                    </ul>
-                `,
-                code: `<!DOCTYPE html>
-<html>
-  <head>
-    <title>Mi Sitio Web</title>
-  </head>
-  <body>
-    <h1>Este es el cuerpo</h1>
-    <p>Todo el contenido visible va aquí.</p>
-  </body>
+                codeRef: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Mi Primera Web HTML5</title>
+</head>
+<body>
+    <h1>Hola Mundo</h1>
+</body>
 </html>`,
+                exercise: {
+                    instruction: "Escribe la estructura mínima de un documento HTML5. Asegúrate de incluir el DOCTYPE, la etiqueta html con lang='es' y un título.",
+                    placeholder: "<!DOCTYPE html>\n...",
+                    difficulty: "Básico",
+                    validate: (code) => {
+                        const clean = code.toLowerCase().replace(/\s+/g, '');
+                        if (!clean.includes('<!doctypehtml>')) return { valid: false, msg: "Falta la declaración <!DOCTYPE html> al inicio." };
+                        if (!clean.includes('<htmllang="es">') && !clean.includes("<htmllang='es'>")) return { valid: false, msg: "La etiqueta html debe tener el atributo lang='es'." };
+                        if (!clean.includes('<title>')) return { valid: false, msg: "No olvides la etiqueta <title> dentro del head." };
+                        return { valid: true, msg: "¡Estructura perfecta!" };
+                    }
+                },
                 quiz: {
-                    question: "¿Dónde se coloca el contenido visible para el usuario?",
-                    options: ["En la etiqueta <head>", "En la etiqueta <body>", "En la etiqueta <title>"],
+                    q: "¿Por qué se simplificó el DOCTYPE en HTML5?",
+                    options: ["Para que cargue más rápido", "Porque HTML5 ya no está basado en SGML", "Para ahorrar bytes"],
                     correct: 1
                 }
             },
             {
-                id: 2,
-                title: "Encabezados y Párrafos",
-                icon: "type",
+                id: "semantics",
+                title: "2. Semántica Estructural",
+                icon: "columns",
                 content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 3</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">Jerarquía de Texto</h1>
-                    <p class="text-lg text-slate-300 mb-6">
-                        HTML ofrece 6 niveles de títulos, desde <code>&lt;h1&gt;</code> (el más importante) hasta <code>&lt;h6&gt;</code>.
-                    </p>
-                    <div class="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg mb-6">
-                        <p class="text-yellow-200 text-sm"><strong>⚠️ Regla de Oro SEO:</strong> Solo debe haber UN <code>&lt;h1&gt;</code> por página. Es el título principal del documento.</p>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 2</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Adiós al &lt;div&gt; Soup</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>Una de las premisas del libro es dar significado al contenido. Un <code>div</code> no dice nada sobre lo que contiene. HTML5 introduce etiquetas con significado semántico:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 text-sm">
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                                <code class="text-pink-400 font-bold">&lt;header&gt;</code>
+                                <p class="mt-1 text-slate-400">Cabecera, logos, navegación principal.</p>
+                            </div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                                <code class="text-pink-400 font-bold">&lt;nav&gt;</code>
+                                <p class="mt-1 text-slate-400">Bloques de enlaces de navegación.</p>
+                            </div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                                <code class="text-pink-400 font-bold">&lt;section&gt;</code>
+                                <p class="mt-1 text-slate-400">Agrupación temática de contenido.</p>
+                            </div>
+                            <div class="bg-slate-800 p-3 rounded border border-slate-700">
+                                <code class="text-pink-400 font-bold">&lt;footer&gt;</code>
+                                <p class="mt-1 text-slate-400">Pie de página, copyright, datos de contacto.</p>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-slate-300">Para texto normal, usamos la etiqueta de párrafo <code>&lt;p&gt;</code>.</p>
                 `,
-                code: `<h1>Noticias del Día (h1)</h1>
-
-<h2>Sección de Deportes (h2)</h2>
-<p>El equipo local ganó el campeonato.</p>
-
-<h3>Fútbol (h3)</h3>
-<p>Detalles del partido...</p>
-
-<h2>Sección de Clima (h2)</h2>
-<p>Soleado con probabilidad de lluvia.</p>`,
+                codeRef: `<header>
+    <h1>Mi Blog</h1>
+    <nav>
+        <a href="#">Inicio</a>
+        <a href="#">Artículos</a>
+    </nav>
+</header>
+<section>
+    <h2>Último post</h2>
+    <p>Contenido del artículo...</p>
+</section>
+<footer>
+    <p>&copy; 2024</p>
+</footer>`,
+                exercise: {
+                    instruction: "Crea una barra de navegación semántica. Usa la etiqueta <nav> y dentro coloca dos enlaces <a>.",
+                    difficulty: "Intermedio",
+                    validate: (code) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(code, "text/html");
+                        const nav = doc.querySelector('nav');
+                        
+                        if (!nav) return { valid: false, msg: "No encontré la etiqueta <nav>." };
+                        if (nav.querySelectorAll('a').length < 2) return { valid: false, msg: "Debes incluir al menos dos enlaces <a> dentro del <nav>." };
+                        
+                        return { valid: true, msg: "¡Excelente uso de la semántica!" };
+                    }
+                },
                 quiz: {
-                    question: "¿Cuántas etiquetas <h1> debería haber idealmente en una página?",
-                    options: ["Todas las que quiera", "Solo una", "Ninguna"],
+                    q: "¿Qué etiqueta usarías para un artículo de blog independiente?",
+                    options: ["<section>", "<article>", "<div>"],
                     correct: 1
                 }
             },
             {
-                id: 3,
-                title: "Enlaces (Links)",
-                icon: "link",
-                content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 4</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">La Web Interconectada</h1>
-                    <p class="text-lg text-slate-300 mb-6">
-                        La etiqueta <code>&lt;a&gt;</code> (Anchor) crea hipervínculos. Es lo que hace que la web sea una "red".
-                    </p>
-                    <p class="text-slate-300 mb-4">Requiere el atributo <strong>href</strong> (Hypertext Reference) para saber a dónde ir.</p>
-                    <ul class="space-y-2 text-slate-400 text-sm mb-6">
-                        <li>• <strong>Enlaces absolutos:</strong> Van a otro sitio web (https://google.com).</li>
-                        <li>• <strong>Enlaces relativos:</strong> Van a otra página de tu mismo sitio (contacto.html).</li>
-                        <li>• <strong>target="_blank":</strong> Abre el enlace en una pestaña nueva.</li>
-                    </ul>
-                `,
-                code: `<h2>Mis Enlaces Favoritos</h2>
-
-<p>Busca información en <a href="https://google.com" target="_blank">Google</a>.</p>
-
-<p>O mira este enlace falso a <a href="#">Contacto</a>.</p>
-
-<button onclick="alert('¡Click!')">
-  <a href="#" style="color:black; text-decoration:none;">Botón Enlace</a>
-</button>`,
-                quiz: {
-                    question: "¿Qué atributo define el destino del enlace?",
-                    options: ["src", "link", "href"],
-                    correct: 2
-                }
-            },
-            {
-                id: 4,
-                title: "Imágenes Multimedia",
-                icon: "image",
-                content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 5</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">Insertando Imágenes</h1>
-                    <p class="text-lg text-slate-300 mb-6">
-                        Usamos la etiqueta <code>&lt;img&gt;</code>. Es una etiqueta de cierre automático (no tiene <code>&lt;/img&gt;</code>).
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <code class="text-blue-400">src="..."</code>
-                            <p class="text-xs text-slate-400 mt-1">Source. La URL de la imagen.</p>
-                        </div>
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <code class="text-blue-400">alt="..."</code>
-                            <p class="text-xs text-slate-400 mt-1">Texto alternativo. Vital para accesibilidad y si la imagen falla.</p>
-                        </div>
-                    </div>
-                `,
-                code: `<h2>Galería de Viajes</h2>
-
-<!-- Imagen desde URL externa -->
-<img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-     alt="Paisaje de montaña" 
-     width="100%" 
-     style="border-radius: 8px;">
-
-<p>Una hermosa vista de las montañas.</p>`,
-                quiz: {
-                    question: "¿Por qué es importante el atributo 'alt'?",
-                    options: ["Para que la imagen cargue más rápido", "Para accesibilidad (lectores de pantalla) y SEO", "Para ponerle un borde a la imagen"],
-                    correct: 1
-                }
-            },
-            {
-                id: 5,
-                title: "Listas",
-                icon: "list",
-                content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 6</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">Organizando Datos</h1>
-                    <p class="text-lg text-slate-300 mb-6">Hay dos tipos principales de listas:</p>
-                    
-                    <div class="space-y-4 mb-6">
-                        <div class="border-l-4 border-pink-500 pl-4">
-                            <h3 class="font-bold text-white">Desordenadas (&lt;ul&gt;)</h3>
-                            <p class="text-slate-400 text-sm">Usan "bullets" o puntos. El orden no importa (ej: lista de compras).</p>
-                        </div>
-                        <div class="border-l-4 border-blue-500 pl-4">
-                            <h3 class="font-bold text-white">Ordenadas (&lt;ol&gt;)</h3>
-                            <p class="text-slate-400 text-sm">Usan números. El orden importa (ej: pasos de una receta).</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-300">Dentro de ambas, cada elemento es un <code>&lt;li&gt;</code> (List Item).</p>
-                `,
-                code: `<h3>Ingredientes (ul)</h3>
-<ul>
-  <li>Harina</li>
-  <li>Huevos</li>
-  <li>Leche</li>
-</ul>
-
-<h3>Pasos de Preparación (ol)</h3>
-<ol>
-  <li>Mezclar harina y huevos.</li>
-  <li>Añadir leche poco a poco.</li>
-  <li>Hornear por 20 minutos.</li>
-</ol>`,
-                quiz: {
-                    question: "¿Qué etiqueta se usa para cada elemento individual de una lista?",
-                    options: ["<ol>", "<ul>", "<li>"],
-                    correct: 2
-                }
-            },
-            {
-                id: 6,
-                title: "Formularios",
+                id: "forms",
+                title: "3. Formularios 2.0",
                 icon: "check-square",
                 content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 7</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">Interactividad de Usuario</h1>
-                    <p class="text-lg text-slate-300 mb-6">
-                        Los formularios permiten al usuario enviar datos. La etiqueta clave es <code>&lt;input&gt;</code>.
-                    </p>
-                    <p class="text-slate-300 mb-4">El atributo <code>type</code> cambia radicalmente el input:</p>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-mono text-center mb-6">
-                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="text"</span>
-                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="password"</span>
-                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="email"</span>
-                        <span class="bg-slate-800 p-2 rounded text-blue-300">type="date"</span>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 3</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Formularios Inteligentes</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>Antes de HTML5, validar un email requería Javascript complejo. El libro destaca cómo los nuevos atributos hacen el trabajo duro por nosotros.</p>
+                        <p class="mb-4">Nuevos tipos de input esenciales:</p>
+                        <ul class="space-y-2 text-sm mb-6">
+                            <li><code class="text-yellow-300">type="email"</code>: Valida formato de correo y cambia el teclado en móviles.</li>
+                            <li><code class="text-yellow-300">type="date"</code>: Despliega un calendario nativo.</li>
+                            <li><code class="text-yellow-300">type="range"</code>: Un control deslizante (slider).</li>
+                            <li><code class="text-yellow-300">required</code>: Impide enviar el formulario si está vacío.</li>
+                            <li><code class="text-yellow-300">placeholder</code>: Texto de ayuda visual.</li>
+                        </ul>
                     </div>
                 `,
-                code: `<h3>Registro de Usuario</h3>
-
-<form>
-  <label>Nombre:</label><br>
-  <input type="text" placeholder="Tu nombre"><br><br>
-  
-  <label>Contraseña:</label><br>
-  <input type="password" placeholder="Secreto"><br><br>
-  
-  <label>Fecha Nacimiento:</label><br>
-  <input type="date"><br><br>
-  
-  <button type="button" onclick="alert('Enviando...')">Registrarse</button>
+                codeRef: `<form>
+    <label>Email:</label>
+    <input type="email" required placeholder="tu@email.com">
+    
+    <label>Fecha de Nacimiento:</label>
+    <input type="date">
+    
+    <button type="submit">Enviar</button>
 </form>`,
+                exercise: {
+                    instruction: "Crea un campo de entrada para email que sea obligatorio (required) y tenga un texto de ayuda (placeholder) 'usuario@web.com'.",
+                    difficulty: "Intermedio",
+                    validate: (code) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(code, "text/html");
+                        const input = doc.querySelector('input');
+
+                        if (!input) return { valid: false, msg: "Falta la etiqueta <input>." };
+                        if (input.getAttribute('type') !== 'email') return { valid: false, msg: "El tipo debe ser 'email'." };
+                        if (!input.hasAttribute('required')) return { valid: false, msg: "Falta el atributo 'required'." };
+                        if (input.getAttribute('placeholder') !== 'usuario@web.com') return { valid: false, msg: "El placeholder debe ser exactamente 'usuario@web.com'." };
+
+                        return { valid: true, msg: "¡Correcto! Has usado las validaciones nativas." };
+                    }
+                },
                 quiz: {
-                    question: "¿Qué type usarías para un campo de contraseña?",
-                    options: ["secure", "hidden", "password"],
+                    q: "¿Qué atributo muestra un texto gris de ayuda dentro del input?",
+                    options: ["value", "helper", "placeholder"],
                     correct: 2
                 }
             },
             {
-                id: 7,
-                title: "Semántica y Estructura",
-                icon: "box",
+                id: "multimedia",
+                title: "4. Audio y Video",
+                icon: "play-circle",
                 content: `
-                    <span class="text-blue-400 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Módulo 8</span>
-                    <h1 class="text-4xl font-extrabold text-white mb-6">HTML Semántico</h1>
-                    <p class="text-lg text-slate-300 mb-6">
-                        Antes usábamos <code>&lt;div&gt;</code> para todo. HTML5 introdujo etiquetas con significado para ayudar a Google y a los lectores de pantalla a entender tu web.
-                    </p>
-                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 relative overflow-hidden">
-                        <div class="flex flex-col gap-2 text-center text-xs font-mono text-slate-400 uppercase">
-                            <div class="border border-dashed border-slate-500 p-2 rounded bg-slate-900">&lt;header&gt;</div>
-                            <div class="flex gap-2">
-                                <div class="border border-dashed border-slate-500 p-8 rounded bg-slate-900 w-1/4">&lt;nav&gt;</div>
-                                <div class="border border-dashed border-slate-500 p-8 rounded bg-slate-900 w-3/4">&lt;main&gt;</div>
-                            </div>
-                            <div class="border border-dashed border-slate-500 p-2 rounded bg-slate-900">&lt;footer&gt;</div>
-                        </div>
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 4</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Multimedia Sin Plugins</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>El libro marca el fin de la era Flash. HTML5 introduce etiquetas nativas para reproducir contenido multimedia.</p>
+                        <p>La etiqueta <code>&lt;video&gt;</code> acepta atributos poderosos:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
+                            <li><strong>controls:</strong> Muestra play/pause/volumen.</li>
+                            <li><strong>poster:</strong> Imagen de portada antes de reproducir.</li>
+                            <li><strong>loop:</strong> Repite el video infinitamente.</li>
+                        </ul>
+                        <p>Dentro de la etiqueta video, usamos <code>&lt;source&gt;</code> para proveer formatos alternativos.</p>
                     </div>
                 `,
-                code: `<header style="background:#eee; padding:10px;">
-  <h1>Mi Blog Personal</h1>
-</header>
+                codeRef: `<video controls width="300" poster="portada.jpg">
+    <source src="video.mp4" type="video/mp4">
+    <p>Tu navegador no soporta video.</p>
+</video>`,
+                exercise: {
+                    instruction: "Inserta un reproductor de video con controles visibles y define el ancho en 400px.",
+                    difficulty: "Avanzado",
+                    validate: (code) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(code, "text/html");
+                        const video = doc.querySelector('video');
 
-<div style="display:flex; margin-top:10px; gap:10px;">
-  <nav style="background:#ddd; padding:10px; width:30%;">
-    <ul>
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Blog</a></li>
-    </ul>
-  </nav>
+                        if (!video) return { valid: false, msg: "Falta la etiqueta <video>." };
+                        if (!video.hasAttribute('controls')) return { valid: false, msg: "Falta el atributo 'controls' para que el usuario pueda interactuar." };
+                        if (video.getAttribute('width') !== '400') return { valid: false, msg: "El ancho (width) debe ser 400." };
 
-  <main style="background:#f9f9f9; padding:10px; flex:1;">
-    <article>
-      <h2>Mi primer post</h2>
-      <p>Hoy aprendí semántica...</p>
-    </article>
-  </main>
-</div>
-
-<footer style="background:#333; color:white; padding:10px; margin-top:10px;">
-  &copy; 2025 Derechos Reservados
-</footer>`,
+                        return { valid: true, msg: "¡Perfecto! Ya no necesitas Flash Player." };
+                    }
+                },
                 quiz: {
-                    question: "¿Qué etiqueta representa el contenido principal y único de la página?",
-                    options: ["<content>", "<main>", "<body>"],
+                    q: "¿Qué etiqueta se usa para definir múltiples formatos de archivo dentro de video?",
+                    options: ["<track>", "<source>", "<file>"],
                     correct: 1
                 }
             }
         ];
 
-        // ----------------------------------------------------
-        // 2. LÓGICA DE LA APLICACIÓN
-        // ----------------------------------------------------
-        
-        let currentModule = 0;
-        let progress = 0;
-        let moduleStatus = new Array(courseData.length).fill('locked'); // locked, unlocked, completed
-        moduleStatus[0] = 'unlocked'; // Primer módulo abierto
+        // -------------------------------------------------------------------
+        // LÓGICA DE LA APLICACIÓN
+        // -------------------------------------------------------------------
 
-        // Inicialización
+        let currentIndex = 0;
+        let progress = 0;
+        const progressStep = 100 / curriculum.length;
+
+        // Init
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            loadSidebar();
+            renderSidebar();
             loadLesson(0);
+            lucide.createIcons();
         });
 
-        // Cargar Sidebar
-        function loadSidebar() {
+        function renderSidebar() {
             const list = document.getElementById('module-list');
-            list.innerHTML = courseData.map((mod, index) => {
-                const status = moduleStatus[index];
-                const isLocked = status === 'locked';
-                const isActive = index === currentModule;
-                const icon = status === 'completed' ? 'check-circle' : (isLocked ? 'lock' : mod.icon);
-                const iconColor = status === 'completed' ? 'text-green-500' : (isActive ? 'text-blue-400' : 'text-slate-500');
-
-                return `
-                <button onclick="${isLocked ? '' : `loadLesson(${index})`}" 
-                    class="module-item w-full text-left px-4 py-3 flex items-center gap-3 transition-all hover:bg-[#1e293b] ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}">
-                    <i data-lucide="${icon}" class="w-4 h-4 ${iconColor}"></i>
-                    <div>
-                        <p class="text-sm font-medium ${isActive ? 'text-white' : 'text-slate-400'}">${mod.title}</p>
-                    </div>
-                </button>
-                `;
-            }).join('');
-            lucide.createIcons();
-        }
-
-        // Cargar Lección
-        function loadLesson(index) {
-            currentModule = index;
-            const data = courseData[index];
-            
-            // 1. Actualizar Contenido
-            const contentDiv = document.getElementById('lesson-content');
-            contentDiv.innerHTML = data.content;
-
-            // 2. Actualizar Código y Preview
-            const editor = document.getElementById('code-editor');
-            editor.innerHTML = highlightHTML(data.code);
-            updatePreview(data.code);
-
-            // 3. Configurar Quiz
-            setupQuiz(data.quiz);
-
-            // 4. UI Updates
-            loadSidebar();
-            updateProgressBar();
-            
-            // Reset scroll
-            document.getElementById('content-scroll').scrollTop = 0;
-            
-            // Botones de navegación
-            const btnNext = document.getElementById('btn-next');
-            btnNext.disabled = moduleStatus[index] !== 'completed';
-            
-            if (index === courseData.length - 1 && moduleStatus[index] === 'completed') {
-                btnNext.innerHTML = 'Obtener Certificado <i data-lucide="award" class="w-4 h-4 ml-2"></i>';
-                btnNext.onclick = showCertificate;
-            } else {
-                btnNext.innerHTML = 'Siguiente Lección <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>';
-                btnNext.onclick = nextModule;
-            }
-
-            document.getElementById('btn-prev').disabled = index === 0;
-
-            lucide.createIcons();
-        }
-
-        // Sistema de Quiz
-        function setupQuiz(quizData) {
-            const quizArea = document.getElementById('quiz-area');
-            const questionEl = document.getElementById('quiz-question');
-            const optionsEl = document.getElementById('quiz-options');
-            const feedbackEl = document.getElementById('quiz-feedback');
-
-            // Resetear estado visual
-            quizArea.classList.remove('hidden');
-            feedbackEl.classList.add('hidden');
-            feedbackEl.className = 'mt-4 hidden p-3 rounded-lg text-sm font-medium text-center';
-
-            // Si ya está completado, mostrarlo resuelto
-            if (moduleStatus[currentModule] === 'completed') {
-                quizArea.classList.add('hidden'); // Ocultar quiz si ya se pasó
-                // Opcional: Podrías dejarlo visible pero deshabilitado
-                document.getElementById('btn-next').disabled = false;
-                return;
-            }
-
-            questionEl.innerText = quizData.question;
-            
-            optionsEl.innerHTML = quizData.options.map((opt, i) => `
-                <button onclick="checkAnswer(${i}, ${quizData.correct})" 
-                    class="quiz-opt w-full text-left p-3 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors text-sm">
-                    ${opt}
+            list.innerHTML = curriculum.map((item, idx) => `
+                <button onclick="loadLesson(${idx})" 
+                    class="nav-item w-full text-left px-5 py-3.5 flex items-center gap-3 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all border-l-2 border-transparent ${idx === currentIndex ? 'active' : ''}">
+                    <i data-lucide="${item.icon}" class="w-4 h-4"></i>
+                    ${item.title}
+                    ${idx < currentIndex ? '<i data-lucide="check" class="ml-auto w-3 h-3 text-green-500"></i>' : ''}
                 </button>
             `).join('');
+            lucide.createIcons();
         }
 
-        function checkAnswer(selected, correct) {
-            const feedbackEl = document.getElementById('quiz-feedback');
-            const btnNext = document.getElementById('btn-next');
-            const options = document.querySelectorAll('.quiz-opt');
-
-            feedbackEl.classList.remove('hidden');
-
-            if (selected === correct) {
-                // Correcto
-                feedbackEl.innerText = "¡Correcto! Has desbloqueado la siguiente lección.";
-                feedbackEl.classList.add('bg-green-500/20', 'text-green-400', 'border', 'border-green-500/30');
-                
-                options[selected].classList.add('bg-green-600', 'text-white', 'border-green-500');
-                
-                // Desbloquear siguiente nivel
-                moduleStatus[currentModule] = 'completed';
-                if (currentModule + 1 < courseData.length) {
-                    if (moduleStatus[currentModule + 1] === 'locked') {
-                        moduleStatus[currentModule + 1] = 'unlocked';
-                    }
-                }
-                
-                btnNext.disabled = false;
-                loadSidebar(); // Actualizar iconos
-                updateProgressBar();
-
-                // Efecto visual simple
-                confetti({
-                    particleCount: 50,
-                    spread: 60,
-                    origin: { y: 0.8 },
-                    disableForReducedMotion: true
-                });
-
-            } else {
-                // Incorrecto
-                feedbackEl.innerText = "Ups, respuesta incorrecta. Inténtalo de nuevo.";
-                feedbackEl.classList.add('bg-red-500/20', 'text-red-400', 'border', 'border-red-500/30');
-                options[selected].classList.add('bg-red-900/50', 'border-red-500');
-            }
-        }
-
-        // Navegación
-        function nextModule() {
-            if (currentModule < courseData.length - 1) {
-                loadLesson(currentModule + 1);
-            }
-        }
-
-        function prevModule() {
-            if (currentModule > 0) {
-                loadLesson(currentModule - 1);
-            }
-        }
-
-        // Función para colorear sintaxis HTML simple
-        function highlightHTML(code) {
-            // Escapar HTML primero
-            let safeCode = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        function loadLesson(index) {
+            currentIndex = index;
+            const data = curriculum[index];
             
-            // Colorear Tags
-            safeCode = safeCode.replace(/&lt;(\/?)(\w+)(.*?)&gt;/g, (match, slash, tag, attrs) => {
-                // Procesar atributos dentro del tag
-                const processedAttrs = attrs.replace(/(\w+)=(".*?")/g, '<span class="token-attr">$1</span>=<span class="token-val">$2</span>');
-                return `<span class="token-punct">&lt;${slash}</span><span class="token-tag">${tag}</span>${processedAttrs}<span class="token-punct">&gt;</span>`;
-            });
-
-            // Colorear comentarios
-            safeCode = safeCode.replace(/&lt;!--(.*?)--&gt;/g, '<span class="token-comment">&lt;!--$1--&gt;</span>');
-
-            return safeCode;
-        }
-
-        // Actualizar el Iframe
-        function updatePreview(code) {
+            // UI Updates
+            renderSidebar(); // Update active class
+            
+            // Content
+            const contentDiv = document.getElementById('lesson-content');
+            contentDiv.innerHTML = data.content;
+            
+            // Code Reference
+            const codeRef = document.getElementById('reference-code');
+            codeRef.innerHTML = syntaxHighlight(data.codeRef);
+            
+            // Preview
             const iframe = document.getElementById('preview-frame');
             const doc = iframe.contentDocument || iframe.contentWindow.document;
             doc.open();
             doc.write(`
                 <style>
-                    body { font-family: sans-serif; padding: 20px; color: #333; }
-                    h1 { color: #1e293b; }
+                    body { font-family: system-ui, sans-serif; padding: 20px; color: #333; } 
+                    h1 { color: #0284c7; }
+                    input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; width: 100%; }
+                    button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; }
                 </style>
-                ${code}
+                ${data.codeRef}
             `);
             doc.close();
-        }
 
-        function updateProgressBar() {
-            const completed = moduleStatus.filter(s => s === 'completed').length;
-            const total = courseData.length;
-            const percentage = Math.round((completed / total) * 100);
+            // Exercise Setup
+            document.getElementById('workspace-area').classList.remove('hidden');
+            document.getElementById('exercise-instruction').innerText = data.exercise.instruction;
+            document.getElementById('code-input').value = ""; // Reset input
+            document.getElementById('code-input').placeholder = data.exercise.placeholder || "<!-- Tu código aquí -->";
+            document.getElementById('difficulty-badge').innerText = data.exercise.difficulty;
             
-            document.getElementById('progress-bar').style.width = `${percentage}%`;
-            document.getElementById('progress-percent').innerText = `${percentage}%`;
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('-translate-x-full');
-        }
-
-        // Pantalla Final
-        function showCertificate() {
-            const contentDiv = document.getElementById('lesson-content');
-            const quizArea = document.getElementById('quiz-area');
-            const nav = document.querySelector('.flex.justify-between.mt-10'); // Footer nav
-
-            quizArea.style.display = 'none';
-            nav.style.display = 'none';
-
-            contentDiv.innerHTML = `
-                <div class="flex flex-col items-center justify-center text-center h-full py-20 fade-in">
-                    <div class="w-24 h-24 bg-yellow-500 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-yellow-500/40 animate-bounce">
-                        <i data-lucide="trophy" class="w-12 h-12 text-white"></i>
-                    </div>
-                    <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-4">
-                        ¡Felicidades!
-                    </h1>
-                    <p class="text-xl text-slate-300 mb-8 max-w-md">
-                        Has completado el curso "Master HTML5". Ya conoces la estructura fundamental de la web.
-                    </p>
-                    
-                    <div class="bg-slate-800 p-8 rounded-xl border border-slate-700 shadow-2xl max-w-lg w-full mb-8 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
-                        <h2 class="text-2xl font-serif text-white mb-2">Certificado de Finalización</h2>
-                        <p class="text-slate-400 mb-6">Otorgado a: <span class="text-blue-400 font-bold">Estudiante Web</span></p>
-                        <div class="flex justify-between items-end">
-                            <img src="https://cdn-icons-png.flaticon.com/512/1051/1051275.png" class="w-12 opacity-50">
-                            <div class="text-right">
-                                <p class="text-xs text-slate-500">GodsPlan Coding</p>
-                                <p class="text-xs text-slate-500">${new Date().toLocaleDateString()}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button onclick="location.reload()" class="text-slate-400 hover:text-white underline">
-                        Reiniciar Curso
-                    </button>
-                </div>
-            `;
+            // Reset Feedback & Quiz
+            const fb = document.getElementById('feedback-msg');
+            fb.style.opacity = '0';
+            document.getElementById('quiz-container').classList.add('hidden');
             
-            // Fuegos artificiales masivos
-            var duration = 3 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            // Scroll to top
+            document.getElementById('scroll-container').scrollTop = 0;
 
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
-                var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
-            }, 250);
-            
+            updateProgress();
             lucide.createIcons();
+        }
+
+        function validateCode() {
+            const data = curriculum[currentIndex].exercise;
+            const userCode = document.getElementById('code-input').value;
+            const result = data.validate(userCode);
+            const fb = document.getElementById('feedback-msg');
+            
+            fb.innerText = result.msg;
+            fb.style.opacity = '1';
+            
+            if (result.valid) {
+                fb.className = "text-xs font-bold px-3 py-2 rounded bg-green-500/20 text-green-400 border border-green-500/30 flex-1 mr-4";
+                
+                // Show Quiz
+                setupQuiz(curriculum[currentIndex].quiz);
+                
+                // Confetti for mini-win
+                confetti({
+                    particleCount: 30,
+                    spread: 50,
+                    origin: { y: 0.7, x: 0.3 },
+                    disableForReducedMotion: true,
+                    colors: ['#0ea5e9', '#22c55e']
+                });
+            } else {
+                fb.className = "text-xs font-bold px-3 py-2 rounded bg-red-500/20 text-red-400 border border-red-500/30 flex-1 mr-4";
+                
+                // Shake effect
+                const editor = document.querySelector('.code-editor-area');
+                editor.classList.add('animate-pulse');
+                setTimeout(() => editor.classList.remove('animate-pulse'), 500);
+            }
+        }
+
+        function setupQuiz(quizData) {
+            const container = document.getElementById('quiz-container');
+            container.classList.remove('hidden');
+            container.classList.add('animate-fade-in');
+            
+            document.getElementById('quiz-question').innerText = quizData.q;
+            document.getElementById('quiz-options').innerHTML = quizData.options.map((opt, i) => `
+                <button onclick="checkQuiz(${i}, ${quizData.correct})" class="w-full text-left p-2 rounded text-sm text-slate-400 hover:bg-slate-700 hover:text-white transition-colors border border-transparent hover:border-slate-600">
+                    ${String.fromCharCode(65 + i)}. ${opt}
+                </button>
+            `).join('');
+            
+            // Auto scroll to quiz
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function checkQuiz(selected, correct) {
+            const buttons = document.querySelectorAll('#quiz-options button');
+            
+            if (selected === correct) {
+                buttons[selected].classList.add('bg-green-600', 'text-white', '!border-green-400');
+                buttons[selected].innerHTML += ' <i data-lucide="check" class="inline w-3 h-3 ml-2"></i>';
+                
+                // Unlock next button logic
+                document.getElementById('btn-next').disabled = false;
+                document.getElementById('btn-next').classList.replace('bg-slate-700', 'bg-brand-600');
+                
+                // Global Progress
+                if (progress < ((currentIndex + 1) * progressStep)) {
+                    progress = (currentIndex + 1) * progressStep;
+                    updateProgress();
+                }
+                
+                // Big Confetti
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+
+            } else {
+                buttons[selected].classList.add('bg-red-900/50', 'text-red-300', '!border-red-500/50');
+            }
+            lucide.createIcons();
+        }
+
+        function updateProgress() {
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-text').innerText = `${Math.round(progress)}%`;
+            
+            // Nav buttons state
+            document.getElementById('btn-prev').disabled = currentIndex === 0;
+            
+            const nextBtn = document.getElementById('btn-next');
+            // Check if current level is passed (logic simplified for demo)
+            // In a real app we'd check a 'passed' flag in the data object
+            // Here we default to disabled until quiz is done, UNLESS we are navigating back to review
+            // For now, let's keep it simple: Next is enabled only if we passed quiz OR if it's strictly a review
+            // To force learning, we keep it disabled here and enable in checkQuiz
+            if (currentIndex === 0 && progress === 0) {
+                 nextBtn.disabled = true;
+                 nextBtn.classList.replace('bg-brand-600', 'bg-slate-700');
+            }
+        }
+
+        function nextLesson() {
+            if (currentIndex < curriculum.length - 1) {
+                loadLesson(currentIndex + 1);
+            } else {
+                alert("¡Curso completado! Felicidades.");
+            }
+        }
+
+        function prevLesson() {
+            if (currentIndex > 0) {
+                loadLesson(currentIndex - 1);
+                // Allow navigation freely backwards
+                const nextBtn = document.getElementById('btn-next');
+                nextBtn.disabled = false;
+                nextBtn.classList.replace('bg-slate-700', 'bg-brand-600');
+            }
+        }
+
+        // Simple syntax highlighter for the reference code
+        function syntaxHighlight(code) {
+            return code
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/(&lt;\/?)(\w+)(.*?)(&gt;)/g, (match, p1, p2, p3, p4) => {
+                    const attrs = p3.replace(/(\w+)=(".*?")/g, '<span class="token-attr">$1</span>=<span class="token-val">$2</span>');
+                    return `<span class="token-punct">${p1}</span><span class="token-tag">${p2}</span>${attrs}<span class="token-punct">${p4}</span>`;
+                })
+                .replace(/(&lt;!--.*?--&gt;)/g, '<span class="token-comment">$1</span>');
         }
 
     </script>
