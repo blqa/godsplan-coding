@@ -145,13 +145,18 @@
 
             <div class="text-center mb-8">
                 <h2 id="modal-title" class="text-2xl font-bold mb-2">Bienvenido</h2>
-                <p id="modal-desc" class="text-slate-400 text-sm">Ingresa tus datos para continuar</p>
+                <p id="modal-desc" class="text-slate-400 text-sm">Usa tu ID de estudiante para continuar</p>
             </div>
 
             <form id="auth-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-1">Email</label>
-                    <input type="email" id="auth-email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all" placeholder="tu@email.com">
+                    <label class="block text-sm font-medium text-slate-300 mb-1">ID de Estudiante</label>
+                    <div class="relative">
+                        <input type="text" id="auth-id" required class="w-full bg-slate-800 border border-slate-700 rounded-lg pl-4 pr-32 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all" placeholder="ej. juan_perez">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-500 text-xs font-mono">
+                            @godsplan.site
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-300 mb-1">Contraseña</label>
@@ -185,7 +190,7 @@
             signInAnonymously
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Configuración de Firebase actualizada
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDsYGFyJRPGhLI8p7QOEbXeyRZgFJOEG7U",
             authDomain: "godsplan-coding.firebaseapp.com",
@@ -234,13 +239,13 @@
 
             if (currentMode === 'login') {
                 title.innerText = 'Bienvenido de nuevo';
-                desc.innerText = 'Ingresa tus credenciales para continuar';
+                desc.innerText = 'Usa tu ID de estudiante para continuar';
                 submitBtn.innerText = 'Entrar';
                 footerText.innerText = '¿No tienes cuenta?';
                 switchBtn.innerText = 'Regístrate';
             } else {
                 title.innerText = 'Únete a GodsPlan';
-                desc.innerText = 'Comienza tu viaje en el mundo del código hoy';
+                desc.innerText = 'Crea tu ID de estudiante hoy mismo';
                 submitBtn.innerText = 'Registrarse';
                 footerText.innerText = '¿Ya eres miembro?';
                 switchBtn.innerText = 'Inicia Sesión';
@@ -250,9 +255,12 @@
         // Manejar envío del formulario
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('auth-email').value;
+            const studentId = document.getElementById('auth-id').value.trim().toLowerCase();
             const password = document.getElementById('auth-password').value;
             const btn = document.getElementById('auth-submit-btn');
+
+            // Formatear automáticamente el email ficticio
+            const email = studentId.includes('@') ? studentId : `${studentId}@godsplan.site`;
 
             btn.disabled = true;
             btn.innerText = 'Procesando...';
@@ -267,7 +275,13 @@
                 toggleModal();
                 authForm.reset();
             } catch (error) {
-                errorDiv.innerText = error.message.replace('Firebase:', '');
+                let errorMsg = "Ocurrió un error inesperado.";
+                if (error.code === 'auth/user-not-found') errorMsg = "El ID de estudiante no existe.";
+                else if (error.code === 'auth/wrong-password') errorMsg = "Contraseña incorrecta.";
+                else if (error.code === 'auth/email-already-in-use') errorMsg = "Este ID ya está registrado.";
+                else if (error.code === 'auth/weak-password') errorMsg = "La contraseña debe tener al menos 6 caracteres.";
+                
+                errorDiv.innerText = errorMsg;
                 errorDiv.classList.remove('hidden');
             } finally {
                 btn.disabled = false;
@@ -281,9 +295,10 @@
         // Observador de estado de autenticación
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                const displayId = user.email.split('@')[0];
                 navAuth.innerHTML = `
                     <div class="flex items-center space-x-4">
-                        <span class="hidden sm:inline text-sm text-slate-400">Hola, ${user.email.split('@')[0]}</span>
+                        <span class="hidden sm:inline text-sm text-slate-400 font-mono">ID: ${displayId}</span>
                         <button onclick="handleLogout()" class="flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-sm">
                             <i data-lucide="log-out" class="w-4 h-4"></i>
                             <span>Salir</span>
