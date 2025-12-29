@@ -38,6 +38,15 @@
                     },
                     animation: {
                         'bounce-slow': 'bounce 3s infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
                     }
                 }
             }
@@ -299,7 +308,7 @@
         </main>
     </div>
 
-    <!-- Modal de Completado (Reemplaza al Alert) -->
+    <!-- Modal de Completado -->
     <div id="completion-modal" class="fixed inset-0 z-[60] hidden items-center justify-center">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
         <div class="bg-[#1e293b] border border-slate-700 p-8 rounded-2xl shadow-2xl relative z-10 max-w-sm w-full mx-4 text-center transform scale-95 opacity-0 transition-all duration-300" id="modal-content">
@@ -307,7 +316,7 @@
                 <i data-lucide="trophy" class="w-8 h-8 text-white"></i>
             </div>
             <h2 class="text-2xl font-bold text-white mb-2">¡Curso Completado!</h2>
-            <p class="text-slate-400 text-sm mb-6">Has dominado los conceptos esenciales de HTML5 y sus APIs modernas.</p>
+            <p class="text-slate-400 text-sm mb-6">Has dominado los conceptos esenciales de HTML5, incluyendo Multimedia y Canvas.</p>
             <button onclick="closeModal()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-lg shadow-lg shadow-brand-500/20 transition-all">
                 ¡Genial!
             </button>
@@ -317,19 +326,17 @@
     <!-- Data & Logic -->
     <script>
         // -------------------------------------------------------------------
-        // 1. CONFIGURACIÓN Y ESTADO (PERSISTENCIA AGREGADA)
+        // 1. CONFIGURACIÓN Y ESTADO
         // -------------------------------------------------------------------
         
-        const STORAGE_KEY = 'html5_masterclass_progress';
+        const STORAGE_KEY = 'html5_masterclass_pro_v2';
         
-        // Estado inicial
         let state = {
             currentIndex: 0,
             progress: 0,
             completedLessons: [] // Array de IDs
         };
 
-        // CONTENIDO DIDÁCTICO REESCRITO PARA PRINCIPIANTES
         const curriculum = [
             {
                 id: "intro",
@@ -342,61 +349,33 @@
                     <div class="prose prose-invert max-w-none text-slate-300">
                         <div class="concept-box">
                             <h3 class="text-white font-bold mb-2">Concepto: Etiquetas (Tags)</h3>
-                            <p class="text-sm">Imagina que HTML es como Lego. Usas piezas llamadas <strong>etiquetas</strong> para construir cosas. Las etiquetas casi siempre vienen en pares: una que abre <code class="example-tag">&lt;p&gt;</code> y otra que cierra <code class="example-tag">&lt;/p&gt;</code>.</p>
+                            <p class="text-sm">HTML son piezas tipo Lego llamadas <strong>etiquetas</strong>. Casi siempre vienen en pares: apertura <code class="example-tag">&lt;p&gt;</code> y cierre <code class="example-tag">&lt;/p&gt;</code>.</p>
                         </div>
-
-                        <p class="mb-4">Todo documento HTML5 necesita una estructura básica, como un cuerpo humano:</p>
-                        
+                        <p class="mb-4">Todo documento HTML5 necesita esta estructura básica:</p>
                         <ul class="list-none space-y-4 text-sm mb-6">
-                            <li class="flex gap-3">
-                                <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 font-bold text-brand-400">1</div>
-                                <div>
-                                    <strong class="text-white">DOCTYPE:</strong> 
-                                    <code class="example-tag">&lt;!DOCTYPE html&gt;</code>
-                                    <p class="text-slate-400 mt-1">Le dice al navegador: "Oye, esto es HTML moderno". Va siempre al principio.</p>
-                                </div>
-                            </li>
-                            <li class="flex gap-3">
-                                <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 font-bold text-brand-400">2</div>
-                                <div>
-                                    <strong class="text-white">HTML:</strong> 
-                                    <code class="example-tag">&lt;html lang="es"&gt;</code>
-                                    <p class="text-slate-400 mt-1">Es la caja grande que contiene TODO. El atributo <code>lang="es"</code> dice que la página está en español.</p>
-                                </div>
-                            </li>
-                            <li class="flex gap-3">
-                                <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 font-bold text-brand-400">3</div>
-                                <div>
-                                    <strong class="text-white">HEAD y BODY:</strong> 
-                                    <p class="text-slate-400 mt-1"><code class="example-tag">&lt;head&gt;</code> es el cerebro (configuración, título) y <code class="example-tag">&lt;body&gt;</code> es el cuerpo visible (texto, imágenes).</p>
-                                </div>
-                            </li>
+                            <li class="flex gap-3"><div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 font-bold text-brand-400">1</div><div><strong class="text-white">DOCTYPE:</strong> <code class="example-tag">&lt;!DOCTYPE html&gt;</code><p class="text-slate-400 mt-1">Le dice al navegador: "Esto es HTML moderno". Va siempre al principio.</p></div></li>
+                            <li class="flex gap-3"><div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 font-bold text-brand-400">2</div><div><strong class="text-white">HTML:</strong> <code class="example-tag">&lt;html&gt;</code><p class="text-slate-400 mt-1">La caja que contiene todo el código.</p></div></li>
                         </ul>
                     </div>
                 `,
                 codeRef: `<!DOCTYPE html>
-<!-- Inicio del documento -->
 <html lang="es">
-  <!-- Cerebro: Configuración -->
   <head>
     <meta charset="utf-8">
-    <title>Mi Primera Web</title>
+    <title>Mi Web</title>
   </head>
-  
-  <!-- Cuerpo: Lo que se ve -->
   <body>
-    <h1>¡Hola Mundo!</h1>
-    <p>Esto es HTML.</p>
+    <h1>Hola Mundo</h1>
   </body>
 </html>`,
                 exercise: {
-                    instruction: "Vamos a crear el esqueleto. Escribe la estructura básica: el DOCTYPE, la etiqueta html con lang='es' y un título dentro del head.",
+                    instruction: "Escribe la estructura básica: el DOCTYPE, la etiqueta <html> y un <title> dentro del <head>.",
                     placeholder: "<!DOCTYPE html>\n<html>\n...",
                     difficulty: "Básico",
                     validate: (code) => {
                         const clean = code.toLowerCase().replace(/\s+/g, '');
-                        if (!clean.includes('<!doctypehtml>')) return { valid: false, msg: "Falta la declaración <!DOCTYPE html> al principio." };
-                        if (!clean.includes('<htmllang="es">') && !clean.includes("<htmllang='es'>")) return { valid: false, msg: "La etiqueta html debe tener lang='es'." };
+                        if (!clean.includes('<!doctypehtml>')) return { valid: false, msg: "Falta <!DOCTYPE html> al principio." };
+                        if (!clean.includes('<html')) return { valid: false, msg: "Falta la etiqueta <html>." };
                         if (!clean.includes('<title>')) return { valid: false, msg: "Añade un <title> dentro de <head>." };
                         return { valid: true, msg: "¡Perfecto! Ya tienes la base." };
                     }
@@ -409,119 +388,73 @@
             },
             {
                 id: "semantics",
-                title: "2. Organizar con Sentido",
+                title: "2. Semántica",
                 icon: "columns",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 2</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Cajas con Etiqueta</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Cajas con Significado</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <div class="concept-box">
-                            <h3 class="text-white font-bold mb-2">Problema: El exceso de DIVs</h3>
-                            <p class="text-sm">Antes, usábamos <code class="example-tag">&lt;div&gt;</code> para todo. Era como tener 100 cajas de mudanza marrones sin escribir qué había dentro. Un caos.</p>
-                        </div>
-
-                        <p>HTML5 introdujo <strong>Etiquetas Semánticas</strong>. Son cajas con nombre propio que explican qué contienen:</p>
-                        
+                        <p>No uses <code class="example-tag">&lt;div&gt;</code> para todo. Usa etiquetas que expliquen qué contienen:</p>
                         <div class="grid grid-cols-1 gap-3 my-6 text-sm">
-                            <div class="bg-slate-800 p-3 rounded border-l-4 border-pink-500">
-                                <code class="text-pink-400 font-bold text-lg">&lt;header&gt;</code>
-                                <p class="text-slate-300">La parte superior. Suele tener el logo y el menú.</p>
-                            </div>
-                            <div class="bg-slate-800 p-3 rounded border-l-4 border-purple-500">
-                                <code class="text-purple-400 font-bold text-lg">&lt;nav&gt;</code>
-                                <p class="text-slate-300">Exclusivo para la barra de navegación (links).</p>
-                            </div>
-                            <div class="bg-slate-800 p-3 rounded border-l-4 border-yellow-500">
-                                <code class="text-yellow-400 font-bold text-lg">&lt;footer&gt;</code>
-                                <p class="text-slate-300">El pie de página. Derechos de autor, contacto, etc.</p>
-                            </div>
+                            <div class="bg-slate-800 p-3 rounded border-l-4 border-pink-500"><code class="text-pink-400 font-bold">&lt;header&gt;</code><p class="text-slate-300">Cabecera (Logo, menú).</p></div>
+                            <div class="bg-slate-800 p-3 rounded border-l-4 border-purple-500"><code class="text-purple-400 font-bold">&lt;nav&gt;</code><p class="text-slate-300">Navegación (Links).</p></div>
+                            <div class="bg-slate-800 p-3 rounded border-l-4 border-yellow-500"><code class="text-yellow-400 font-bold">&lt;footer&gt;</code><p class="text-slate-300">Pie de página.</p></div>
                         </div>
                     </div>
                 `,
                 codeRef: `<header>
-    <h1>Blog de Cocina</h1>
-    <!-- Navegación aquí -->
     <nav>
-        <a href="#">Recetas</a>
-        <a href="#">Contacto</a>
+        <a href="#">Inicio</a>
     </nav>
 </header>
-
-<section>
-    <h2>Última Receta</h2>
-    <p>Cómo hacer pan...</p>
-</section>
-
 <footer>
-    <p>Creado en 2024</p>
+    <p>Copyright 2024</p>
 </footer>`,
                 exercise: {
-                    instruction: "Crea una barra de navegación. Usa la etiqueta <nav> y pon dentro dos enlaces <a> (ej: Inicio y Contacto).",
+                    instruction: "Crea una barra de navegación. Usa <nav> y pon dos enlaces <a> dentro.",
                     difficulty: "Intermedio",
                     validate: (code) => {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(code, "text/html");
                         const nav = doc.querySelector('nav');
                         if (!nav) return { valid: false, msg: "Necesitas la etiqueta <nav>." };
-                        if (nav.querySelectorAll('a').length < 2) return { valid: false, msg: "Pon al menos dos enlaces <a> dentro del nav." };
+                        if (nav.querySelectorAll('a').length < 2) return { valid: false, msg: "Pon al menos dos enlaces <a>." };
                         return { valid: true, msg: "¡Muy bien! Eso es semántica." };
                     }
                 },
                 quiz: {
-                    q: "¿Qué etiqueta usarías para la parte inferior de una página web?",
+                    q: "¿Qué etiqueta usarías para el pie de página?",
                     options: ["<bottom>", "<footer>", "<end>"],
                     correct: 1
                 }
             },
             {
                 id: "forms",
-                title: "3. Pedir Datos (Formularios)",
+                title: "3. Formularios",
                 icon: "check-square",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 3</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Hablando con el Usuario</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Pedir Datos</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>Las páginas web necesitan pedir información: un login, una búsqueda, un registro. Para eso usamos <strong>Formularios</strong>.</p>
-                        
-                        <div class="concept-box">
-                            <h3 class="text-white font-bold mb-2">La etiqueta &lt;input&gt;</h3>
-                            <p class="text-sm">Es la caja donde el usuario escribe. Lo mágico es el atributo <code>type</code>:</p>
-                            <ul class="list-disc pl-4 mt-2 text-xs font-mono text-pink-300">
-                                <li>type="text" (Texto normal)</li>
-                                <li>type="email" (Obliga a tener @)</li>
-                                <li>type="password" (Oculta ***)</li>
-                                <li>type="date" (Calendario)</li>
-                            </ul>
-                        </div>
-                        
-                        <p class="text-sm">También podemos obligar a llenar un campo con <code>required</code> o poner un texto fantasma de ayuda con <code>placeholder</code>.</p>
+                        <div class="concept-box"><h3 class="text-white font-bold mb-2">&lt;input&gt;</h3><p class="text-sm">Es la caja donde el usuario escribe. El atributo <code>type</code> define qué es (email, password, date).</p></div>
+                        <p class="text-sm">Usa <code>required</code> para obligar a llenarlo y <code>placeholder</code> para ayuda visual.</p>
                     </div>
                 `,
                 codeRef: `<form>
-    <!-- Texto de ayuda "Email:" -->
     <label>Email:</label>
-    
-    <!-- Campo inteligente -->
-    <input type="email" required placeholder="nombre@correo.com">
-    
-    <!-- Calendario -->
-    <input type="date">
-    
-    <!-- Botón -->
+    <input type="email" required placeholder="tu@correo.com">
     <button type="submit">Enviar</button>
 </form>`,
                 exercise: {
-                    instruction: "Crea un campo para email. Debe ser obligatorio (required) y mostrar el texto de ayuda 'usuario@web.com' usando placeholder.",
+                    instruction: "Crea un input de tipo 'email' que sea obligatorio (required).",
                     difficulty: "Intermedio",
                     validate: (code) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(code, "text/html");
+                        const doc = new DOMParser().parseFromString(code, "text/html");
                         const input = doc.querySelector('input');
                         if (!input) return { valid: false, msg: "Falta la etiqueta <input>." };
-                        if (input.getAttribute('type') !== 'email') return { valid: false, msg: "El tipo (type) debe ser 'email'." };
-                        if (!input.hasAttribute('required')) return { valid: false, msg: "Olvidaste poner 'required'." };
-                        if (input.getAttribute('placeholder') !== 'usuario@web.com') return { valid: false, msg: "El placeholder debe ser exactamente 'usuario@web.com'." };
-                        return { valid: true, msg: "¡Correcto! El navegador ahora validará el email por ti." };
+                        if (input.getAttribute('type') !== 'email') return { valid: false, msg: "El type debe ser 'email'." };
+                        if (!input.hasAttribute('required')) return { valid: false, msg: "Falta el atributo 'required'." };
+                        return { valid: true, msg: "¡Correcto! El navegador validará el email." };
                     }
                 },
                 quiz: {
@@ -532,134 +465,102 @@
             },
             {
                 id: "svg",
-                title: "4. Dibujos Matemáticos (SVG)",
+                title: "4. Vectores (SVG)",
                 icon: "pen-tool",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 4</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Imágenes que no se pixelan</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Gráficos SVG</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <div class="concept-box">
-                            <h3 class="text-white font-bold mb-2">JPG vs SVG</h3>
-                            <p class="text-sm">Una foto (JPG) son puntos de colores. Si haces zoom, se ve borrosa. Un <strong>SVG</strong> son instrucciones matemáticas ("dibuja un círculo aquí"). Si haces zoom, ¡se recalcula y se ve perfecto!</p>
-                        </div>
-
-                        <p>En HTML5 puedes escribir dibujos directamente con código:</p>
-                        <ul class="list-disc pl-5 space-y-1 text-sm mb-4">
-                            <li><strong>&lt;svg&gt;:</strong> Es el lienzo.</li>
-                            <li><strong>&lt;rect&gt;:</strong> Un cuadrado o rectángulo.</li>
-                            <li><strong>&lt;circle&gt;:</strong> Un círculo.</li>
+                        <p>SVG son gráficos definidos por matemáticas, no píxeles. No se ven borrosos al hacer zoom.</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm mt-4">
+                            <li><strong>&lt;svg&gt;:</strong> El lienzo.</li>
+                            <li><strong>&lt;circle&gt;:</strong> Círculo (usa cx, cy, r).</li>
+                            <li><strong>&lt;rect&gt;:</strong> Rectángulo.</li>
                         </ul>
                     </div>
                 `,
-                codeRef: `<!-- Lienzo de 100x100 -->
-<svg width="100" height="100">
-  <!-- Círculo: centro en 50,50 y radio 40 -->
+                codeRef: `<svg width="100" height="100">
   <circle cx="50" cy="50" r="40" fill="red" />
 </svg>`,
                 exercise: {
-                    instruction: "Dibuja un rectángulo (<rect>) dentro de un <svg>. Dale un ancho (width) y alto (height) de 50.",
+                    instruction: "Dibuja un círculo (<circle>) dentro de un <svg>.",
                     difficulty: "Avanzado",
                     validate: (code) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(code, "text/html");
-                        const svg = doc.querySelector('svg');
-                        const rect = doc.querySelector('rect');
-                        
-                        if (!svg) return { valid: false, msg: "Necesitas el lienzo <svg>." };
-                        if (!rect) return { valid: false, msg: "Dibuja el <rect> dentro del svg." };
-                        if (rect.getAttribute('width') !== '50' || rect.getAttribute('height') !== '50') return { valid: false, msg: "El tamaño debe ser 50x50." };
-                        
-                        return { valid: true, msg: "¡Genial! Has creado un gráfico vectorial con código." };
+                        const doc = new DOMParser().parseFromString(code, "text/html");
+                        if (!doc.querySelector('svg')) return { valid: false, msg: "Necesitas <svg>." };
+                        if (!doc.querySelector('circle')) return { valid: false, msg: "Falta el <circle>." };
+                        return { valid: true, msg: "¡Genial! Has creado un gráfico vectorial." };
                     }
                 },
                 quiz: {
-                    q: "¿Qué pasa si haces mucho zoom en un SVG?",
-                    options: ["Se ve borroso", "Se ve perfecto", "Desaparece"],
+                    q: "¿Qué pasa si haces zoom en un SVG?",
+                    options: ["Se pixela", "Se ve nítido", "Desaparece"],
                     correct: 1
                 }
             },
             {
                 id: "storage",
-                title: "5. Memoria (LocalStorage)",
+                title: "5. LocalStorage",
                 icon: "database",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 5</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Guardar Datos</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Memoria del Navegador</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>Normalmente, si recargas una página, todo se borra. <strong>LocalStorage</strong> es como una pequeña libreta en el navegador donde podemos apuntar cosas para que no se olviden.</p>
-                        
-                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 mb-4 text-sm">
-                            <h4 class="text-blue-400 font-bold mb-2">¿Cómo funciona?</h4>
-                            <p class="mb-2">Funciona con pares <strong>Clave</strong> (el nombre) y <strong>Valor</strong> (el dato).</p>
-                            <code class="block bg-black/30 p-2 rounded mb-2">localStorage.setItem('nombre', 'Juan');</code>
-                            <p>Esto guarda "Juan" bajo la etiqueta "nombre".</p>
-                        </div>
+                        <p><strong>LocalStorage</strong> permite guardar datos en el navegador que persisten tras recargar.</p>
+                        <code class="block bg-black/30 p-2 rounded my-4 text-sm">localStorage.setItem('clave', 'valor');</code>
                     </div>
                 `,
                 codeRef: `<script>
-  // 1. Guardar en la libreta
-  localStorage.setItem("fruta", "Manzana");
-  
-  // 2. Leer de la libreta
-  var dato = localStorage.getItem("fruta");
-  
-  // 3. Mostrarlo
-  document.write("Me gusta la " + dato);
+  localStorage.setItem("usuario", "Ana");
+  const nombre = localStorage.getItem("usuario");
+  document.body.append("Hola " + nombre);
 <\/script>`,
                 exercise: {
-                    instruction: "Usa JavaScript para guardar el valor 'HTML5' con la clave 'curso' en el localStorage.",
+                    instruction: "Usa JS para guardar 'HTML5' con la clave 'curso' en localStorage.",
                     placeholder: "<script>\n  localStorage.setItem(..., ...);\n<\/script>",
                     difficulty: "Experto",
                     validate: (code) => {
-                        if (!code.includes('<script>')) return { valid: false, msg: "Necesitas las etiquetas <script> para escribir JavaScript." };
-                        if (!code.includes('localStorage.setItem')) return { valid: false, msg: "Usa la función localStorage.setItem()." };
-                        if (!code.includes("'curso'") && !code.includes('"curso"')) return { valid: false, msg: "La clave (primero) debe ser 'curso'." };
-                        if (!code.includes("'HTML5'") && !code.includes('"HTML5"')) return { valid: false, msg: "El valor (segundo) debe ser 'HTML5'." };
-                        return { valid: true, msg: "¡Datos guardados! Se quedarán ahí aunque cierres el navegador." };
+                        if (!code.includes('<script>')) return { valid: false, msg: "Usa etiquetas <script>." };
+                        if (!code.includes('localStorage.setItem')) return { valid: false, msg: "Usa localStorage.setItem()." };
+                        if (!code.includes('"curso"') && !code.includes("'curso'")) return { valid: false, msg: "La clave debe ser 'curso'." };
+                        return { valid: true, msg: "¡Datos guardados!" };
                     }
                 },
                 quiz: {
                     q: "¿Cuándo se borran los datos de LocalStorage?",
-                    options: ["Al cerrar la pestaña", "Al apagar el PC", "Solo si los borras manualmente"],
-                    correct: 2
+                    options: ["Al cerrar navegador", "Nunca (salvo manual)", "Al apagar PC"],
+                    correct: 1
                 }
             },
             {
                 id: "details",
-                title: "6. Interactividad Simple",
+                title: "6. Interactividad",
                 icon: "layers",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 6</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Acordeones sin JavaScript</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Acordeones Nativos</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>¿Has visto esas secciones de "Preguntas Frecuentes" donde haces clic y se despliega la respuesta? Antes era difícil de hacer. ¡Ahora HTML5 lo trae de serie!</p>
-                        
-                        <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
-                            <li><strong>&lt;details&gt;:</strong> Es la caja que envuelve todo.</li>
-                            <li><strong>&lt;summary&gt;:</strong> Es el título visible (lo único que se ve al principio).</li>
-                            <li>Lo que pongas después del summary estará oculto hasta que hagas clic.</li>
-                        </ul>
+                        <p>Crea secciones desplegables sin JavaScript usando <strong>&lt;details&gt;</strong> y <strong>&lt;summary&gt;</strong>.</p>
                     </div>
                 `,
                 codeRef: `<details>
-  <summary>Haz clic para ver el secreto</summary>
-  <p>¡Hola! Estaba escondido.</p>
-  <p>Puedes poner imágenes o lo que quieras aquí.</p>
+  <summary>Más Información</summary>
+  <p>Aquí está el contenido oculto.</p>
 </details>`,
                 exercise: {
-                    instruction: "Crea un desplegable. El título (<summary>) debe decir 'Ayuda' y dentro pon cualquier texto.",
+                    instruction: "Crea un desplegable. El título (<summary>) debe decir 'Ayuda'.",
                     difficulty: "Fácil",
                     validate: (code) => {
                         const clean = code.toLowerCase();
-                        if (!clean.includes('<details')) return { valid: false, msg: "Empieza con la etiqueta <details>." };
-                        if (!clean.includes('<summary')) return { valid: false, msg: "Pon el título dentro de <summary>." };
-                        if (!clean.includes('ayuda')) return { valid: false, msg: "El título del summary debe ser 'Ayuda'." };
-                        return { valid: true, msg: "¡Pruébalo! Haz clic en el texto 'Ayuda' en la previsualización." };
+                        if (!clean.includes('<details')) return { valid: false, msg: "Usa <details>." };
+                        if (!clean.includes('<summary')) return { valid: false, msg: "Usa <summary>." };
+                        if (!clean.includes('ayuda')) return { valid: false, msg: "El título debe ser 'Ayuda'." };
+                        return { valid: true, msg: "¡Haz clic en 'Ayuda' en la previsualización!" };
                     }
                 },
                 quiz: {
-                    q: "¿Qué etiqueta es la única visible cuando el acordeón está cerrado?",
-                    options: ["<details>", "<summary>", "<hidden>"],
+                    q: "¿Qué etiqueta es visible siempre?",
+                    options: ["<details>", "<summary>", "<content>"],
                     correct: 1
                 }
             },
@@ -669,85 +570,140 @@
                 icon: "accessibility",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 7</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Web para Todos</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Web Inclusiva (ARIA)</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <div class="concept-box">
-                            <h3 class="text-white font-bold mb-2">Lectores de Pantalla</h3>
-                            <p class="text-sm">Las personas ciegas usan software que "lee" la web en voz alta. Si pones un botón que solo es un icono "X", el lector no sabrá qué decir.</p>
-                        </div>
-                        
-                        <p>Para eso usamos <strong>ARIA</strong> (atributos especiales):</p>
-                        <ul class="list-disc pl-5 space-y-2 mb-6 text-sm">
-                            <li><strong>aria-label="Texto":</strong> Una etiqueta invisible que el lector de pantalla leerá en voz alta.</li>
-                        </ul>
+                        <p>Los lectores de pantalla necesitan ayuda para entender botones que solo son iconos.</p>
+                        <p class="mt-2">Usa <strong>aria-label</strong> para dar un nombre invisible pero audible.</p>
                     </div>
                 `,
-                codeRef: `<!-- Botón malo: Un ciego escucha "Botón" y ya. -->
-<button>X</button>
-
-<!-- Botón bueno: Un ciego escucha "Cerrar Ventana". -->
-<button aria-label="Cerrar Ventana">
-  X
-</button>`,
+                codeRef: `<button aria-label="Cerrar ventana">X</button>`,
                 exercise: {
-                    instruction: "Mejora un botón que solo tiene una 'X'. Añádele un atributo aria-label que diga 'Cerrar'.",
+                    instruction: "Crea un botón con el texto 'X' y un aria-label que diga 'Cerrar'.",
                     difficulty: "Intermedio",
                     validate: (code) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(code, "text/html");
+                        const doc = new DOMParser().parseFromString(code, "text/html");
                         const btn = doc.querySelector('button');
-                        
                         if (!btn) return { valid: false, msg: "Crea el <button>." };
-                        if (!btn.hasAttribute('aria-label')) return { valid: false, msg: "Añade el atributo aria-label." };
-                        if (btn.getAttribute('aria-label') !== 'Cerrar') return { valid: false, msg: "El texto del aria-label debe ser 'Cerrar'." };
-                        
-                        return { valid: true, msg: "¡Excelente! Has hecho la web más accesible." };
+                        if (btn.getAttribute('aria-label') !== 'Cerrar') return { valid: false, msg: "El aria-label debe ser 'Cerrar'." };
+                        return { valid: true, msg: "¡Excelente accesibilidad!" };
                     }
                 },
                 quiz: {
-                    q: "¿Quién se beneficia principalmente del atributo aria-label?",
-                    options: ["Los motores de búsqueda", "Usuarios de lectores de pantalla", "Diseñadores gráficos"],
-                    correct: 1
+                    q: "¿Para quién es útil aria-label?",
+                    options: ["Lectores de pantalla", "Diseñadores", "Servidores"],
+                    correct: 0
                 }
             },
             {
                 id: "responsive",
-                title: "8. Imágenes Adaptables",
+                title: "8. Responsive",
                 icon: "image",
                 content: `
                     <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 8</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Una imagen no sirve para todo</h1>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Imágenes Inteligentes</h1>
                     <div class="prose prose-invert max-w-none text-slate-300">
-                        <p>Un móvil tiene una pantalla pequeña y datos limitados. Un monitor 4K es enorme. ¿Por qué enviar la misma foto gigante a los dos?</p>
-                        
-                        <p>La etiqueta <strong>&lt;picture&gt;</strong> nos permite dar opciones al navegador:</p>
-                        <div class="bg-slate-800 p-3 rounded text-sm mt-2">
-                            "Si la pantalla es grande, usa <em>foto-grande.jpg</em>. Si no, usa <em>foto-pequeña.jpg</em>."
-                        </div>
+                        <p>La etiqueta <strong>&lt;picture&gt;</strong> permite cargar distintas imágenes según el tamaño de la pantalla.</p>
                     </div>
                 `,
                 codeRef: `<picture>
-  <!-- 1. Opción Grande (si pantalla > 800px) -->
-  <source media="(min-width: 800px)" srcset="paisaje-4k.jpg">
-  
-  <!-- 2. Opción por defecto (Móvil) -->
-  <img src="paisaje-movil.jpg" alt="Montañas">
+  <source media="(min-width: 800px)" srcset="grande.jpg">
+  <img src="movil.jpg" alt="Foto">
 </picture>`,
                 exercise: {
-                    instruction: "Crea una estructura <picture>. Debe tener al menos un <source> para pantallas grandes y un <img> obligatorio para el resto.",
+                    instruction: "Crea un <picture> con un <source> y un <img>.",
                     difficulty: "Avanzado",
                     validate: (code) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(code, "text/html");
-                        if (!doc.querySelector('picture')) return { valid: false, msg: "Envuelve todo en <picture>." };
-                        if (!doc.querySelector('source')) return { valid: false, msg: "Añade una opción con <source>." };
-                        if (!doc.querySelector('img')) return { valid: false, msg: "Siempre necesitas un <img> al final como respaldo." };
-                        return { valid: true, msg: "¡Perfecto! Tu web es rápida en móviles y bonita en PC." };
+                        const doc = new DOMParser().parseFromString(code, "text/html");
+                        if (!doc.querySelector('picture')) return { valid: false, msg: "Falta <picture>." };
+                        if (!doc.querySelector('source')) return { valid: false, msg: "Falta <source>." };
+                        if (!doc.querySelector('img')) return { valid: false, msg: "Falta <img>." };
+                        return { valid: true, msg: "¡Perfecto!" };
                     }
                 },
                 quiz: {
-                    q: "¿Qué etiqueta dentro de picture se descarga si ninguna condición 'media' se cumple?",
-                    options: ["<source>", "<img>", "<fallback>"],
+                    q: "¿Qué etiqueta se usa si el navegador no soporta picture?",
+                    options: ["<source>", "<fallback>", "<img>"],
+                    correct: 2
+                }
+            },
+            // --- NUEVAS LECCIONES ---
+            {
+                id: "multimedia",
+                title: "9. Multimedia Nativo",
+                icon: "film",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 9</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Audio y Video</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>HTML5 eliminó la necesidad de Flash. Ahora tenemos etiquetas nativas para reproducir medios.</p>
+                        <div class="concept-box">
+                            <h3 class="text-white font-bold mb-2">Etiquetas Clave</h3>
+                            <ul class="list-disc pl-4 text-sm space-y-2">
+                                <li><strong>&lt;audio&gt;</strong>: Para sonido.</li>
+                                <li><strong>&lt;video&gt;</strong>: Para películas.</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm">El atributo mágico es <code>controls</code>, que añade automáticamente Play, Pausa y Volumen.</p>
+                    </div>
+                `,
+                codeRef: `<!-- Video con controles -->
+<video src="pelicula.mp4" controls width="300"></video>
+
+<!-- Audio que se repite (loop) -->
+<audio src="musica.mp3" controls loop></audio>`,
+                exercise: {
+                    instruction: "Crea una etiqueta <audio> que tenga el atributo 'controls' y 'src' apuntando a 'demo.mp3'.",
+                    difficulty: "Intermedio",
+                    validate: (code) => {
+                        const doc = new DOMParser().parseFromString(code, "text/html");
+                        const audio = doc.querySelector('audio');
+                        if (!audio) return { valid: false, msg: "Necesitas la etiqueta <audio>." };
+                        if (!audio.hasAttribute('controls')) return { valid: false, msg: "Falta el atributo 'controls' para ver los botones." };
+                        if (!audio.getAttribute('src')) return { valid: false, msg: "Falta el atributo 'src' con el archivo." };
+                        return { valid: true, msg: "¡Correcto! Verás el reproductor (aunque no sonará porque el archivo no existe)." };
+                    }
+                },
+                quiz: {
+                    q: "¿Qué atributo es necesario para que el usuario pueda dar Play/Pause?",
+                    options: ["autoplay", "controls", "buttons"],
+                    correct: 1
+                }
+            },
+            {
+                id: "canvas",
+                title: "10. Canvas API",
+                icon: "palette",
+                content: `
+                    <span class="text-brand-500 font-mono text-xs font-bold uppercase mb-2 block tracking-widest">Capítulo 10</span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Dibujando con Píxeles</h1>
+                    <div class="prose prose-invert max-w-none text-slate-300">
+                        <p>A diferencia de SVG (vectores), <strong>&lt;canvas&gt;</strong> es un lienzo de píxeles controlado completamente por JavaScript.</p>
+                        <p class="mt-2 text-sm">Es ideal para videojuegos, manipulación de fotos o gráficos complejos que cambian muy rápido.</p>
+                    </div>
+                `,
+                codeRef: `<canvas id="miLienzo" width="200" height="100"></canvas>
+
+<script>
+  const c = document.getElementById("miLienzo");
+  const ctx = c.getContext("2d");
+  
+  // Dibujar rectángulo rojo
+  ctx.fillStyle = "red";
+  ctx.fillRect(10, 10, 50, 50);
+<\/script>`,
+                exercise: {
+                    instruction: "Crea un <canvas> con id='game' y usa JS para obtener su contexto '2d'.",
+                    placeholder: "<canvas id='game'></canvas>\n<script>\n  const cvs = ...\n  const ctx = ...\n<\/script>",
+                    difficulty: "Experto",
+                    validate: (code) => {
+                        if (!code.includes('<canvas')) return { valid: false, msg: "Falta la etiqueta <canvas>." };
+                        if (!code.includes('getContext("2d")') && !code.includes("getContext('2d')")) return { valid: false, msg: "Debes obtener el contexto '2d' en JS." };
+                        return { valid: true, msg: "¡Excelente! Has inicializado el motor gráfico de HTML5." };
+                    }
+                },
+                quiz: {
+                    q: "¿Qué método de JS se usa para empezar a dibujar en el canvas?",
+                    options: ["getDrawing()", "getContext('2d')", "startCanvas()"],
                     correct: 1
                 }
             }
@@ -772,7 +728,6 @@
             if (saved) {
                 try {
                     state = JSON.parse(saved);
-                    // Validar integridad básica
                     if (state.currentIndex >= curriculum.length) state.currentIndex = 0;
                 } catch (e) {
                     console.error("Error cargando progreso", e);
@@ -822,7 +777,6 @@
             lucide.createIcons();
         }
 
-        // Feature: Permitir Tab en el Textarea
         function setupTabSupport() {
             const textarea = document.getElementById('code-input');
             textarea.addEventListener('keydown', function(e) {
@@ -830,7 +784,6 @@
                     e.preventDefault();
                     var start = this.selectionStart;
                     var end = this.selectionEnd;
-                    // Insertar 2 espacios
                     this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
                     this.selectionStart = this.selectionEnd = start + 2;
                 }
@@ -843,31 +796,26 @@
 
         function loadLesson(index) {
             state.currentIndex = index;
-            saveProgress(); // Guardar "donde me quedé"
+            saveProgress();
 
             const data = curriculum[index];
             
-            // UI Updates
             renderSidebar(); 
             
-            // Close mobile menu if open
             if(window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.add('-translate-x-full');
                 document.getElementById('mobile-overlay').classList.remove('open');
             }
             
-            // Content
             const contentDiv = document.getElementById('lesson-content');
             contentDiv.innerHTML = data.content;
             
-            // Code Reference
             const codeRef = document.getElementById('reference-code');
             codeRef.innerHTML = syntaxHighlight(data.codeRef);
             
-            // Preview
             updatePreview(data.codeRef);
 
-            // Exercise Setup
+            // Setup Exercise Area
             document.getElementById('workspace-area').classList.remove('hidden');
             document.getElementById('exercise-instruction').innerText = data.exercise.instruction;
             const codeInput = document.getElementById('code-input');
@@ -875,13 +823,11 @@
             codeInput.placeholder = data.exercise.placeholder || "<!-- Tu código aquí -->";
             document.getElementById('difficulty-badge').innerText = data.exercise.difficulty;
             
-            // Reset Feedback & Quiz
             const fb = document.getElementById('feedback-msg');
             fb.style.opacity = '0';
             fb.innerText = '';
             document.getElementById('quiz-container').classList.add('hidden');
             
-            // Scroll to top
             document.getElementById('scroll-container').scrollTop = 0;
 
             updateProgressBar();
@@ -899,7 +845,7 @@
                     input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
                     button { background: #0284c7; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
                     button:hover { background: #0369a1; }
-                    canvas, svg { border: 2px dashed #0284c7; background: #f0f9ff; margin: 10px 0; }
+                    canvas, svg, video, audio { border: 2px dashed #0284c7; background: #f0f9ff; margin: 10px 0; max-width: 100%; }
                     details { border: 1px solid #ddd; padding: 10px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; background: #fff; }
                     summary { font-weight: bold; color: #0284c7; margin-bottom: 5px; }
                     [role="alert"] { padding: 10px; background: #fee2e2; color: #b91c1c; border-radius: 4px; margin-top: 10px; border: 1px solid #fecaca; }
@@ -911,17 +857,15 @@
         }
 
         // -------------------------------------------------------------------
-        // 5. VALIDACIÓN Y QUIZ
+        // 5. VALIDACIÓN Y QUIZ (Lógica Mejorada)
         // -------------------------------------------------------------------
 
         function validateCode() {
             const data = curriculum[state.currentIndex].exercise;
             const userCode = document.getElementById('code-input').value;
             
-            // Update Preview
             updatePreview(userCode);
 
-            // Validate
             const result = data.validate(userCode);
             const fb = document.getElementById('feedback-msg');
             
@@ -942,56 +886,77 @@
 
         function setupQuiz(quizData) {
             const container = document.getElementById('quiz-container');
-            // Solo mostrar si no estaba ya visible para evitar saltos
             if(container.classList.contains('hidden')) {
                 container.classList.remove('hidden');
                 container.classList.add('animate-fade-in');
             }
             
             document.getElementById('quiz-question').innerText = quizData.q;
-            document.getElementById('quiz-options').innerHTML = quizData.options.map((opt, i) => `
-                <button onclick="checkQuiz(${i}, ${quizData.correct})" class="w-full text-left p-3 rounded text-sm text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white transition-all border border-slate-700/50 hover:border-slate-500">
-                    <span class="font-bold text-brand-500 mr-2">${String.fromCharCode(65 + i)}.</span> ${opt}
-                </button>
-            `).join('');
             
-            // Smooth scroll
+            // Generamos botones. Si la lección ya se completó antes, marcamos la correcta.
+            const isDone = state.completedLessons.includes(state.currentIndex);
+
+            document.getElementById('quiz-options').innerHTML = quizData.options.map((opt, i) => {
+                let extraClass = "bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700/50";
+                let icon = "";
+                let disabled = "";
+                
+                // Si ya estaba completa, mostrar el estado visual
+                if (isDone) {
+                    disabled = "disabled";
+                    if (i === quizData.correct) {
+                        extraClass = "bg-green-600 text-white border-green-400 opacity-80";
+                        icon = '<i data-lucide="check" class="inline w-4 h-4 ml-2 float-right"></i>';
+                    } else {
+                        extraClass = "opacity-30 bg-slate-900";
+                    }
+                }
+
+                return `
+                <button onclick="checkQuiz(this, ${i}, ${quizData.correct})" ${disabled}
+                    class="quiz-btn w-full text-left p-3 rounded text-sm transition-all border ${extraClass} mb-2">
+                    <span class="font-bold text-brand-500 mr-2">${String.fromCharCode(65 + i)}.</span> ${opt} ${icon}
+                </button>
+            `}).join('');
+            
+            lucide.createIcons();
             setTimeout(() => {
                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
 
-        function checkQuiz(selected, correct) {
-            const buttons = document.querySelectorAll('#quiz-options button');
-            
-            if (selected === correct) {
-                // Estilo Correcto
-                buttons[selected].className = "w-full text-left p-3 rounded text-sm bg-green-600 text-white border border-green-400 shadow-[0_0_15px_rgba(34,197,94,0.4)] transition-all transform scale-[1.02]";
-                buttons[selected].innerHTML += ' <i data-lucide="check" class="inline w-4 h-4 ml-2 float-right"></i>';
-                
-                // Deshabilitar otros
-                buttons.forEach(btn => btn.disabled = true);
+        function checkQuiz(btnElement, selected, correct) {
+            const allBtns = document.querySelectorAll('.quiz-btn');
 
-                // Habilitar siguiente
-                const nextBtn = document.getElementById('btn-next');
-                nextBtn.disabled = false;
-                nextBtn.classList.replace('bg-slate-700', 'bg-brand-600');
+            if (selected === correct) {
+                // CORRECTO
+                btnElement.className = "quiz-btn w-full text-left p-3 rounded text-sm bg-green-600 text-white border border-green-400 shadow-[0_0_15px_rgba(34,197,94,0.4)] transition-all transform scale-[1.02] mb-2";
+                btnElement.innerHTML += ' <i data-lucide="check" class="inline w-4 h-4 ml-2 float-right"></i>';
                 
-                // Update Logic State
+                // Deshabilitar todos
+                allBtns.forEach(btn => btn.disabled = true);
+
+                // Lógica de progreso
                 if (!state.completedLessons.includes(state.currentIndex)) {
                     state.completedLessons.push(state.currentIndex);
-                    updateProgressBar();
                     saveProgress();
                 }
+                updateProgressBar(); // Esto habilitará el botón siguiente
                 
-                renderSidebar(); // Update checks
+                renderSidebar();
                 lucide.createIcons();
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
             } else {
-                // Estilo Incorrecto
-                buttons[selected].className = "w-full text-left p-3 rounded text-sm bg-red-900/50 text-red-300 border border-red-500/50 shake";
-                setTimeout(() => buttons[selected].classList.remove('shake'), 500);
+                // INCORRECTO
+                btnElement.className = "quiz-btn w-full text-left p-3 rounded text-sm bg-red-900/80 text-red-200 border border-red-500 animate-shake mb-2";
+                btnElement.disabled = true; // Deshabilitar solo el incorrecto para que intenten otro
+                
+                // Feedback visual sutil en el botón incorrecto
+                const badge = document.createElement('span');
+                badge.innerText = " (Incorrecto)";
+                badge.className = "text-[10px] ml-2 opacity-75";
+                btnElement.appendChild(badge);
             }
         }
 
@@ -1002,17 +967,18 @@
             document.getElementById('progress-bar').style.width = `${percentage}%`;
             document.getElementById('progress-text').innerText = `${Math.round(percentage)}%`;
             
-            // Botones de navegación lógica
             document.getElementById('btn-prev').disabled = state.currentIndex === 0;
             
             const nextBtn = document.getElementById('btn-next');
-            // Si la lección actual ya fue completada antes, permitir avanzar
+            // Si la lección está en la lista de completadas, activamos Next
             if (state.completedLessons.includes(state.currentIndex)) {
                 nextBtn.disabled = false;
                 nextBtn.classList.replace('bg-slate-700', 'bg-brand-600');
+                nextBtn.classList.add('hover:bg-brand-500');
             } else {
                 nextBtn.disabled = true;
                 nextBtn.classList.replace('bg-brand-600', 'bg-slate-700');
+                nextBtn.classList.remove('hover:bg-brand-500');
             }
         }
 
@@ -1042,7 +1008,6 @@
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            // Simple animation sequence
             setTimeout(() => {
                 content.classList.remove('scale-95', 'opacity-0');
                 content.classList.add('scale-100', 'opacity-100');
