@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GodsPlan | Coding - Aprende a Programar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #818cf8, #ffffff, #818cf8);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-flow 5s linear infinite;
+        }
+
+        @keyframes gradient-flow {
+            to { background-position: 200% center; }
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        .hidden-modal {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-slate-100 overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="p-2 bg-indigo-600 rounded-lg">
+                    <i data-lucide="terminal" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">
+                    GodsPlan | <span class="text-indigo-400">Coding</span>
+                </span>
+            </div>
+            
+            <div id="nav-auth-section" class="flex items-center space-x-4">
+                <!-- Se llena dinámicamente con JS -->
+                <button onclick="toggleModal('login')" class="px-6 py-2 rounded-full bg-indigo-600 hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 text-sm font-medium">
+                    Empezar ahora
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none -z-10">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-6">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                <span>FASE 1: INICIALIZACIÓN DISPONIBLE</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                Domina el Código. <br />
+                <span class="gradient-text">Construye tu Futuro.</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-10 leading-relaxed">
+                Bienvenido a GodsPlan | Coding. La plataforma diseñada para llevarte de cero a desarrollador profesional con una metodología práctica e intuitiva.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button onclick="toggleModal('signup')" class="w-full sm:w-auto px-8 py-4 bg-white text-slate-950 rounded-xl font-bold hover:bg-slate-200 transition-all flex items-center justify-center space-x-2 group">
+                    <span>Crear Cuenta Gratis</span>
+                    <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <button class="w-full sm:w-auto px-8 py-4 bg-slate-900 border border-slate-800 rounded-xl font-bold hover:bg-slate-800 transition-all">
+                    Ver Plan de Estudios
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Características -->
+    <section class="py-24 bg-slate-900/30 border-y border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl glass hover:border-indigo-500/30 transition-all group">
+                    <div class="mb-4 inline-block p-3 rounded-xl bg-slate-950 group-hover:scale-110 transition-transform text-indigo-400">
+                        <i data-lucide="code" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Aprende Haciendo</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">No más tutoriales infinitos. Escribe código real desde el primer minuto en nuestro entorno integrado.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl glass hover:border-blue-500/30 transition-all group">
+                    <div class="mb-4 inline-block p-3 rounded-xl bg-slate-950 group-hover:scale-110 transition-transform text-blue-400">
+                        <i data-lucide="book-open" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Ruta Personalizada</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Nuestra plataforma adapta los ejercicios según tu progreso, asegurando un aprendizaje óptimo.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl glass hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 inline-block p-3 rounded-xl bg-slate-950 group-hover:scale-110 transition-transform text-emerald-400">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Comunidad Global</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Colabora con otros estudiantes, resuelve dudas y participa en proyectos reales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center border-t border-slate-900">
+        <p class="text-slate-500 text-sm">© 2025 GodsPlan | Coding. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden-modal">
+        <div class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm" onclick="toggleModal()"></div>
+        <div class="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-8 overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
+            
+            <button onclick="toggleModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="text-center mb-8">
+                <h2 id="modal-title" class="text-2xl font-bold mb-2">Bienvenido</h2>
+                <p id="modal-desc" class="text-slate-400 text-sm">Ingresa tus datos para continuar</p>
+            </div>
+
+            <form id="auth-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Email</label>
+                    <input type="email" id="auth-email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all" placeholder="tu@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Contraseña</label>
+                    <input type="password" id="auth-password" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all" placeholder="••••••••">
+                </div>
+
+                <div id="auth-error" class="text-red-400 text-xs italic hidden"></div>
+
+                <button type="submit" id="auth-submit-btn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-500/20">
+                    Continuar
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-sm">
+                <span id="modal-footer-text" class="text-slate-400">¿No tienes cuenta?</span>
+                <button onclick="switchAuthMode()" id="modal-switch-btn" class="ml-2 text-indigo-400 hover:text-indigo-300 font-semibold">Regístrate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Firebase y Lógica -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut,
+            signInWithCustomToken,
+            signInAnonymously
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDsYGFyJRPGhLI8p7QOEbXeyRZgFJOEG7U", // Manejada por el entorno
+            authDomain: "godsplan-coding.firebaseapp.com",
+            projectId: "godsplan-coding",
+            storageBucket: "godsplan-coding.firebasestorage.app",
+            messagingSenderId: "302179658354",
+            appId: "1:302179658354:web:21933ff88861126932b0eb"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        let currentMode = 'login';
+
+        // Inicializar Lucide Icons
+        lucide.createIcons();
+
+        // Referencias al DOM
+        const authModal = document.getElementById('auth-modal');
+        const authForm = document.getElementById('auth-form');
+        const navAuth = document.getElementById('nav-auth-section');
+        const errorDiv = document.getElementById('auth-error');
+
+        // Función para cambiar visibilidad del modal (Global)
+        window.toggleModal = (mode) => {
+            if (mode) {
+                currentMode = mode;
+                updateModalContent();
+            }
+            authModal.classList.toggle('hidden-modal');
+            errorDiv.classList.add('hidden');
+        };
+
+        // Cambiar entre Login y Signup
+        window.switchAuthMode = () => {
+            currentMode = currentMode === 'login' ? 'signup' : 'login';
+            updateModalContent();
+        };
+
+        function updateModalContent() {
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const footerText = document.getElementById('modal-footer-text');
+            const switchBtn = document.getElementById('modal-switch-btn');
+
+            if (currentMode === 'login') {
+                title.innerText = 'Bienvenido de nuevo';
+                desc.innerText = 'Ingresa tus credenciales para continuar';
+                submitBtn.innerText = 'Entrar';
+                footerText.innerText = '¿No tienes cuenta?';
+                switchBtn.innerText = 'Regístrate';
+            } else {
+                title.innerText = 'Únete a GodsPlan';
+                desc.innerText = 'Comienza tu viaje en el mundo del código hoy';
+                submitBtn.innerText = 'Registrarse';
+                footerText.innerText = '¿Ya eres miembro?';
+                switchBtn.innerText = 'Inicia Sesión';
+            }
+        }
+
+        // Manejar envío del formulario
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const btn = document.getElementById('auth-submit-btn');
+
+            btn.disabled = true;
+            btn.innerText = 'Procesando...';
+            errorDiv.classList.add('hidden');
+
+            try {
+                if (currentMode === 'login') {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                }
+                toggleModal();
+                authForm.reset();
+            } catch (error) {
+                errorDiv.innerText = error.message.replace('Firebase:', '');
+                errorDiv.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = currentMode === 'login' ? 'Entrar' : 'Registrarse';
+            }
+        });
+
+        // Cerrar sesión
+        window.handleLogout = () => signOut(auth);
+
+        // Observador de estado de autenticación
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navAuth.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <span class="hidden sm:inline text-sm text-slate-400">Hola, ${user.email.split('@')[0]}</span>
+                        <button onclick="handleLogout()" class="flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-sm">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span>Salir</span>
+                        </button>
+                    </div>
+                `;
+            } else {
+                navAuth.innerHTML = `
+                    <button onclick="toggleModal('login')" class="px-6 py-2 rounded-full bg-indigo-600 hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 text-sm font-medium">
+                        Empezar ahora
+                    </button>
+                `;
+            }
+            lucide.createIcons();
+        });
+
+        // Autenticación inicial del entorno
+        const initEnvAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                try {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } catch (e) {
+                    console.error("Token fail", e);
+                }
+            }
+        };
+        initEnvAuth();
+    </script>
+</body>
+</html>
