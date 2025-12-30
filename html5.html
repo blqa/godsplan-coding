@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GodsPlan | Coding: HTML5</title>
+    <title>GodsPlan | HTML5 Master Course</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,11 +18,10 @@
             theme: {
                 extend: {
                     colors: {
-                        // Paleta personalizada basada en tu snippet
                         slate: {
                             850: '#1e293b',
                             900: '#0f172a',
-                            950: '#020617', // Fondo principal muy oscuro
+                            950: '#020617',
                         },
                         orange: {
                             400: '#fb923c',
@@ -38,6 +37,7 @@
                     animation: {
                         'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'float': 'float 3s ease-in-out infinite',
                     },
                     keyframes: {
                         'pulse-glow': {
@@ -49,6 +49,10 @@
                             '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
                             '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
                             '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
@@ -62,38 +66,36 @@
         body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; }
         .font-mono { font-family: 'Fira Code', monospace; }
 
-        /* Custom Scrollbar Orange Theme */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #020617; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #f97316; }
 
         /* Syntax Highlight Basics */
-        .token-tag { color: #f97316; } /* Orange tags */
-        .token-attr { color: #fb923c; } /* Lighter orange attributes */
-        .token-val { color: #a3e635; } /* Lime Green values */
+        .token-tag { color: #f97316; } 
+        .token-attr { color: #fb923c; } 
+        .token-val { color: #a3e635; } 
         .token-comment { color: #64748b; font-style: italic; }
         .token-punct { color: #94a3b8; }
-        .token-js { color: #fbbf24; }
 
         .code-editor-area {
             background-image: radial-gradient(#334155 1px, transparent 1px);
             background-size: 20px 20px;
         }
 
-        /* Nav Item Active State matching the user request style */
         .nav-item.active {
-            background: linear-gradient(to right, rgba(249, 115, 22, 0.1), transparent);
+            background: linear-gradient(to right, rgba(249, 115, 22, 0.15), transparent);
             border-left: 3px solid #f97316;
             color: #fb923c;
         }
         
         textarea:focus { outline: none; }
         
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* Certificate Pattern */
+        .cert-pattern {
+            background-color: #ffffff;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
     </style>
 </head>
@@ -101,33 +103,35 @@
 
     <!-- Header -->
     <header class="h-16 border-b border-slate-800 bg-slate-950 flex items-center justify-between px-4 md:px-6 z-50 shrink-0 relative">
-        <!-- Glow Effect under header -->
         <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
 
         <div class="flex items-center gap-4">
-            <!-- Mobile Menu Trigger -->
-            <button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-400 hover:text-white">
+            <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white transition-colors">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
             
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-600 to-orange-400 flex items-center justify-center shadow-lg shadow-orange-500/20">
-                    <i data-lucide="file-code-2" class="text-white w-6 h-6"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-600 to-orange-400 flex items-center justify-center shadow-lg shadow-orange-500/20 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <i data-lucide="file-code-2" class="text-white w-6 h-6 relative z-10"></i>
                 </div>
                 <div>
                     <h1 class="font-bold text-white tracking-tight leading-none text-lg">
-                        GodsPlan | Coding: <span class="text-orange-500">HTML5</span>
+                        GodsPlan | <span class="text-orange-500">HTML5 Master</span>
                     </h1>
-                    <span class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Interactive Course</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold" id="user-rank">Novato</span>
+                        <div class="h-1 w-1 rounded-full bg-slate-600"></div>
+                        <span class="text-[10px] text-orange-400 font-mono font-bold" id="user-xp">0 XP</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="flex items-center gap-4 md:gap-6">
-            <!-- Progress Bar -->
             <div class="hidden md:flex flex-col items-end w-48">
                 <div class="flex items-center gap-2 text-[10px] font-bold uppercase text-slate-500 mb-1">
-                    <span>Progreso Global</span>
+                    <span>Progreso Total</span>
                     <span id="progress-text" class="text-orange-400">0%</span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
@@ -135,10 +139,9 @@
                 </div>
             </div>
 
-            <!-- BOTÓN SOLICITADO: VOLVER A INDEX -->
             <a href="https://coding.godsplan.site/" onclick="window.location.reload()" class="group relative px-4 py-2 bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm text-slate-400 hover:text-white hover:-translate-y-0.5 shadow-lg hover:shadow-orange-500/10">
                 <i data-lucide="home" class="w-4 h-4 group-hover:text-orange-500 transition-colors"></i>
-                <span class="hidden sm:inline font-medium">Volver al Index</span>
+                <span class="hidden sm:inline font-medium">Salir</span>
             </a>
         </div>
     </header>
@@ -147,111 +150,115 @@
     <div class="flex-1 flex overflow-hidden relative bg-slate-950">
         
         <!-- Mobile Overlay -->
-        <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 z-30 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+        <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 z-30 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden backdrop-blur-sm"></div>
 
-        <!-- Sidebar -->
-        <aside class="w-72 bg-slate-900/50 border-r border-slate-800 flex flex-col shrink-0 transition-transform duration-300 absolute md:relative z-40 h-full -translate-x-full md:translate-x-0 backdrop-blur-md" id="sidebar">
-            <div class="p-5 border-b border-slate-800/50">
+        <!-- Sidebar (Curriculum) -->
+        <aside class="w-80 bg-slate-900/95 border-r border-slate-800 flex flex-col shrink-0 transition-transform duration-300 absolute lg:relative z-40 h-full -translate-x-full lg:translate-x-0 backdrop-blur-md" id="sidebar">
+            <div class="p-5 border-b border-slate-800/50 flex justify-between items-center">
                 <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                    <i data-lucide="list" class="w-3 h-3"></i> Módulos
+                    <i data-lucide="map" class="w-3 h-3"></i> Mapa del Curso
                 </h2>
-                <button onclick="toggleSidebar()" class="md:hidden absolute top-4 right-4 text-slate-400 hover:text-orange-500"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-orange-500"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             
-            <nav id="module-list" class="flex-1 overflow-y-auto py-4 space-y-1 px-3 custom-scrollbar">
+            <nav id="module-list" class="flex-1 overflow-y-auto py-2 space-y-1 px-2 custom-scrollbar">
                 <!-- Se llena con JS -->
             </nav>
             
-            <div class="p-4 border-t border-slate-800/50 bg-slate-900/80">
-                <button onclick="resetProgress()" class="w-full text-xs text-slate-500 hover:text-red-400 flex items-center justify-center gap-2 transition-colors py-2">
-                    <i data-lucide="rotate-ccw" class="w-3 h-3"></i> Reiniciar Progreso
+            <div class="p-4 border-t border-slate-800/50 bg-slate-900">
+                <button onclick="resetProgress()" class="w-full text-xs text-slate-500 hover:text-red-400 flex items-center justify-center gap-2 transition-colors py-2 border border-slate-800 rounded hover:bg-slate-800 hover:border-red-900/30">
+                    <i data-lucide="trash-2" class="w-3 h-3"></i> Resetear Progreso
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="flex-1 flex flex-col lg:flex-row min-w-0 bg-slate-950 relative">
             
-            <!-- Left: Theory & Exercise -->
+            <!-- Left: Theory & Workspace -->
             <section class="flex-1 overflow-y-auto scroll-smooth custom-scrollbar relative" id="scroll-container">
-                <div class="max-w-3xl mx-auto p-6 lg:p-10 pb-32">
+                <div class="max-w-4xl mx-auto p-6 lg:p-8 pb-32">
                     
                     <!-- Content Injection -->
-                    <div id="lesson-content" class="mb-12"></div>
+                    <div id="lesson-content" class="mb-10 animate-[fadeIn_0.3s_ease-out]"></div>
 
                     <!-- Interactive Workspace -->
-                    <div id="workspace-area" class="hidden space-y-8 animate-[fadeIn_0.5s_ease-out]">
+                    <div id="workspace-area" class="hidden space-y-6">
                         
-                        <!-- Exercise Card -->
-                        <div class="rounded-xl overflow-hidden border border-slate-800 bg-[#0b101b] shadow-2xl">
+                        <!-- Editor Container -->
+                        <div class="rounded-xl overflow-hidden border border-slate-800 bg-[#0b101b] shadow-2xl ring-1 ring-white/5">
                             <!-- Toolbar -->
-                            <div class="bg-slate-900/50 px-4 py-3 flex justify-between items-center border-b border-slate-800">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
-                                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Editor de Código</span>
+                            <div class="bg-slate-900/80 backdrop-blur px-4 py-2 flex justify-between items-center border-b border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
+                                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Editor HTML</span>
+                                    </div>
+                                    <span id="difficulty-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700 uppercase">
+                                        Básico
+                                    </span>
                                 </div>
-                                <span id="difficulty-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700 uppercase">
-                                    Básico
-                                </span>
+                                <div class="flex gap-2">
+                                    <button onclick="resetCode()" title="Reiniciar Código" class="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded transition-colors">
+                                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
                             </div>
 
-                            <!-- Instructions -->
-                            <div class="bg-gradient-to-b from-slate-900 to-[#0b101b] p-5 border-b border-slate-800/50">
-                                <h3 class="text-orange-400 font-semibold mb-2 flex items-center gap-2 text-sm uppercase tracking-wide">
-                                    <i data-lucide="terminal" class="w-4 h-4"></i>
-                                    Misión
-                                </h3>
-                                <p id="exercise-instruction" class="text-slate-300 text-sm leading-relaxed"></p>
+                            <!-- Instructions Panel -->
+                            <div class="bg-slate-900/40 p-4 border-b border-slate-800/50 flex items-start gap-3">
+                                <div class="mt-1 min-w-[20px]">
+                                    <i data-lucide="terminal" class="w-4 h-4 text-orange-500"></i>
+                                </div>
+                                <p id="exercise-instruction" class="text-slate-300 text-sm leading-relaxed font-medium"></p>
                             </div>
 
                             <!-- Code Input -->
                             <div class="relative code-editor-area group">
                                 <textarea id="code-input" spellcheck="false" 
-                                    class="w-full h-56 bg-transparent p-5 font-mono text-sm text-slate-200 resize-y border-none focus:ring-0 leading-relaxed tab-size-4 placeholder-slate-700"
-                                    placeholder="<!-- Escribe tu código aquí... -->"></textarea>
+                                    class="w-full h-64 bg-transparent p-5 font-mono text-sm text-slate-200 resize-y border-none focus:ring-0 leading-relaxed tab-size-4 placeholder-slate-700"
+                                    placeholder="<!-- Tu código brillante aquí... -->"></textarea>
                             </div>
 
-                            <!-- Action Bar -->
+                            <!-- Footer Actions -->
                             <div class="p-4 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-                                <div id="feedback-msg" class="w-full sm:w-auto text-xs font-medium px-3 py-2 rounded transition-all opacity-0 text-center sm:text-left border border-transparent"></div>
+                                <div id="feedback-msg" class="w-full sm:w-auto text-xs font-medium px-3 py-2 rounded transition-all opacity-0 text-center sm:text-left border border-transparent flex items-center gap-2"></div>
                                 
                                 <div class="flex gap-3 w-full sm:w-auto">
                                     <button onclick="showHint()" id="btn-help" class="hidden px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 rounded-lg transition-all text-xs font-bold uppercase tracking-wide items-center justify-center gap-2">
                                         <i data-lucide="life-buoy" class="w-3 h-3"></i> Pista
                                     </button>
                                     
-                                    <button onclick="validateCode()" class="flex-1 sm:flex-none px-6 py-2 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-xs font-bold uppercase tracking-widest rounded-lg shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all flex items-center justify-center gap-2 transform active:scale-95">
-                                        <i data-lucide="play" class="w-3 h-3 fill-current"></i> Verificar
+                                    <button onclick="validateCode()" class="flex-1 sm:flex-none px-6 py-2 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-xs font-bold uppercase tracking-widest rounded-lg shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all flex items-center justify-center gap-2 transform active:scale-95 group">
+                                        <i data-lucide="play" class="w-3 h-3 fill-current group-hover:translate-x-0.5 transition-transform"></i> Verificar
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Quiz Section -->
-                        <div id="quiz-container" class="hidden bg-slate-900/50 border border-slate-800 rounded-xl p-6 relative overflow-hidden group hover:border-orange-500/30 transition-colors duration-500">
-                            <!-- Decoración de fondo -->
-                            <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/5 rounded-full blur-3xl group-hover:bg-orange-500/10 transition-colors"></div>
-                            
+                        <!-- Quiz Section (Conditional) -->
+                        <div id="quiz-container" class="hidden bg-slate-900/30 border border-slate-800 rounded-xl p-6 relative overflow-hidden transition-all duration-500">
+                            <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/5 rounded-full blur-3xl"></div>
                             <div class="flex items-start gap-4 relative z-10">
                                 <div class="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center shrink-0 text-orange-500 border border-slate-700">
                                     <i data-lucide="help-circle" class="w-5 h-5"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-base font-bold text-white mb-2">Pregunta Rápida</h3>
-                                    <p id="quiz-question" class="text-slate-400 mb-5 text-sm"></p>
-                                    <div id="quiz-options" class="space-y-2.5"></div>
+                                    <h3 class="text-sm font-bold text-white mb-2 uppercase tracking-wide text-orange-400">Desafío Teórico</h3>
+                                    <p id="quiz-question" class="text-slate-300 mb-5 text-sm font-medium"></p>
+                                    <div id="quiz-options" class="grid grid-cols-1 gap-2"></div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Navigation -->
-                    <div class="mt-16 flex justify-between items-center pt-8 border-t border-slate-800/50">
+                    <!-- Navigation Footer -->
+                    <div class="mt-12 flex justify-between items-center pt-8 border-t border-slate-800/50">
                         <button onclick="prevLesson()" id="btn-prev" class="group px-4 py-2 text-slate-500 hover:text-orange-400 transition-colors flex items-center gap-2 text-sm font-medium disabled:opacity-30 disabled:pointer-events-none">
                             <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Anterior
                         </button>
-                        <button onclick="nextLesson()" id="btn-next" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all flex items-center gap-2 text-sm font-bold border border-slate-700 hover:border-orange-500/50 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button onclick="nextLesson()" id="btn-next" class="px-6 py-2.5 bg-slate-800 text-white rounded-lg transition-all flex items-center gap-2 text-sm font-bold border border-slate-700 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
                             Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -259,616 +266,955 @@
                 </div>
             </section>
 
-            <!-- Right: Live Preview -->
+            <!-- Right: Live Preview Panel -->
             <section class="hidden lg:flex w-[45%] xl:w-[40%] flex-col border-l border-slate-800 bg-[#020617] relative z-10">
                 
-                <!-- Tab Header -->
-                <div class="h-10 bg-[#0f172a] border-b border-slate-800 flex items-end px-2 gap-1">
-                    <div class="px-4 py-2 bg-slate-900 text-orange-400 text-xs font-mono border-t border-x border-slate-800 rounded-t-md flex items-center gap-2 relative top-[1px] border-b-slate-900">
-                        <i data-lucide="globe" class="w-3 h-3"></i> preview.html
-                    </div>
-                    <div class="ml-auto flex items-center px-3 py-2 gap-2">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Live</span>
+                <!-- Code Reference Tab -->
+                <div class="h-10 bg-[#0f172a] border-b border-slate-800 flex items-end px-2 gap-1 shrink-0">
+                    <div class="px-4 py-2 bg-slate-900 text-orange-400 text-xs font-mono border-t border-x border-slate-800 rounded-t-md flex items-center gap-2 relative top-[1px] border-b-slate-900 select-none">
+                        <i data-lucide="code" class="w-3 h-3"></i> ejemplo.html
                     </div>
                 </div>
 
-                <!-- Reference Code (Read Only) -->
+                <!-- Example Code View -->
                 <div class="h-1/3 overflow-hidden bg-[#0f172a] border-b border-slate-800 flex flex-col relative group">
-                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                         <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded border border-slate-700">Ejemplo</span>
+                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                         <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded border border-slate-700 shadow-sm">Solo Lectura</span>
                     </div>
                     <pre id="reference-code" class="flex-1 p-5 font-mono text-xs text-slate-400 overflow-auto custom-scrollbar select-text leading-relaxed"></pre>
                 </div>
 
-                <!-- Iframe Preview -->
-                <div class="flex-1 flex flex-col bg-white">
-                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-2 shrink-0">
-                        <div class="flex gap-1.5 opacity-50 hover:opacity-100 transition-opacity">
-                            <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
-                        </div>
-                        <div class="flex-1 bg-white h-5 rounded border border-slate-200 flex items-center px-2 shadow-sm ml-2">
-                            <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 mr-1.5"></i>
-                            <span class="text-[9px] text-slate-400 font-sans">localhost:8080</span>
-                        </div>
+                <!-- Preview Header -->
+                <div class="h-9 bg-slate-100 border-b border-slate-200 flex items-center px-3 gap-2 shrink-0">
+                    <div class="flex gap-1.5 opacity-50">
+                        <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
                     </div>
-                    <iframe id="preview-frame" class="flex-1 w-full border-none bg-white"></iframe>
+                    <div class="flex-1 bg-white h-6 rounded border border-slate-200 flex items-center px-2 shadow-sm ml-2">
+                        <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 mr-1.5"></i>
+                        <span class="text-[10px] text-slate-400 font-sans">localhost:8080/live-preview</span>
+                    </div>
+                    <div class="ml-auto flex items-center gap-1">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Iframe Preview -->
+                <div class="flex-1 bg-white relative">
+                    <iframe id="preview-frame" class="w-full h-full border-none bg-white"></iframe>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Modal de Completado -->
-    <div id="completion-modal" class="fixed inset-0 z-[60] hidden items-center justify-center">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
-        <div class="bg-slate-900 border border-orange-500/30 p-8 rounded-2xl shadow-[0_0_50px_rgba(249,115,22,0.2)] relative z-10 max-w-sm w-full mx-4 text-center transform scale-95 opacity-0 transition-all duration-500" id="modal-content">
-            <div class="w-20 h-20 bg-gradient-to-tr from-orange-600 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-orange-500/40 animate-pulse-glow">
-                <i data-lucide="trophy" class="w-10 h-10 text-white fill-white/20"></i>
+    <!-- Modal de Certificado -->
+    <div id="certificate-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeCertModal()"></div>
+        <div class="bg-white text-slate-900 w-full max-w-2xl relative z-10 rounded-xl overflow-hidden shadow-2xl transform scale-95 opacity-0 transition-all duration-700 cert-pattern" id="cert-content">
+            <div class="border-8 border-double border-orange-500/20 m-2 p-8 text-center relative">
+                <!-- Watermark -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                    <i data-lucide="code-2" class="w-96 h-96"></i>
+                </div>
+
+                <div class="w-24 h-24 bg-orange-500 mx-auto rounded-full flex items-center justify-center mb-6 shadow-xl text-white">
+                    <i data-lucide="award" class="w-12 h-12"></i>
+                </div>
+                
+                <h2 class="text-4xl font-serif font-bold text-slate-800 mb-2">Certificado de Excelencia</h2>
+                <p class="text-slate-500 uppercase tracking-widest text-xs font-bold mb-8">GodsPlan Coding Academy</p>
+                
+                <p class="text-lg text-slate-600 mb-2">Este documento certifica que</p>
+                <h3 class="text-3xl font-bold text-orange-600 mb-6 font-mono" id="cert-name">Desarrollador Web</h3>
+                
+                <p class="text-slate-600 max-w-lg mx-auto leading-relaxed mb-8">
+                    Ha completado satisfactoriamente los 20 módulos intensivos del curso <strong class="text-slate-800">HTML5 Master</strong>, demostrando competencia en estructura, semántica, formularios y multimedia.
+                </p>
+                
+                <div class="flex justify-between items-end border-t border-slate-200 pt-6 mt-6">
+                    <div class="text-left">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iNDAiPjx0ZXh0IHk9IjMwIiBmb250LWZhbWlseT0iQ3Vyc2l2ZSIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMyI+R29kc1BsYW48L3RleHQ+PC9zdmc+" alt="Signature" class="h-10 opacity-70">
+                        <p class="text-xs text-slate-400 uppercase mt-1">Instructor Principal</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-400 uppercase">Fecha de Emisión</p>
+                        <p class="text-sm font-mono font-bold text-slate-700" id="cert-date">12/12/2025</p>
+                    </div>
+                </div>
             </div>
-            <h2 class="text-3xl font-bold text-white mb-2">¡Curso Completado!</h2>
-            <div class="h-1 w-20 bg-gradient-to-r from-transparent via-orange-500 to-transparent mx-auto mb-4"></div>
-            <p class="text-slate-400 text-sm mb-8 leading-relaxed">Has dominado la estructura, semántica y componentes avanzados de HTML5.</p>
-            <button onclick="closeModal()" class="w-full py-3 bg-white text-orange-600 font-bold uppercase tracking-widest rounded-lg hover:bg-orange-50 transition-colors shadow-lg">
-                Continuar Aprendiendo
-            </button>
+            
+            <div class="bg-slate-900 p-4 flex justify-center gap-4">
+                <button onclick="window.print()" class="px-6 py-2 bg-white text-slate-900 rounded font-bold hover:bg-orange-50 transition flex items-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Imprimir / PDF
+                </button>
+                <button onclick="closeCertModal()" class="px-6 py-2 border border-slate-700 text-slate-300 rounded hover:text-white transition">
+                    Cerrar
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Data & Logic -->
+    <!-- Lógica Principal -->
     <script>
-        // --- 1. CONFIGURACIÓN ---
-        const STORAGE_KEY = 'html5_master_orange_v1';
-        
-        let state = {
-            currentIndex: 0,
-            progress: 0,
-            completedLessons: []
-        };
-
+        // --- 1. DATOS DEL CURSO (20 MÓDULOS) ---
         const curriculum = [
+            // BASICS
             {
-                id: "intro",
+                id: "m01",
                 title: "1. Estructura Vital",
+                desc: "El esqueleto de toda página web.",
                 content: `
-                    <span class="text-orange-500 font-mono text-[10px] font-bold uppercase mb-2 block tracking-[0.2em]">Módulo 01</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">El Esqueleto HTML5</h1>
-                    <div class="prose prose-invert max-w-none text-slate-400">
-                        <p class="mb-4 text-lg text-slate-300">Bienvenido al desarrollo moderno. Todo comienza con la estructura base.</p>
-                        <div class="bg-slate-900 border-l-2 border-orange-500 p-4 rounded-r-lg mb-6">
-                            <h3 class="text-orange-400 font-bold text-sm mb-2 uppercase">Reglas de Oro</h3>
-                            <ul class="text-sm space-y-2 list-none">
-                                <li class="flex gap-2"><span class="text-orange-500 font-mono">></span> <strong>!DOCTYPE html</strong>: La declaración moderna.</li>
-                                <li class="flex gap-2"><span class="text-orange-500 font-mono">></span> <strong>html</strong>: La raíz del documento.</li>
-                                <li class="flex gap-2"><span class="text-orange-500 font-mono">></span> <strong>body</strong>: Lo que ve el usuario.</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <div class="mb-4"><span class="badge-mod">Módulo 01</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">HTML5 Boilerplate</h1>
+                    <p class="text-slate-400 mb-4">Toda página comienza con una declaración y una estructura raíz.</p>
+                    <ul class="list-disc pl-5 text-slate-400 space-y-2 mb-4">
+                        <li><code>!DOCTYPE html</code>: Informa al navegador que usamos HTML5.</li>
+                        <li><code>html</code>: La raíz del árbol.</li>
+                        <li><code>head</code>: Metadatos (no visibles).</li>
+                        <li><code>body</code>: Contenido visible.</li>
+                    </ul>
                 `,
-                codeRef: `<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <title>Hola</title>
-  </head>
-  <body>
-    <h1>Bienvenido</h1>
-  </body>
-</html>`,
+                codeRef: `<!DOCTYPE html>\n<html lang="es">\n  <head>\n    <title>Mi Web</title>\n  </head>\n  <body>\n    <h1>Hola Mundo</h1>\n  </body>\n</html>`,
                 exercise: {
-                    instruction: "Inicializa el documento. Escribe el DOCTYPE, html, head y body.",
-                    placeholder: "<!DOCTYPE html>\n<html>\n...",
-                    difficulty: "Inicial",
-                    validate: (code) => {
-                        const c = code.toLowerCase().replace(/\s/g, '');
-                        if(!c.includes('<!doctypehtml>')) return {valid:false, msg:"Falta <!DOCTYPE html> al inicio."};
-                        if(!c.includes('<html>') || !c.includes('</html>')) return {valid:false, msg:"Falta cerrar <html>."};
-                        if(!c.includes('<body>')) return {valid:false, msg:"Falta la etiqueta <body>."};
-                        return {valid:true, msg:"¡Estructura perfecta! Sistema en línea."};
+                    instruction: "Escribe la estructura base completa. Incluye DOCTYPE, html, head, title ('Demo') y body.",
+                    placeholder: "<!DOCTYPE html>\n...",
+                    difficulty: "Básico",
+                    hint: "Recuerda cerrar las etiquetas html, head y body.",
+                    validate: (doc, str) => {
+                        if(!str.toLowerCase().includes('<!doctype html>')) return {valid:false, msg:"Falta el DOCTYPE al inicio."};
+                        if(!doc.querySelector('head')) return {valid:false, msg:"Falta la etiqueta <head>."};
+                        if(!doc.querySelector('body')) return {valid:false, msg:"Falta la etiqueta <body>."};
+                        if(doc.title !== 'Demo') return {valid:false, msg:"El título debe ser 'Demo'."};
+                        return {valid:true, msg:"¡Excelente inicio!"};
                     }
                 },
-                quiz: {
-                    q: "¿Qué etiqueta contiene los metadatos invisibles?",
-                    options: ["<body>", "<head>", "<footer>"],
-                    correct: 1
-                }
+                quiz: { q: "¿Qué etiqueta contiene información invisible para el usuario?", options: ["<body>", "<head>", "<foot>"], correct: 1 }
             },
             {
-                id: "links",
-                title: "2. Hipervínculos",
+                id: "m02",
+                title: "2. Títulos y Jerarquía",
+                desc: "Organizando el contenido con H1-H6.",
                 content: `
-                    <span class="text-orange-500 font-mono text-[10px] font-bold uppercase mb-2 block tracking-[0.2em]">Módulo 02</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Conexiones Globales</h1>
-                    <div class="prose prose-invert max-w-none text-slate-400">
-                        <p>La web es una red de enlaces. Usamos la etiqueta ancla <code>&lt;a&gt;</code>.</p>
-                        <p class="mt-4">El atributo clave es <strong>href</strong> (Hypertext Reference).</p>
-                        <div class="mt-4 p-3 bg-orange-500/10 border border-orange-500/20 rounded text-sm text-orange-200">
-                            <strong>Tip Pro:</strong> Usa <code>target="_blank"</code> para abrir en nueva pestaña.
-                        </div>
-                    </div>
+                    <div class="mb-4"><span class="badge-mod">Módulo 02</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Encabezados</h1>
+                    <p class="text-slate-400 mb-4">Los buscadores aman una buena estructura. Usa <code>h1</code> para el título principal y <code>h2</code> a <code>h6</code> para subtítulos.</p>
                 `,
-                codeRef: `<a href="https://google.com">Ir a Google</a>
-<a href="#" target="_blank">Nueva pestaña</a>`,
+                codeRef: `<h1>Título Principal</h1>\n<h2>Subtítulo</h2>\n<h3>Sección pequeña</h3>`,
                 exercise: {
-                    instruction: "Crea un enlace <a> que lleve a 'https://curso.com' y diga 'Entrar'.",
+                    instruction: "Crea un <h1> que diga 'Noticias' y un <h2> debajo que diga 'Deportes'.",
+                    placeholder: "<h1>...</h1>",
                     difficulty: "Fácil",
-                    validate: (code) => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(code, "text/html");
-                        const a = doc.querySelector('a');
-                        if(!a) return {valid:false, msg:"No encuentro la etiqueta <a>."};
-                        if(a.getAttribute('href') !== 'https://curso.com') return {valid:false, msg:"El href debe ser 'https://curso.com'."};
-                        if(a.innerText.trim() !== 'Entrar') return {valid:false, msg:"El texto del enlace debe ser 'Entrar'."};
-                        return {valid:true, msg:"¡Enlace establecido correctamente!"};
+                    hint: "El orden importa: h1 primero, luego h2.",
+                    validate: (doc) => {
+                        const h1 = doc.querySelector('h1');
+                        const h2 = doc.querySelector('h2');
+                        if(!h1 || h1.innerText !== 'Noticias') return {valid:false, msg:"Falta el h1 con texto 'Noticias'."};
+                        if(!h2 || h2.innerText !== 'Deportes') return {valid:false, msg:"Falta el h2 con texto 'Deportes'."};
+                        return {valid:true, msg:"¡Jerarquía establecida!"};
                     }
                 },
-                quiz: {
-                    q: "¿Qué atributo define el destino del enlace?",
-                    options: ["src", "link", "href"],
-                    correct: 2
-                }
+                quiz: { q: "¿Cuántos niveles de encabezados existen en HTML?", options: ["3", "5", "6"], correct: 2 }
             },
             {
-                id: "img",
-                title: "3. Media & Atributos",
+                id: "m03",
+                title: "3. Párrafos y Texto",
+                desc: "Bloques de texto con <p>.",
                 content: `
-                    <span class="text-orange-500 font-mono text-[10px] font-bold uppercase mb-2 block tracking-[0.2em]">Módulo 03</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Imágenes</h1>
-                    <div class="prose prose-invert max-w-none text-slate-400">
-                        <p>La etiqueta <code>&lt;img&gt;</code> es "self-closing" (no tiene cierre).</p>
-                        <ul class="list-disc pl-5 mt-4 space-y-2">
-                            <li><strong>src</strong>: La fuente o URL de la imagen.</li>
-                            <li><strong>alt</strong>: Texto alternativo (Vital para accesibilidad).</li>
-                        </ul>
-                    </div>
+                    <div class="mb-4"><span class="badge-mod">Módulo 03</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Párrafos</h1>
+                    <p class="text-slate-400 mb-4">La etiqueta <code>&lt;p&gt;</code> define un bloque de texto. Los navegadores añaden margen automáticamente antes y después.</p>
                 `,
-                codeRef: `<img src="logo.png" alt="Logotipo de la empresa" width="200">`,
+                codeRef: `<p>Este es el primer párrafo de texto.</p>\n<p>Este es otro párrafo separado.</p>`,
                 exercise: {
-                    instruction: "Inserta una imagen con src='foto.jpg' y un alt='Usuario'.",
-                    difficulty: "Medio",
-                    validate: (code) => {
-                        const doc = new DOMParser().parseFromString(code, "text/html");
+                    instruction: "Escribe dos párrafos distintos. El primero debe decir 'Hola' y el segundo 'Mundo'.",
+                    placeholder: "<p>...</p>",
+                    difficulty: "Fácil",
+                    hint: "Usa dos etiquetas <p> separadas.",
+                    validate: (doc) => {
+                        const ps = doc.querySelectorAll('p');
+                        if(ps.length < 2) return {valid:false, msg:"Necesitas al menos 2 párrafos."};
+                        if(ps[0].innerText !== 'Hola') return {valid:false, msg:"El primero debe decir 'Hola'."};
+                        if(ps[1].innerText !== 'Mundo') return {valid:false, msg:"El segundo debe decir 'Mundo'."};
+                        return {valid:true, msg:"¡Texto renderizado correctamente!"};
+                    }
+                },
+                quiz: { q: "¿Qué hace el navegador con los espacios extra en blanco dentro de un <p>?", options: ["Los muestra todos", "Los colapsa a uno solo", "Da error"], correct: 1 }
+            },
+            {
+                id: "m04",
+                title: "4. Formato de Texto",
+                desc: "Negritas, itálicas y énfasis.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 04</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Estilo en Línea</h1>
+                    <p class="text-slate-400 mb-4">
+                        <code>&lt;strong&gt;</code>: Importancia fuerte (Negrita).<br>
+                        <code>&lt;em&gt;</code>: Énfasis (Cursiva).
+                    </p>
+                `,
+                codeRef: `<p>Esto es <strong>importante</strong> y esto tiene <em>énfasis</em>.</p>`,
+                exercise: {
+                    instruction: "Crea un párrafo que contenga la palabra 'Alerta' en negrita (strong) y 'cuidado' en cursiva (em).",
+                    placeholder: "<p>...</p>",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
+                        if(!doc.querySelector('p')) return {valid:false, msg:"Crea un párrafo contenedor."};
+                        const s = doc.querySelector('strong');
+                        const e = doc.querySelector('em');
+                        if(!s || s.innerText !== 'Alerta') return {valid:false, msg:"Falta <strong> con 'Alerta'."};
+                        if(!e || e.innerText !== 'cuidado') return {valid:false, msg:"Falta <em> con 'cuidado'."};
+                        return {valid:true, msg:"¡Texto formateado!"};
+                    }
+                },
+                quiz: { q: "¿Cuál es la diferencia entre <b> y <strong>?", options: ["Ninguna visualmente, pero strong es semántico", "<b> es más grueso", "<strong> está obsoleto"], correct: 0 }
+            },
+            // LINKS & IMAGES
+            {
+                id: "m05",
+                title: "5. Hipervínculos",
+                desc: "Conectando la web con <a>.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 05</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Enlaces (Anchors)</h1>
+                    <p class="text-slate-400 mb-4">El atributo <code>href</code> define el destino. Usa <code>target="_blank"</code> para nueva pestaña.</p>
+                `,
+                codeRef: `<a href="https://google.com">Ir a Google</a>\n<a href="contacto.html">Contacto</a>`,
+                exercise: {
+                    instruction: "Crea un enlace a 'https://bing.com' con el texto 'Buscador' que se abra en una nueva pestaña.",
+                    placeholder: "<a ...>...</a>",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const a = doc.querySelector('a');
+                        if(!a) return {valid:false, msg:"No encuentro el enlace."};
+                        if(a.getAttribute('href') !== 'https://bing.com') return {valid:false, msg:"El href es incorrecto."};
+                        if(a.getAttribute('target') !== '_blank') return {valid:false, msg:"Falta target='_blank'."};
+                        if(a.innerText !== 'Buscador') return {valid:false, msg:"El texto debe ser 'Buscador'."};
+                        return {valid:true, msg:"¡Enlace creado!"};
+                    }
+                },
+                quiz: { q: "¿Qué significa 'href'?", options: ["HTML Reference", "Hypertext Reference", "Home Reference"], correct: 1 }
+            },
+            {
+                id: "m06",
+                title: "6. Imágenes",
+                desc: "Insertando medios visuales.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 06</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Imágenes</h1>
+                    <p class="text-slate-400 mb-4">Etiqueta <code>&lt;img&gt;</code>. No tiene cierre. Atributos clave: <code>src</code> (fuente) y <code>alt</code> (descripción).</p>
+                `,
+                codeRef: `<img src="gato.jpg" alt="Un gato lindo" width="300">`,
+                exercise: {
+                    instruction: "Inserta una imagen con src='logo.png', alt='Mi Logo' y width='100'.",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
                         const img = doc.querySelector('img');
                         if(!img) return {valid:false, msg:"Falta la etiqueta <img>."};
-                        if(!img.getAttribute('src')) return {valid:false, msg:"Falta el atributo src."};
-                        if(!img.getAttribute('alt')) return {valid:false, msg:"Falta el atributo alt (accesibilidad)."};
-                        return {valid:true, msg:"¡Imagen renderizada!"};
+                        if(img.getAttribute('src') !== 'logo.png') return {valid:false, msg:"El src debe ser 'logo.png'."};
+                        if(img.getAttribute('alt') !== 'Mi Logo') return {valid:false, msg:"El alt debe ser 'Mi Logo'."};
+                        if(img.getAttribute('width') !== '100') return {valid:false, msg:"Falta el ancho de 100."};
+                        return {valid:true, msg:"¡Imagen insertada!"};
                     }
                 },
-                quiz: {
-                    q: "¿La etiqueta <img> necesita cierre </img>?",
-                    options: ["Sí, siempre", "No, es self-closing", "Solo en HTML4"],
-                    correct: 1
-                }
+                quiz: { q: "¿Por qué es importante el atributo 'alt'?", options: ["Para cargar más rápido", "Para accesibilidad y SEO", "Para dar bordes"], correct: 1 }
             },
+            // LISTS
             {
-                id: "semantic",
-                title: "4. Semántica Pro",
+                id: "m07",
+                title: "7. Listas Desordenadas",
+                desc: "Listas con viñetas (bullets).",
                 content: `
-                    <span class="text-orange-500 font-mono text-[10px] font-bold uppercase mb-2 block tracking-[0.2em]">Módulo 04</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Arquitectura Web</h1>
-                    <div class="prose prose-invert max-w-none text-slate-400">
-                        <p>Deja de usar divs para todo. Dale significado a tu estructura.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                            <div class="bg-slate-900 p-4 rounded border border-slate-800">
-                                <code class="text-orange-400 font-bold">&lt;header&gt;</code>
-                                <p class="text-xs mt-2 text-slate-500">Cabecera, logo, navegación principal.</p>
-                            </div>
-                            <div class="bg-slate-900 p-4 rounded border border-slate-800">
-                                <code class="text-orange-400 font-bold">&lt;article&gt;</code>
-                                <p class="text-xs mt-2 text-slate-500">Contenido independiente (posts, noticias).</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="mb-4"><span class="badge-mod">Módulo 07</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Listas UL</h1>
+                    <p class="text-slate-400 mb-4">Usa <code>&lt;ul&gt;</code> para el contenedor y <code>&lt;li&gt;</code> para cada ítem.</p>
                 `,
-                codeRef: `<header>
-  <nav>...</nav>
-</header>
-<main>
-  <article>
-    <h2>Blog Post</h2>
-  </article>
-</main>
-<footer>...</footer>`,
+                codeRef: `<ul>\n  <li>Manzanas</li>\n  <li>Peras</li>\n</ul>`,
                 exercise: {
-                    instruction: "Crea una estructura semántica: un <header> y dentro un <nav>.",
-                    difficulty: "Intermedio",
-                    validate: (code) => {
-                        const doc = new DOMParser().parseFromString(code, "text/html");
-                        if(!doc.querySelector('header')) return {valid:false, msg:"Falta <header>."};
-                        if(!doc.querySelector('header > nav')) return {valid:false, msg:"El <nav> debe estar dentro del <header>."};
-                        return {valid:true, msg:"¡Arquitectura semántica correcta!"};
+                    instruction: "Crea una lista desordenada con 3 ítems: 'Rojo', 'Verde', 'Azul'.",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
+                        const ul = doc.querySelector('ul');
+                        if(!ul) return {valid:false, msg:"Falta el <ul>."};
+                        const lis = ul.querySelectorAll('li');
+                        if(lis.length !== 3) return {valid:false, msg:"Deben ser exactamente 3 ítems."};
+                        if(lis[0].innerText !== 'Rojo') return {valid:false, msg:"El primero debe ser 'Rojo'."};
+                        return {valid:true, msg:"¡Lista creada!"};
                     }
                 },
-                quiz: {
-                    q: "¿Qué etiqueta usarías para el contenido principal único?",
-                    options: ["<div id='main'>", "<content>", "<main>"],
-                    correct: 2
-                }
+                quiz: { q: "¿Qué significa UL?", options: ["Underlined List", "Unordered List", "Unique List"], correct: 1 }
             },
             {
-                id: "forms",
-                title: "5. Inputs y Datos",
+                id: "m08",
+                title: "8. Listas Ordenadas",
+                desc: "Listas numeradas.",
                 content: `
-                    <span class="text-orange-500 font-mono text-[10px] font-bold uppercase mb-2 block tracking-[0.2em]">Módulo 05</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Formularios</h1>
-                    <div class="prose prose-invert max-w-none text-slate-400">
-                        <p>Interactúa con el usuario. El atributo <code>type</code> cambia todo.</p>
-                        <ul class="text-sm space-y-2 mt-4 font-mono text-slate-300">
-                            <li>type="text"</li>
-                            <li>type="password"</li>
-                            <li>type="email"</li>
-                            <li>type="date"</li>
+                    <div class="mb-4"><span class="badge-mod">Módulo 08</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Listas OL</h1>
+                    <p class="text-slate-400 mb-4">Igual que las anteriores, pero usa <code>&lt;ol&gt;</code>. El navegador las numera automáticamente (1, 2, 3...).</p>
+                `,
+                codeRef: `<ol>\n  <li>Primer paso</li>\n  <li>Segundo paso</li>\n</ol>`,
+                exercise: {
+                    instruction: "Crea una lista ordenada con 2 pasos: 'Abrir' y 'Cerrar'.",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
+                        const ol = doc.querySelector('ol');
+                        if(!ol) return {valid:false, msg:"Falta el <ol>."};
+                        const lis = ol.querySelectorAll('li');
+                        if(lis.length !== 2) return {valid:false, msg:"Necesitas 2 pasos."};
+                        if(lis[0].innerText !== 'Abrir') return {valid:false, msg:"El paso 1 es 'Abrir'."};
+                        return {valid:true, msg:"¡Secuencia correcta!"};
+                    }
+                },
+                quiz: { q: "¿Se puede cambiar el tipo de numeración (A, B, C)?", options: ["No, siempre es 1,2,3", "Sí, con el atributo type", "Sí, con CSS solamente"], correct: 1 }
+            },
+            // SEMANTICS & STRUCTURE
+            {
+                id: "m09",
+                title: "9. Div y Span",
+                desc: "Contenedores genéricos.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 09</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Bloque vs Línea</h1>
+                    <p class="text-slate-400 mb-4">
+                        <code>&lt;div&gt;</code>: Elemento de bloque (ocupa todo el ancho). Para agrupar secciones.<br>
+                        <code>&lt;span&gt;</code>: Elemento en línea (solo ocupa su contenido). Para estilizar partes de texto.
+                    </p>
+                `,
+                codeRef: `<div>\n  <p>Texto con <span style="color:red">color</span>.</p>\n</div>`,
+                exercise: {
+                    instruction: "Crea un <div>. Dentro pon un <p> que diga 'Hola <span style='color:blue'>Mundo</span>'.",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const div = doc.querySelector('div');
+                        if(!div) return {valid:false, msg:"Falta el <div> contenedor."};
+                        const p = div.querySelector('p');
+                        if(!p) return {valid:false, msg:"Falta el <p> dentro del div."};
+                        const span = p.querySelector('span');
+                        if(!span || span.innerText !== 'Mundo') return {valid:false, msg:"Falta el <span> envolviendo 'Mundo'."};
+                        if(span.style.color !== 'blue') return {valid:false, msg:"El span debe tener estilo color:blue."};
+                        return {valid:true, msg:"¡Estructura de contenedores correcta!"};
+                    }
+                },
+                quiz: { q: "¿El <div> fuerza un salto de línea?", options: ["Sí, es elemento de bloque", "No, es elemento en línea", "Depende del contenido"], correct: 0 }
+            },
+            {
+                id: "m10",
+                title: "10. Atributos Globales",
+                desc: "Clases e Identificadores.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 10</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Class e ID</h1>
+                    <p class="text-slate-400 mb-4">
+                        <code>id</code>: Identificador ÚNICO en la página.<br>
+                        <code>class</code>: Para agrupar múltiples elementos (usado por CSS).
+                    </p>
+                `,
+                codeRef: `<div id="header" class="caja oscura">\n  ...\n</div>`,
+                exercise: {
+                    instruction: "Crea un párrafo con id='intro' y class='texto-grande'.",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
+                        const p = doc.querySelector('p');
+                        if(!p) return {valid:false, msg:"Falta el <p>."};
+                        if(p.id !== 'intro') return {valid:false, msg:"El id debe ser 'intro'."};
+                        if(p.className !== 'texto-grande') return {valid:false, msg:"La clase debe ser 'texto-grande'."};
+                        return {valid:true, msg:"¡Atributos asignados!"};
+                    }
+                },
+                quiz: { q: "¿Pueden dos elementos tener el mismo ID?", options: ["Sí", "No, es ilegal en HTML", "Solo si son diferentes etiquetas"], correct: 1 }
+            },
+            // TABLES
+            {
+                id: "m11",
+                title: "11. Tablas Básicas",
+                desc: "Filas y Celdas.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 11</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Tablas</h1>
+                    <p class="text-slate-400 mb-4">Estructura: <code>table</code> > <code>tr</code> (fila) > <code>td</code> (celda de dato) o <code>th</code> (encabezado).</p>
+                `,
+                codeRef: `<table border="1">\n  <tr>\n    <th>Nombre</th>\n  </tr>\n  <tr>\n    <td>Juan</td>\n  </tr>\n</table>`,
+                exercise: {
+                    instruction: "Crea una tabla con 1 fila (tr). Esa fila debe tener 2 celdas (td) con los textos 'A' y 'B'.",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const table = doc.querySelector('table');
+                        if(!table) return {valid:false, msg:"Falta <table>."};
+                        const tr = table.querySelector('tr');
+                        if(!tr) return {valid:false, msg:"Falta la fila <tr>."};
+                        const tds = tr.querySelectorAll('td');
+                        if(tds.length !== 2) return {valid:false, msg:"Necesitas 2 celdas <td>."};
+                        if(tds[0].innerText !== 'A' || tds[1].innerText !== 'B') return {valid:false, msg:"Los textos deben ser 'A' y 'B'."};
+                        return {valid:true, msg:"¡Tabla construida!"};
+                    }
+                },
+                quiz: { q: "¿Qué significa TR?", options: ["Table Row", "Table Record", "Table Root"], correct: 0 }
+            },
+            {
+                id: "m12",
+                title: "12. Tablas Avanzadas",
+                desc: "Thead, Tbody y fusiones.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 12</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Organización de Tablas</h1>
+                    <p class="text-slate-400 mb-4">Agrupa el contenido semánticamente en <code>thead</code> (cabecera) y <code>tbody</code> (cuerpo).</p>
+                `,
+                codeRef: `<table>\n  <thead>...</thead>\n  <tbody>...</tbody>\n</table>`,
+                exercise: {
+                    instruction: "Estructura una tabla con un <thead> y un <tbody> dentro.",
+                    placeholder: "<table>\n...",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        if(!doc.querySelector('table > thead')) return {valid:false, msg:"Falta el <thead> dentro de la tabla."};
+                        if(!doc.querySelector('table > tbody')) return {valid:false, msg:"Falta el <tbody> dentro de la tabla."};
+                        return {valid:true, msg:"¡Estructura de tabla profesional!"};
+                    }
+                },
+                quiz: { q: "¿Para qué sirve rowspan?", options: ["Unir filas verticalmente", "Unir columnas", "Separar celdas"], correct: 0 }
+            },
+            // SEMANTICS 2
+            {
+                id: "m13",
+                title: "13. Semántica: Cabecera",
+                desc: "Header, Nav y Footer.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 13</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Layout Semántico</h1>
+                    <p class="text-slate-400 mb-4">No uses divs para todo. Usa <code>header</code> para la parte superior y <code>nav</code> para menús.</p>
+                `,
+                codeRef: `<header>\n  <nav>\n    <a href="#">Inicio</a>\n  </nav>\n</header>`,
+                exercise: {
+                    instruction: "Crea un <header>. Dentro coloca un <nav> y dentro del nav un texto 'Menú'.",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const h = doc.querySelector('header');
+                        if(!h) return {valid:false, msg:"Falta <header>."};
+                        if(!h.querySelector('nav')) return {valid:false, msg:"El <nav> debe estar dentro del header."};
+                        if(h.querySelector('nav').innerText !== 'Menú') return {valid:false, msg:"El texto 'Menú' falta."};
+                        return {valid:true, msg:"¡Semántica aplicada!"};
+                    }
+                },
+                quiz: { q: "¿El <footer> debe ir siempre al final del <body>?", options: ["Sí, obligatorio", "No, puede ir dentro de artículos u secciones", "No existe footer en HTML5"], correct: 1 }
+            },
+            {
+                id: "m14",
+                title: "14. Semántica: Contenido",
+                desc: "Main, Article, Section.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 14</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Cuerpo del Documento</h1>
+                    <p class="text-slate-400 mb-4">
+                        <code>main</code>: Contenido principal único.<br>
+                        <code>article</code>: Contenido independiente (blog post).<br>
+                        <code>section</code>: Agrupación temática.
+                    </p>
+                `,
+                codeRef: `<main>\n  <article>\n    <h2>Título</h2>\n  </article>\n</main>`,
+                exercise: {
+                    instruction: "Crea un <main> y dentro una <section> con el id='servicios'.",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const m = doc.querySelector('main');
+                        if(!m) return {valid:false, msg:"Falta <main>."};
+                        const s = m.querySelector('section');
+                        if(!s) return {valid:false, msg:"Falta <section> dentro de main."};
+                        if(s.id !== 'servicios') return {valid:false, msg:"El section necesita id='servicios'."};
+                        return {valid:true, msg:"¡Estructura lógica!"};
+                    }
+                },
+                quiz: { q: "¿Cuántos <main> debe haber por página?", options: ["Tantos como quieras", "Solo uno visible", "Ninguno"], correct: 1 }
+            },
+            // FORMS
+            {
+                id: "m15",
+                title: "15. Formularios Básicos",
+                desc: "Recogiendo datos.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 15</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Forms & Inputs</h1>
+                    <p class="text-slate-400 mb-4">El contenedor es <code>form</code>. El elemento clave es <code>input</code>.</p>
+                `,
+                codeRef: `<form>\n  <label>Nombre:</label>\n  <input type="text">\n</form>`,
+                exercise: {
+                    instruction: "Crea un formulario con un input de tipo 'text'.",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
+                        if(!doc.querySelector('form')) return {valid:false, msg:"Falta <form>."};
+                        const i = doc.querySelector('input');
+                        if(!i || i.type !== 'text') return {valid:false, msg:"Falta <input type='text'>."};
+                        return {valid:true, msg:"¡Formulario iniciado!"};
+                    }
+                },
+                quiz: { q: "¿Input necesita etiqueta de cierre </input>?", options: ["Sí", "No", "A veces"], correct: 1 }
+            },
+            {
+                id: "m16",
+                title: "16. Tipos de Input",
+                desc: "Email, Password, Date.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 16</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Validación Nativa</h1>
+                    <p class="text-slate-400 mb-4">HTML5 valida formatos por ti. Usa <code>type="email"</code>, <code>type="password"</code>, <code>type="number"</code>.</p>
+                `,
+                codeRef: `<input type="email" placeholder="tu@email.com">`,
+                exercise: {
+                    instruction: "Crea un input para contraseña con placeholder='Secreto'.",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const i = doc.querySelector('input');
+                        if(!i || i.type !== 'password') return {valid:false, msg:"El tipo debe ser 'password'."};
+                        if(i.getAttribute('placeholder') !== 'Secreto') return {valid:false, msg:"El placeholder debe ser 'Secreto'."};
+                        return {valid:true, msg:"¡Campo seguro creado!"};
+                    }
+                },
+                quiz: { q: "¿Qué hace type='email' en móviles?", options: ["Nada especial", "Cambia el teclado para mostrar @", "Envía el email solo"], correct: 1 }
+            },
+            {
+                id: "m17",
+                title: "17. Selectores y Áreas",
+                desc: "Select y Textarea.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 17</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Más Controles</h1>
+                    <p class="text-slate-400 mb-4">
+                        <code>select</code> + <code>option</code>: Menú desplegable.<br>
+                        <code>textarea</code>: Texto multilínea.
+                    </p>
+                `,
+                codeRef: `<select>\n  <option>Opción A</option>\n</select>\n<textarea></textarea>`,
+                exercise: {
+                    instruction: "Crea un <select> con dos opciones: 'Si' y 'No'.",
+                    difficulty: "Intermedio",
+                    validate: (doc) => {
+                        const s = doc.querySelector('select');
+                        if(!s) return {valid:false, msg:"Falta el <select>."};
+                        const ops = s.querySelectorAll('option');
+                        if(ops.length !== 2) return {valid:false, msg:"Necesitas 2 opciones."};
+                        if(ops[0].innerText !== 'Si') return {valid:false, msg:"Opción 1 debe ser 'Si'."};
+                        return {valid:true, msg:"¡Menú desplegable listo!"};
+                    }
+                },
+                quiz: { q: "¿Textarea usa el atributo 'value' para su texto inicial?", options: ["Sí", "No, va entre las etiquetas", "No tiene texto inicial"], correct: 1 }
+            },
+            {
+                id: "m18",
+                title: "18. Botones",
+                desc: "Interacción y envío.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 18</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Buttons</h1>
+                    <p class="text-slate-400 mb-4">Dentro de un form, <code>type="submit"</code> envía los datos. Fuera, <code>type="button"</code> es para JS.</p>
+                `,
+                codeRef: `<button type="submit">Enviar</button>`,
+                exercise: {
+                    instruction: "Crea un botón de tipo 'submit' que diga 'Guardar'.",
+                    difficulty: "Fácil",
+                    validate: (doc) => {
+                        const b = doc.querySelector('button');
+                        if(!b) return {valid:false, msg:"Falta el <button>."};
+                        if(b.getAttribute('type') !== 'submit') return {valid:false, msg:"Tipo debe ser 'submit'."};
+                        if(b.innerText !== 'Guardar') return {valid:false, msg:"Texto debe ser 'Guardar'."};
+                        return {valid:true, msg:"¡Botón listo!"};
+                    }
+                },
+                quiz: { q: "¿Cuál es el tipo por defecto de un botón dentro de un form?", options: ["button", "reset", "submit"], correct: 2 }
+            },
+            // ADVANCED & FINAL
+            {
+                id: "m19",
+                title: "19. Multimedia & Embeds",
+                desc: "Iframes y Audio.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod">Módulo 19</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Incrustar Contenido</h1>
+                    <p class="text-slate-400 mb-4">Usa <code>iframe</code> para mostrar otras webs o mapas dentro de la tuya.</p>
+                `,
+                codeRef: `<iframe src="https://example.com" height="200"></iframe>`,
+                exercise: {
+                    instruction: "Inserta un iframe vacío (src='about:blank') con borde 0 (frameborder='0').",
+                    difficulty: "Avanzado",
+                    validate: (doc) => {
+                        const i = doc.querySelector('iframe');
+                        if(!i) return {valid:false, msg:"Falta <iframe>."};
+                        if(i.getAttribute('src') !== 'about:blank') return {valid:false, msg:"Src debe ser 'about:blank'."};
+                        if(i.getAttribute('frameborder') !== '0') return {valid:false, msg:"Frameborder debe ser '0'."};
+                        return {valid:true, msg:"¡Ventana incrustada!"};
+                    }
+                },
+                quiz: { q: "¿Qué etiqueta se usa para videos nativos?", options: ["<media>", "<video>", "<movie>"], correct: 1 }
+            },
+            {
+                id: "m20",
+                title: "20. Proyecto Final",
+                desc: "Construye tu perfil.",
+                content: `
+                    <div class="mb-4"><span class="badge-mod bg-orange-600 text-white animate-pulse">Desafío Final</span></div>
+                    <h1 class="text-3xl font-bold text-white mb-4">Tu Perfil de Desarrollador</h1>
+                    <p class="text-slate-400 mb-4">Combina todo: Estructura, Imagen, Lista y Formulario de contacto.</p>
+                    <div class="bg-slate-900 p-4 border border-slate-700 rounded-lg text-sm text-slate-300">
+                        <strong class="text-orange-400">Requisitos:</strong>
+                        <ul class="list-disc pl-4 mt-2 space-y-1">
+                            <li>Un <code>h1</code> con tu nombre.</li>
+                            <li>Una <code>img</code> (cualquier src).</li>
+                            <li>Una lista <code>ul</code> con 2 habilidades.</li>
+                            <li>Un <code>form</code> con un botón.</li>
                         </ul>
                     </div>
                 `,
-                codeRef: `<form>
-  <input type="email" placeholder="Tu correo" required>
-  <button type="submit">Enviar</button>
-</form>`,
+                codeRef: `<h1>Dev</h1>\n<img src="yo.jpg">\n<ul><li>HTML</li></ul>\n<form><button>Hi</button></form>`,
                 exercise: {
-                    instruction: "Crea un campo de contraseña (<input type='password'>) con un placeholder 'Secreto'.",
-                    difficulty: "Intermedio",
-                    validate: (code) => {
-                        const doc = new DOMParser().parseFromString(code, "text/html");
-                        const inp = doc.querySelector('input');
-                        if(!inp) return {valid:false, msg:"No veo el <input>."};
-                        if(inp.getAttribute('type') !== 'password') return {valid:false, msg:"El tipo debe ser 'password'."};
-                        if(inp.getAttribute('placeholder') !== 'Secreto') return {valid:false, msg:"El placeholder debe ser 'Secreto'."};
-                        return {valid:true, msg:"¡Input seguro creado!"};
-                    }
-                },
-                quiz: {
-                    q: "¿Qué atributo hace obligatorio un campo?",
-                    options: ["mandatory", "validate", "required"],
-                    correct: 2
-                }
-            },
-            {
-                id: "final",
-                title: "6. Proyecto Final",
-                content: `
-                    <span class="text-orange-500 font-mono text-[10px] font-bold uppercase mb-2 block tracking-[0.2em]">Misión Final</span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Landing Page</h1>
-                    <div class="prose prose-invert max-w-none text-slate-400">
-                        <p>Es hora de combinar todo. Debes construir una mini landing page.</p>
-                        <p class="mt-4"><strong>Requisitos:</strong></p>
-                        <ul class="list-none space-y-2 mt-2">
-                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-orange-500 rounded-full"></div> Un Header con título h1.</li>
-                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-orange-500 rounded-full"></div> Un Main con un párrafo p.</li>
-                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-orange-500 rounded-full"></div> Un Footer con un enlace a.</li>
-                        </ul>
-                    </div>
-                `,
-                codeRef: `<header><h1>Mi App</h1></header>
-<main>
-  <p>Descarga la app ahora.</p>
-</main>
-<footer>
-  <a href="#">Contacto</a>
-</footer>`,
-                exercise: {
-                    instruction: "Construye la Landing Page completa siguiendo los requisitos.",
-                    placeholder: "<header>...</header>\n<main>...</main>\n<footer>...</footer>",
+                    instruction: "Construye el perfil completo cumpliendo los 4 requisitos.",
+                    placeholder: "<!-- Tu obra maestra aquí -->",
                     difficulty: "Experto",
-                    hint: "Asegúrate de que el enlace <a> esté DENTRO del <footer>.",
-                    validate: (code) => {
-                        const doc = new DOMParser().parseFromString(code, "text/html");
-                        if(!doc.querySelector('header h1')) return {valid:false, msg:"Falta el <h1> dentro del Header."};
-                        if(!doc.querySelector('main p')) return {valid:false, msg:"Falta el <p> dentro del Main."};
-                        if(!doc.querySelector('footer a')) return {valid:false, msg:"Falta el enlace <a> dentro del Footer."};
-                        return {valid:true, msg:"¡MISIÓN CUMPLIDA! Eres un Master HTML5."};
+                    validate: (doc) => {
+                        if(!doc.querySelector('h1')) return {valid:false, msg:"Falta el h1."};
+                        if(!doc.querySelector('img')) return {valid:false, msg:"Falta la imagen."};
+                        if(doc.querySelectorAll('ul li').length < 2) return {valid:false, msg:"La lista necesita al menos 2 habilidades."};
+                        if(!doc.querySelector('form button')) return {valid:false, msg:"Falta el formulario con botón."};
+                        return {valid:true, msg:"¡ERES UN MAESTRO DE HTML5!"};
                     }
                 },
-                quiz: {
-                    q: "¿HTML5 es case-sensitive (distingue mayúsculas)?",
-                    options: ["Sí, estricto", "No, pero minúsculas es buena práctica", "Solo en atributos"],
-                    correct: 1
-                }
+                quiz: { q: "¿Estás listo para aprender CSS?", options: ["¡SÍ!", "Claro que sí", "Por supuesto"], correct: 0 }
             }
         ];
 
-        // --- 2. LOGICA DEL SISTEMA ---
-        
+        // --- 2. ESTADO Y LÓGICA ---
+        const STORAGE_KEY = 'godsplan_html5_v2_data';
+        let state = {
+            currentIdx: 0,
+            completed: [],
+            xp: 0
+        };
+
+        const ranks = ["Novato", "Aprendiz", "Junior", "Desarrollador", "Arquitecto", "Dios del Código"];
+
+        // Init
         document.addEventListener('DOMContentLoaded', () => {
-            loadProgress();
+            loadState();
             renderSidebar();
-            loadLesson(state.currentIndex);
-            setupTabSupport();
+            loadLesson(state.currentIdx);
+            updateUI();
             lucide.createIcons();
+            
+            // Textarea Tab support
+            document.getElementById('code-input').addEventListener('keydown', function(e) {
+                if(e.key == 'Tab') {
+                    e.preventDefault();
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+                    this.selectionStart = this.selectionEnd = start + 1;
+                }
+            });
         });
 
-        function loadProgress() {
+        function loadState() {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                try {
-                    state = JSON.parse(saved);
-                    // Asegurar índices válidos
-                    if(state.currentIndex >= curriculum.length) state.currentIndex = 0;
+            if(saved) {
+                try { 
+                    state = JSON.parse(saved); 
+                    // Sanity check
+                    if(state.currentIdx >= curriculum.length) state.currentIdx = curriculum.length - 1;
                 } catch(e) { console.error(e); }
             }
         }
 
-        function saveProgress() {
+        function saveState() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            updateProgressBar();
+            updateUI();
         }
 
-        function resetProgress() {
-            if(confirm("¿Reiniciar todo el curso?")) {
-                localStorage.removeItem(STORAGE_KEY);
-                location.reload();
+        function updateUI() {
+            // XP & Rank
+            const rankIdx = Math.min(Math.floor(state.xp / 400), ranks.length - 1);
+            document.getElementById('user-rank').innerText = ranks[rankIdx];
+            document.getElementById('user-xp').innerText = state.xp + " XP";
+
+            // Progress Bar
+            const pct = Math.round((state.completed.length / curriculum.length) * 100);
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+            document.getElementById('progress-text').innerText = `${pct}%`;
+
+            // Nav Buttons
+            const btnNext = document.getElementById('btn-next');
+            const isCompleted = state.completed.includes(state.currentIdx);
+            
+            document.getElementById('btn-prev').disabled = state.currentIdx === 0;
+            
+            if(isCompleted) {
+                btnNext.disabled = false;
+                btnNext.classList.add('bg-orange-600', 'border-orange-500', 'hover:bg-orange-500');
+                btnNext.classList.remove('bg-slate-800');
+            } else {
+                btnNext.disabled = true;
+                btnNext.classList.remove('bg-orange-600', 'border-orange-500', 'hover:bg-orange-500');
+                btnNext.classList.add('bg-slate-800');
             }
+
+            // Sidebar active states
+            renderSidebar();
         }
 
         function renderSidebar() {
             const list = document.getElementById('module-list');
-            list.innerHTML = curriculum.map((item, idx) => {
-                const isCompleted = state.completedLessons.includes(idx);
-                const activeClass = idx === state.currentIndex 
-                    ? 'active' 
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50 border-transparent';
-                
+            list.innerHTML = curriculum.map((mod, i) => {
+                const done = state.completed.includes(i);
+                const active = i === state.currentIdx;
+                const activeClass = active ? 'active bg-slate-800/50' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/30 border-transparent';
+                const statusIcon = done 
+                    ? `<i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>` 
+                    : `<span class="text-[10px] font-mono w-4 text-center opacity-50">${i+1}</span>`;
+
                 return `
-                <button onclick="loadLesson(${idx})" 
-                    class="nav-item w-full text-left px-4 py-3 rounded-r-lg mb-1 flex items-center gap-3 text-sm font-medium transition-all border-l-4 group ${activeClass}">
-                    <div class="flex flex-col items-center justify-center w-5 h-5 rounded ${isCompleted ? 'bg-green-500/10 text-green-500' : 'bg-slate-800 text-slate-500 group-hover:text-orange-400'}">
-                        ${isCompleted ? '<i data-lucide="check" class="w-3 h-3"></i>' : `<span class="text-[10px] font-mono">${idx+1}</span>`}
+                <button onclick="loadLesson(${i})" class="nav-item w-full text-left px-3 py-2.5 rounded-md mb-1 flex items-center gap-3 text-sm font-medium transition-all border-l-[3px] group ${activeClass}">
+                    ${statusIcon}
+                    <div class="flex-1 truncate">
+                        <span class="${active ? 'text-white' : ''}">${mod.title}</span>
                     </div>
-                    <span class="truncate">${item.title}</span>
+                    ${active ? '<i data-lucide="chevron-right" class="w-3 h-3 text-orange-500"></i>' : ''}
                 </button>
-            `}).join('');
+                `;
+            }).join('');
             lucide.createIcons();
         }
 
-        function loadLesson(index) {
-            state.currentIndex = index;
-            saveProgress();
-            renderSidebar();
+        function loadLesson(idx) {
+            state.currentIdx = idx;
+            saveState();
             
-            // UI Updates
-            if(window.innerWidth < 768) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-                document.getElementById('mobile-overlay').classList.remove('open');
-            }
-
-            const data = curriculum[index];
-            document.getElementById('lesson-content').innerHTML = data.content;
-            document.getElementById('reference-code').innerHTML = syntaxHighlight(data.codeRef);
-            updatePreview(data.codeRef);
-
-            // Exercise Setup
+            const mod = curriculum[idx];
+            
+            // Reset Areas
+            document.getElementById('lesson-content').innerHTML = mod.content;
+            document.getElementById('reference-code').innerText = mod.codeRef;
+            document.getElementById('exercise-instruction').innerText = mod.exercise.instruction;
+            document.getElementById('difficulty-badge').innerText = mod.exercise.difficulty;
+            
+            // Editor
+            const editor = document.getElementById('code-input');
+            editor.value = "";
+            editor.placeholder = mod.exercise.placeholder || "<!-- Escribe tu código aquí -->";
+            
+            // UI Resets
             document.getElementById('workspace-area').classList.remove('hidden');
-            document.getElementById('exercise-instruction').innerText = data.exercise.instruction;
-            document.getElementById('difficulty-badge').innerText = data.exercise.difficulty;
-            const codeInput = document.getElementById('code-input');
-            codeInput.value = ""; 
-            codeInput.placeholder = data.exercise.placeholder || "<!-- Tu código aquí -->";
-
-            // Feedback Reset
-            const fb = document.getElementById('feedback-msg');
-            fb.style.opacity = '0';
-            fb.innerText = '';
-            
-            // Hint Button
-            const helpBtn = document.getElementById('btn-help');
-            if (data.exercise.hint) {
-                helpBtn.classList.remove('hidden');
-                helpBtn.classList.add('flex');
-            } else {
-                helpBtn.classList.add('hidden');
-                helpBtn.classList.remove('flex');
-            }
-
-            // Quiz Reset
+            document.getElementById('feedback-msg').style.opacity = '0';
+            document.getElementById('feedback-msg').className = ""; // clear styles
+            document.getElementById('btn-help').classList.toggle('hidden', !mod.exercise.hint);
             document.getElementById('quiz-container').classList.add('hidden');
             
-            lucide.createIcons();
+            // Preview clear
+            updatePreview("");
+            
+            // Scroll top
             document.getElementById('scroll-container').scrollTop = 0;
+            
+            // Mobile menu close
+            if(window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('mobile-overlay').classList.remove('opacity-100', 'pointer-events-auto');
+            }
         }
 
         function updatePreview(code) {
-            const iframe = document.getElementById('preview-frame');
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            const styles = `
-                <style>
-                    body { font-family: sans-serif; padding: 20px; color: #333; } 
-                    h1 { color: #ea580c; border-bottom: 2px solid #ea580c; padding-bottom: 5px; }
-                    a { color: #f97316; text-decoration: none; font-weight: bold; }
-                    a:hover { text-decoration: underline; }
-                    button { background: #ea580c; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
-                    input { border: 1px solid #ccc; padding: 5px; border-radius: 4px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
-                    header, footer, main, article { border: 1px dashed #cbd5e1; padding: 10px; margin: 5px 0; background: #f8fafc; }
-                    header::before, footer::before { content: attr(tagName); color: #94a3b8; font-size: 10px; text-transform: uppercase; display: block; margin-bottom: 5px;}
-                </style>`;
+            const frame = document.getElementById('preview-frame');
+            const doc = frame.contentDocument || frame.contentWindow.document;
             doc.open();
-            doc.write(styles + code);
+            doc.write(`
+                <style>
+                    body { font-family: sans-serif; padding: 10px; color: #1e293b; }
+                    h1 { color: #ea580c; border-bottom: 1px solid #fed7aa; padding-bottom: 5px; }
+                    table { border-collapse: collapse; width: 100%; }
+                    td, th { border: 1px solid #cbd5e1; padding: 4px 8px; }
+                    input { border: 1px solid #94a3b8; padding: 5px; border-radius: 4px; display:block; margin: 5px 0;}
+                    button { background: #f97316; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+                </style>
+                ${code}
+            `);
             doc.close();
         }
 
         function validateCode() {
-            const data = curriculum[state.currentIndex].exercise;
-            const userCode = document.getElementById('code-input').value;
-            updatePreview(userCode);
-            
-            const result = data.validate(userCode);
+            const mod = curriculum[state.currentIdx];
+            const code = document.getElementById('code-input').value;
             const fb = document.getElementById('feedback-msg');
+            
+            updatePreview(code);
+            
+            // Parser Logic
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(code, "text/html");
+            const result = mod.exercise.validate(doc, code);
             
             fb.innerText = result.msg;
             fb.style.opacity = '1';
-
+            
             if(result.valid) {
-                fb.className = "w-full sm:w-auto text-xs font-bold px-4 py-2 rounded bg-green-500/10 text-green-400 border border-green-500/20 shadow-[0_0_10px_rgba(74,222,128,0.1)]";
-                setupQuiz(curriculum[state.currentIndex].quiz);
-                confetti({ particleCount: 50, spread: 60, colors: ['#f97316', '#ffffff'] });
+                // Success
+                fb.className = "text-xs font-bold px-4 py-2 rounded bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-2 w-full sm:w-auto animate-[pulse-glow_1s]";
+                fb.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> ${result.msg}`;
+                
+                showQuiz(mod.quiz);
+                lucide.createIcons();
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
             } else {
-                fb.className = "w-full sm:w-auto text-xs font-bold px-4 py-2 rounded bg-red-500/10 text-red-400 border border-red-500/20 animate-shake";
+                // Error
+                fb.className = "text-xs font-bold px-4 py-2 rounded bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-2 w-full sm:w-auto animate-shake";
+                fb.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4"></i> ${result.msg}`;
+                lucide.createIcons();
             }
         }
 
-        function setupQuiz(quizData) {
+        function showQuiz(quiz) {
             const container = document.getElementById('quiz-container');
             container.classList.remove('hidden');
-            container.classList.add('animate-[fadeIn_0.5s_ease-out]');
             
-            document.getElementById('quiz-question').innerText = quizData.q;
-            const isDone = state.completedLessons.includes(state.currentIndex);
-
-            document.getElementById('quiz-options').innerHTML = quizData.options.map((opt, i) => {
-                let baseClass = "w-full text-left p-3 rounded-lg text-sm transition-all border flex justify-between items-center group";
-                let styleClass = "bg-slate-800 border-slate-700 text-slate-300 hover:border-orange-500 hover:text-white";
-                let icon = '<i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-orange-500"></i>';
-                let disabled = "";
-
+            document.getElementById('quiz-question').innerText = quiz.q;
+            
+            const isDone = state.completed.includes(state.currentIdx);
+            
+            document.getElementById('quiz-options').innerHTML = quiz.options.map((opt, i) => {
+                let colorClass = "bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border-slate-700";
                 if(isDone) {
-                    disabled = "disabled";
-                    if(i === quizData.correct) {
-                        styleClass = "bg-green-500/20 border-green-500/50 text-green-400";
-                        icon = '<i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>';
-                    } else {
-                        styleClass = "bg-slate-900 border-slate-800 text-slate-600 opacity-50";
-                    }
+                    if(i === quiz.correct) colorClass = "bg-green-500/20 border-green-500 text-green-400";
+                    else colorClass = "bg-slate-800/50 text-slate-500 border-slate-800 opacity-50";
                 }
-
+                
                 return `
-                <button onclick="checkQuiz(this, ${i}, ${quizData.correct})" ${disabled} class="${baseClass} ${styleClass}">
-                    <span>${opt}</span>
-                    ${icon}
+                <button onclick="checkQuiz(this, ${i}, ${quiz.correct})" ${isDone ? 'disabled' : ''} 
+                    class="w-full text-left p-3 rounded-lg text-sm border transition-all flex justify-between items-center ${colorClass}">
+                    ${opt}
+                    ${isDone && i === quiz.correct ? '<i data-lucide="check" class="w-4 h-4"></i>' : ''}
                 </button>
-            `}).join('');
+                `;
+            }).join('');
             
             lucide.createIcons();
-            // Auto scroll to quiz
+            
+            // Auto scroll
             setTimeout(() => {
                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
 
         function checkQuiz(btn, selected, correct) {
-            const allBtns = document.getElementById('quiz-options').children;
-            
             if(selected === correct) {
-                // Correcto
-                btn.className = "w-full text-left p-3 rounded-lg text-sm transition-all border flex justify-between items-center bg-green-500/20 border-green-500/50 text-green-400 shadow-[0_0_15px_rgba(74,222,128,0.2)]";
-                btn.querySelector('i').outerHTML = '<i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>';
-                lucide.createIcons();
-                
-                // Deshabilitar
-                Array.from(allBtns).forEach(b => b.disabled = true);
-                
-                if(!state.completedLessons.includes(state.currentIndex)) {
-                    state.completedLessons.push(state.currentIndex);
-                    saveProgress();
+                // Win Module
+                if(!state.completed.includes(state.currentIdx)) {
+                    state.completed.push(state.currentIdx);
+                    state.xp += 100;
+                    
+                    confetti({ particleCount: 150, spread: 100 });
+                    
+                    if(state.completed.length === curriculum.length) {
+                        setTimeout(showCertificate, 1500);
+                    }
                 }
-                
-                renderSidebar();
-                confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-
+                saveState();
+                showQuiz(curriculum[state.currentIdx].quiz); // Redraw
             } else {
-                // Incorrecto
-                btn.className = "w-full text-left p-3 rounded-lg text-sm transition-all border flex justify-between items-center bg-red-500/10 border-red-500/50 text-red-400 animate-shake";
-                btn.querySelector('i').outerHTML = '<i data-lucide="x-circle" class="w-4 h-4 text-red-400"></i>';
-                lucide.createIcons();
-                btn.disabled = true;
+                // Fail
+                btn.classList.add('bg-red-500/20', 'border-red-500', 'text-red-400', 'animate-shake');
             }
         }
 
-        function updateProgressBar() {
-            const pct = Math.round((state.completedLessons.length / curriculum.length) * 100);
-            document.getElementById('progress-bar').style.width = `${pct}%`;
-            document.getElementById('progress-text').innerText = `${pct}%`;
-            
-            document.getElementById('btn-prev').disabled = state.currentIndex === 0;
-            const nextBtn = document.getElementById('btn-next');
-            
-            if(state.completedLessons.includes(state.currentIndex)) {
-                nextBtn.disabled = false;
-                nextBtn.classList.add('bg-orange-600', 'border-orange-500', 'hover:bg-orange-500');
-                nextBtn.classList.remove('bg-slate-800');
-            } else {
-                nextBtn.disabled = true;
-                nextBtn.classList.remove('bg-orange-600', 'border-orange-500', 'hover:bg-orange-500');
-                nextBtn.classList.add('bg-slate-800');
+        function showHint() {
+            const hint = curriculum[state.currentIdx].exercise.hint;
+            if(hint) {
+                alert("PISTA: " + hint); // Simple fallback or use feedback div
             }
         }
 
         function nextLesson() {
-            if(state.currentIndex < curriculum.length - 1) {
-                loadLesson(state.currentIndex + 1);
-            } else {
-                showCompletionModal();
+            if(state.currentIdx < curriculum.length - 1) {
+                loadLesson(state.currentIdx + 1);
             }
         }
 
         function prevLesson() {
-            if(state.currentIndex > 0) loadLesson(state.currentIndex - 1);
+            if(state.currentIdx > 0) {
+                loadLesson(state.currentIdx - 1);
+            }
+        }
+        
+        function resetCode() {
+            document.getElementById('code-input').value = "";
+            document.getElementById('code-input').focus();
         }
 
-        function showHint() {
-            const hint = curriculum[state.currentIndex].exercise.hint;
-            if(hint) {
-                const fb = document.getElementById('feedback-msg');
-                fb.innerText = "💡 " + hint;
-                fb.className = "w-full sm:w-auto text-xs font-bold px-4 py-2 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/20";
-                fb.style.opacity = '1';
+        function resetProgress() {
+            if(confirm("¿Estás seguro? Perderás todo tu XP y avance.")) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
             }
         }
 
-        // --- Helpers ---
         function toggleSidebar() {
             const sb = document.getElementById('sidebar');
             const ov = document.getElementById('mobile-overlay');
-            sb.classList.toggle('-translate-x-full');
-            ov.classList.toggle('open');
-            if(ov.classList.contains('open')) {
-                ov.style.opacity = '1';
-                ov.style.pointerEvents = 'auto';
+            const isClosed = sb.classList.contains('-translate-x-full');
+            
+            if(isClosed) {
+                sb.classList.remove('-translate-x-full');
+                ov.classList.add('opacity-100', 'pointer-events-auto');
             } else {
-                ov.style.opacity = '0';
-                ov.style.pointerEvents = 'none';
+                sb.classList.add('-translate-x-full');
+                ov.classList.remove('opacity-100', 'pointer-events-auto');
             }
         }
-
-        function setupTabSupport() {
-            const ta = document.getElementById('code-input');
-            ta.addEventListener('keydown', function(e) {
-                if(e.key == 'Tab') {
-                    e.preventDefault();
-                    var s = this.selectionStart;
-                    this.value = this.value.substring(0,this.selectionStart) + "  " + this.value.substring(this.selectionEnd);
-                    this.selectionEnd = s + 2; 
-                }
-            });
-        }
-
-        function syntaxHighlight(code) {
-             return code
-                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                .replace(/(&lt;\/?)(\w+)(.*?)(&gt;)/g, (match, p1, p2, p3, p4) => {
-                    const attrs = p3.replace(/(\w+)=(".*?")/g, '<span class="token-attr">$1</span>=<span class="token-val">$2</span>');
-                    return `<span class="token-punct">${p1}</span><span class="token-tag">${p2}</span>${attrs}<span class="token-punct">${p4}</span>`;
-                });
-        }
-
-        function showCompletionModal() {
-            const m = document.getElementById('completion-modal');
-            const c = document.getElementById('modal-content');
-            m.classList.remove('hidden');
-            m.classList.add('flex');
+        
+        // --- CERTIFICATE SYSTEM ---
+        function showCertificate() {
+            const modal = document.getElementById('certificate-modal');
+            const content = document.getElementById('cert-content');
+            
+            const name = prompt("¡FELICIDADES! Has completado el curso. Ingresa tu nombre para el certificado:", "Tu Nombre");
+            document.getElementById('cert-name').innerText = name || "Estudiante Anónimo";
+            
+            const today = new Date();
+            document.getElementById('cert-date').innerText = today.toLocaleDateString('es-ES');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
             setTimeout(() => {
-                c.classList.remove('scale-95', 'opacity-0');
-                c.classList.add('scale-100', 'opacity-100');
-            }, 10);
-            confetti({ particleCount: 300, spread: 150, origin: { y: 0.6 } });
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 50);
+            
+            // Celebration
+            var end = Date.now() + 3000;
+            (function frame() {
+              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
         
-        function closeModal() {
-            document.getElementById('completion-modal').classList.add('hidden');
-            document.getElementById('completion-modal').classList.remove('flex');
+        function closeCertModal() {
+            document.getElementById('certificate-modal').classList.add('hidden');
+            document.getElementById('certificate-modal').classList.remove('flex');
         }
+
     </script>
+    
+    <!-- Styles helper classes injected dynamically -->
+    <style>
+        .badge-mod {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(249, 115, 22, 0.1);
+            color: #fb923c;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    </style>
 </body>
 </html>
