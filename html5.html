@@ -61,7 +61,7 @@
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
         
         body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; }
         .font-mono { font-family: 'Fira Code', monospace; }
@@ -97,6 +97,67 @@
             background-color: #ffffff;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
+
+        /* Estilos Educativos (Theory Styling) */
+        .concept-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .concept-title {
+            color: #fb923c;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pro-tip {
+            border-left: 4px solid #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .code-snippet {
+            font-family: 'Fira Code', monospace;
+            background: #0f172a;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            color: #e2e8f0;
+            font-size: 0.85em;
+            border: 1px solid #334155;
+        }
+        .block-code {
+            font-family: 'Fira Code', monospace;
+            background: #0b1120;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border: 1px solid #1e293b;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .text-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+        .text-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+        .text-content li {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col overflow-hidden selection:bg-orange-500/30 selection:text-orange-200">
@@ -129,9 +190,14 @@
         </div>
 
         <div class="flex items-center gap-4 md:gap-6">
-            <div class="hidden md:flex flex-col items-end w-48">
+            <!-- Glosario Button -->
+            <button onclick="toggleGlossary()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-medium text-slate-400 hover:text-white hover:border-orange-500/30 transition-all">
+                <i data-lucide="book" class="w-3 h-3"></i> Glosario
+            </button>
+
+            <div class="hidden md:flex flex-col items-end w-32 lg:w-48">
                 <div class="flex items-center gap-2 text-[10px] font-bold uppercase text-slate-500 mb-1">
-                    <span>Progreso Total</span>
+                    <span>Progreso</span>
                     <span id="progress-text" class="text-orange-400">0%</span>
                 </div>
                 <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
@@ -140,8 +206,7 @@
             </div>
 
             <a href="https://coding.godsplan.site/" onclick="window.location.reload()" class="group relative px-4 py-2 bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm text-slate-400 hover:text-white hover:-translate-y-0.5 shadow-lg hover:shadow-orange-500/10">
-                <i data-lucide="home" class="w-4 h-4 group-hover:text-orange-500 transition-colors"></i>
-                <span class="hidden sm:inline font-medium">Salir</span>
+                <i data-lucide="log-out" class="w-4 h-4 group-hover:text-orange-500 transition-colors"></i>
             </a>
         </div>
     </header>
@@ -156,7 +221,7 @@
         <aside class="w-80 bg-slate-900/95 border-r border-slate-800 flex flex-col shrink-0 transition-transform duration-300 absolute lg:relative z-40 h-full -translate-x-full lg:translate-x-0 backdrop-blur-md" id="sidebar">
             <div class="p-5 border-b border-slate-800/50 flex justify-between items-center">
                 <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                    <i data-lucide="map" class="w-3 h-3"></i> Mapa del Curso
+                    <i data-lucide="map" class="w-3 h-3"></i> Ruta de Aprendizaje
                 </h2>
                 <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-orange-500"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
@@ -167,7 +232,7 @@
             
             <div class="p-4 border-t border-slate-800/50 bg-slate-900">
                 <button onclick="resetProgress()" class="w-full text-xs text-slate-500 hover:text-red-400 flex items-center justify-center gap-2 transition-colors py-2 border border-slate-800 rounded hover:bg-slate-800 hover:border-red-900/30">
-                    <i data-lucide="trash-2" class="w-3 h-3"></i> Resetear Progreso
+                    <i data-lucide="trash-2" class="w-3 h-3"></i> Reiniciar Curso
                 </button>
             </div>
         </aside>
@@ -180,7 +245,7 @@
                 <div class="max-w-4xl mx-auto p-6 lg:p-8 pb-32">
                     
                     <!-- Content Injection -->
-                    <div id="lesson-content" class="mb-10 animate-[fadeIn_0.3s_ease-out]"></div>
+                    <div id="lesson-content" class="mb-10 animate-[fadeIn_0.3s_ease-out] text-content"></div>
 
                     <!-- Interactive Workspace -->
                     <div id="workspace-area" class="hidden space-y-6">
@@ -192,7 +257,7 @@
                                 <div class="flex items-center gap-3">
                                     <div class="flex items-center gap-2">
                                         <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
-                                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Editor HTML</span>
+                                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Editor en Vivo</span>
                                     </div>
                                     <span id="difficulty-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700 uppercase">
                                         Básico
@@ -244,7 +309,7 @@
                                     <i data-lucide="help-circle" class="w-5 h-5"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-sm font-bold text-white mb-2 uppercase tracking-wide text-orange-400">Desafío Teórico</h3>
+                                    <h3 class="text-sm font-bold text-white mb-2 uppercase tracking-wide text-orange-400">Pregunta Rápida</h3>
                                     <p id="quiz-question" class="text-slate-300 mb-5 text-sm font-medium"></p>
                                     <div id="quiz-options" class="grid grid-cols-1 gap-2"></div>
                                 </div>
@@ -259,7 +324,7 @@
                             <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Anterior
                         </button>
                         <button onclick="nextLesson()" id="btn-next" class="px-6 py-2.5 bg-slate-800 text-white rounded-lg transition-all flex items-center gap-2 text-sm font-bold border border-slate-700 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
-                            Siguiente <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            Siguiente Lección <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
 
@@ -311,6 +376,24 @@
         </main>
     </div>
 
+    <!-- Glosario Modal -->
+    <div id="glossary-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="toggleGlossary()"></div>
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-3xl max-h-[80vh] flex flex-col relative z-10 rounded-xl overflow-hidden shadow-2xl animate-[modal-in_0.3s_ease-out]">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                    <i data-lucide="book-open" class="text-orange-500"></i> Glosario de Etiquetas
+                </h2>
+                <button onclick="toggleGlossary()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="glossary-content">
+                    <!-- Se llena con JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Certificado -->
     <div id="certificate-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeCertModal()"></div>
@@ -337,7 +420,7 @@
                 
                 <div class="flex justify-between items-end border-t border-slate-200 pt-6 mt-6">
                     <div class="text-left">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iNDAiPjx0ZXh0IHk9IjMwIiBmb250LWZhbWlseT0iQ3Vyc2l2ZSIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMyI+R29kc1BsYW48L3RleHQ+PC9zdmc+" alt="Signature" class="h-10 opacity-70">
+                        <div class="font-cursive text-2xl text-slate-800 opacity-70 mb-1">GodsPlan</div>
                         <p class="text-xs text-slate-400 uppercase mt-1">Instructor Principal</p>
                     </div>
                     <div class="text-right">
@@ -360,189 +443,247 @@
 
     <!-- Lógica Principal -->
     <script>
-        // --- 1. DATOS DEL CURSO (20 MÓDULOS) ---
+        // --- 1. DATOS DEL CURSO ---
+        // Aquí es donde sucede la magia. CONTENIDO REAL Y EDUCATIVO.
         const curriculum = [
             // BASICS
             {
                 id: "m01",
-                title: "1. Estructura Vital",
-                desc: "El esqueleto de toda página web.",
+                title: "1. La Estructura Vital",
+                desc: "Todo tiene un comienzo.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 01</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">HTML5 Boilerplate</h1>
-                    <p class="text-slate-400 mb-4">Toda página comienza con una declaración y una estructura raíz.</p>
-                    <ul class="list-disc pl-5 text-slate-400 space-y-2 mb-4">
-                        <li><code>!DOCTYPE html</code>: Informa al navegador que usamos HTML5.</li>
-                        <li><code>html</code>: La raíz del árbol.</li>
-                        <li><code>head</code>: Metadatos (no visibles).</li>
-                        <li><code>body</code>: Contenido visible.</li>
-                    </ul>
+                    <h1 class="text-3xl font-bold text-white mb-6">HTML5 Boilerplate</h1>
+                    
+                    <p>Imagina que estás construyendo una casa. No puedes poner el techo sin los cimientos, ¿verdad? En la web, esos cimientos son la estructura básica de HTML.</p>
+
+                    <div class="concept-card">
+                        <div class="concept-title"><i data-lucide="layers"></i> Anatomía de un Archivo</div>
+                        <p class="text-sm text-slate-300">
+                            1. <span class="code-snippet">!DOCTYPE html</span>: Le grita al navegador "¡Oye! Esto es HTML5 moderno, no trates de adivinar".<br>
+                            2. <span class="code-snippet">html</span>: La raíz. Todo vive aquí dentro.<br>
+                            3. <span class="code-snippet">head</span>: El cerebro. Información invisible (metadatos, título de pestaña).<br>
+                            4. <span class="code-snippet">body</span>: El cuerpo. Todo lo que el usuario ve en la pantalla.
+                        </p>
+                    </div>
+
+                    <div class="pro-tip text-sm text-slate-300">
+                        <strong>Tip Pro:</strong> Siempre indentamos el código (usamos espacios o tabulaciones) para ver qué etiqueta está dentro de cuál. ¡El orden evita el caos!
+                    </div>
                 `,
-                codeRef: `<!DOCTYPE html>\n<html lang="es">\n  <head>\n    <title>Mi Web</title>\n  </head>\n  <body>\n    <h1>Hola Mundo</h1>\n  </body>\n</html>`,
+                codeRef: `<!DOCTYPE html>\n<html lang="es">\n  <head>\n    <title>Mi Primera Web</title>\n  </head>\n  <body>\n    <h1>¡Hola Mundo!</h1>\n  </body>\n</html>`,
                 exercise: {
-                    instruction: "Escribe la estructura base completa. Incluye DOCTYPE, html, head, title ('Demo') y body.",
+                    instruction: "Escribe la estructura base completa desde cero. No olvides el DOCTYPE, las etiquetas html, head (con un title 'Demo') y body.",
                     placeholder: "<!DOCTYPE html>\n...",
                     difficulty: "Básico",
-                    hint: "Recuerda cerrar las etiquetas html, head y body.",
+                    hint: "La estructura es como una muñeca rusa: html > head/body.",
                     validate: (doc, str) => {
-                        if(!str.toLowerCase().includes('<!doctype html>')) return {valid:false, msg:"Falta el DOCTYPE al inicio."};
-                        if(!doc.querySelector('head')) return {valid:false, msg:"Falta la etiqueta <head>."};
-                        if(!doc.querySelector('body')) return {valid:false, msg:"Falta la etiqueta <body>."};
-                        if(doc.title !== 'Demo') return {valid:false, msg:"El título debe ser 'Demo'."};
-                        return {valid:true, msg:"¡Excelente inicio!"};
+                        if(!str.toLowerCase().includes('<!doctype html>')) return {valid:false, msg:"¡Error Crítico! Falta el <!DOCTYPE html> al inicio."};
+                        if(!doc.querySelector('html')) return {valid:false, msg:"Falta la etiqueta raíz <html>."};
+                        if(!doc.querySelector('head')) return {valid:false, msg:"Tu página no tiene cerebro. Falta <head>."};
+                        if(!doc.querySelector('body')) return {valid:false, msg:"Tu página es invisible. Falta <body>."};
+                        if(doc.title !== 'Demo') return {valid:false, msg:"El título de la pestaña debe ser exactamente 'Demo'."};
+                        return {valid:true, msg:"¡Perfecto! Has creado vida digital."};
                     }
                 },
-                quiz: { q: "¿Qué etiqueta contiene información invisible para el usuario?", options: ["<body>", "<head>", "<foot>"], correct: 1 }
+                quiz: { q: "¿Qué etiqueta contiene lo que ve el usuario?", options: ["<head>", "<body>", "<html5>"], correct: 1 }
             },
             {
                 id: "m02",
-                title: "2. Títulos y Jerarquía",
-                desc: "Organizando el contenido con H1-H6.",
+                title: "2. Jerarquía de Títulos",
+                desc: "Google ama el orden.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 02</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Encabezados</h1>
-                    <p class="text-slate-400 mb-4">Los buscadores aman una buena estructura. Usa <code>h1</code> para el título principal y <code>h2</code> a <code>h6</code> para subtítulos.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Los Encabezados (H1-H6)</h1>
+                    
+                    <p>Cuando lees un periódico, sabes qué es importante por el tamaño del título. En HTML, usamos <span class="code-snippet">h1</span> hasta <span class="code-snippet">h6</span> para crear esa estructura.</p>
+
+                    <div class="concept-card">
+                        <div class="concept-title"><i data-lucide="list-ordered"></i> Reglas de Oro</div>
+                        <ul class="text-sm text-slate-300 list-disc pl-4 space-y-2">
+                            <li>El <strong>h1</strong> es el rey. Solo debe haber UNO por página (usualmente el título principal).</li>
+                            <li>Usa <strong>h2</strong> para secciones principales.</li>
+                            <li>Usa <strong>h3</strong> para subsecciones, y así sucesivamente.</li>
+                            <li>Nunca uses encabezados solo para hacer el texto grande. Para eso está CSS. Úsalos para dar <strong>significado</strong>.</li>
+                        </ul>
+                    </div>
                 `,
-                codeRef: `<h1>Título Principal</h1>\n<h2>Subtítulo</h2>\n<h3>Sección pequeña</h3>`,
+                codeRef: `<h1>Noticias del Día</h1>\n\n<h2>Deportes</h2>\n<p>Ganó el equipo local...</p>\n\n<h2>Clima</h2>\n<h3>Pronóstico Semanal</h3>`,
                 exercise: {
-                    instruction: "Crea un <h1> que diga 'Noticias' y un <h2> debajo que diga 'Deportes'.",
+                    instruction: "Crea una jerarquía lógica: Un <h1> que diga 'Mi Blog', y debajo un <h2> que diga 'Primer Post'.",
                     placeholder: "<h1>...</h1>",
                     difficulty: "Fácil",
-                    hint: "El orden importa: h1 primero, luego h2.",
+                    hint: "Asegúrate de cerrar las etiquetas: </h1> y </h2>.",
                     validate: (doc) => {
                         const h1 = doc.querySelector('h1');
                         const h2 = doc.querySelector('h2');
-                        if(!h1 || h1.innerText !== 'Noticias') return {valid:false, msg:"Falta el h1 con texto 'Noticias'."};
-                        if(!h2 || h2.innerText !== 'Deportes') return {valid:false, msg:"Falta el h2 con texto 'Deportes'."};
-                        return {valid:true, msg:"¡Jerarquía establecida!"};
+                        if(!h1) return {valid:false, msg:"Falta el título principal <h1>."};
+                        if(h1.innerText !== 'Mi Blog') return {valid:false, msg:"El h1 debe decir 'Mi Blog'."};
+                        if(!h2) return {valid:false, msg:"Falta el subtítulo <h2>."};
+                        if(h2.innerText !== 'Primer Post') return {valid:false, msg:"El h2 debe decir 'Primer Post'."};
+                        return {valid:true, msg:"¡Estructura sólida como una roca!"};
                     }
                 },
-                quiz: { q: "¿Cuántos niveles de encabezados existen en HTML?", options: ["3", "5", "6"], correct: 2 }
+                quiz: { q: "¿Cuántos <h1> se recomienda tener por página?", options: ["Tantos como quieras", "Solo uno", "Ninguno, usa h2"], correct: 1 }
             },
             {
                 id: "m03",
-                title: "3. Párrafos y Texto",
-                desc: "Bloques de texto con <p>.",
+                title: "3. Párrafos y Espacio",
+                desc: "El bloque de construcción básico.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 03</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Párrafos</h1>
-                    <p class="text-slate-400 mb-4">La etiqueta <code>&lt;p&gt;</code> define un bloque de texto. Los navegadores añaden margen automáticamente antes y después.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Párrafos (P)</h1>
+                    
+                    <p>La etiqueta <span class="code-snippet">&lt;p&gt;</span> define un bloque de texto. Es inteligente: automáticamente añade un margen arriba y abajo para separar las ideas.</p>
+
+                    <div class="concept-card border-orange-500/30 bg-orange-500/5">
+                        <div class="concept-title text-orange-400"><i data-lucide="alert-triangle"></i> ¡Cuidado con los 'Enter'!</div>
+                        <p class="text-sm text-slate-300">
+                            En HTML, si das 10 veces 'Enter' en tu código, el navegador lo ignorará y mostrará solo un espacio. Si quieres párrafos separados, <strong>debes</strong> usar etiquetas <span class="code-snippet">&lt;p&gt;</span> separadas.
+                        </p>
+                    </div>
                 `,
-                codeRef: `<p>Este es el primer párrafo de texto.</p>\n<p>Este es otro párrafo separado.</p>`,
+                codeRef: `<p>Este es el primer párrafo de mi historia.</p>\n<p>Aquí comienza otra idea distinta, separada visualmente.</p>`,
                 exercise: {
-                    instruction: "Escribe dos párrafos distintos. El primero debe decir 'Hola' y el segundo 'Mundo'.",
+                    instruction: "Escribe dos párrafos distintos. El primero debe decir 'Hola' y el segundo 'Mundo'. Nota cómo se separan solos.",
                     placeholder: "<p>...</p>",
                     difficulty: "Fácil",
-                    hint: "Usa dos etiquetas <p> separadas.",
+                    hint: "Necesitas abrir y cerrar <p> dos veces.",
                     validate: (doc) => {
                         const ps = doc.querySelectorAll('p');
-                        if(ps.length < 2) return {valid:false, msg:"Necesitas al menos 2 párrafos."};
-                        if(ps[0].innerText !== 'Hola') return {valid:false, msg:"El primero debe decir 'Hola'."};
-                        if(ps[1].innerText !== 'Mundo') return {valid:false, msg:"El segundo debe decir 'Mundo'."};
-                        return {valid:true, msg:"¡Texto renderizado correctamente!"};
+                        if(ps.length < 2) return {valid:false, msg:"No seas tímido, escribe al menos 2 párrafos."};
+                        if(ps[0].innerText.trim() !== 'Hola') return {valid:false, msg:"El primer párrafo debe decir 'Hola'."};
+                        if(ps[1].innerText.trim() !== 'Mundo') return {valid:false, msg:"El segundo párrafo debe decir 'Mundo'."};
+                        return {valid:true, msg:"¡Texto renderizado y separado!"};
                     }
                 },
-                quiz: { q: "¿Qué hace el navegador con los espacios extra en blanco dentro de un <p>?", options: ["Los muestra todos", "Los colapsa a uno solo", "Da error"], correct: 1 }
+                quiz: { q: "¿HTML respeta los saltos de línea que haces con 'Enter'?", options: ["Sí, siempre", "No, los ignora", "Solo en el <head>"], correct: 1 }
             },
             {
                 id: "m04",
-                title: "4. Formato de Texto",
-                desc: "Negritas, itálicas y énfasis.",
+                title: "4. Estilo con Significado",
+                desc: "No es solo estética, es semántica.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 04</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Estilo en Línea</h1>
-                    <p class="text-slate-400 mb-4">
-                        <code>&lt;strong&gt;</code>: Importancia fuerte (Negrita).<br>
-                        <code>&lt;em&gt;</code>: Énfasis (Cursiva).
-                    </p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Negritas y Cursivas</h1>
+                    
+                    <p>Antiguamente usábamos <code>&lt;b&gt;</code> (bold) e <code>&lt;i&gt;</code> (italic). Hoy usamos etiquetas que explican <strong>qué es</strong> el texto, no solo cómo se ve.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="concept-card mb-0">
+                            <div class="concept-title text-white">STRONG</div>
+                            <p class="text-xs text-slate-400">Importancia fuerte. Los lectores de pantalla gritan esto.</p>
+                            <div class="code-snippet mt-2">&lt;strong&gt;URGENTE&lt;/strong&gt;</div>
+                        </div>
+                        <div class="concept-card mb-0">
+                            <div class="concept-title text-white">EM (Emphasis)</div>
+                            <p class="text-xs text-slate-400">Énfasis sutil, como cambiar el tono de voz.</p>
+                            <div class="code-snippet mt-2">&lt;em&gt;realmente&lt;/em&gt;</div>
+                        </div>
+                    </div>
                 `,
-                codeRef: `<p>Esto es <strong>importante</strong> y esto tiene <em>énfasis</em>.</p>`,
+                codeRef: `<p>Es <strong>crucial</strong> que leas esto con <em>atención</em>.</p>`,
                 exercise: {
-                    instruction: "Crea un párrafo que contenga la palabra 'Alerta' en negrita (strong) y 'cuidado' en cursiva (em).",
+                    instruction: "Crea un párrafo que diga 'Alerta: ten cuidado'. La palabra 'Alerta' debe ser strong y 'cuidado' debe ser em.",
                     placeholder: "<p>...</p>",
                     difficulty: "Fácil",
                     validate: (doc) => {
-                        if(!doc.querySelector('p')) return {valid:false, msg:"Crea un párrafo contenedor."};
+                        if(!doc.querySelector('p')) return {valid:false, msg:"Empieza con un párrafo <p>."};
                         const s = doc.querySelector('strong');
                         const e = doc.querySelector('em');
-                        if(!s || s.innerText !== 'Alerta') return {valid:false, msg:"Falta <strong> con 'Alerta'."};
-                        if(!e || e.innerText !== 'cuidado') return {valid:false, msg:"Falta <em> con 'cuidado'."};
-                        return {valid:true, msg:"¡Texto formateado!"};
+                        if(!s || s.innerText.toLowerCase() !== 'alerta') return {valid:false, msg:"Falta <strong> envolviendo 'Alerta'."};
+                        if(!e || e.innerText.toLowerCase() !== 'cuidado') return {valid:false, msg:"Falta <em> envolviendo 'cuidado'."};
+                        return {valid:true, msg:"¡Has dado énfasis con significado!"};
                     }
                 },
-                quiz: { q: "¿Cuál es la diferencia entre <b> y <strong>?", options: ["Ninguna visualmente, pero strong es semántico", "<b> es más grueso", "<strong> está obsoleto"], correct: 0 }
+                quiz: { q: "¿Por qué preferimos <strong> sobre <b>?", options: ["Se ve más negro", "Es semántico y accesible", "Es más corto de escribir"], correct: 1 }
             },
-            // LINKS & IMAGES
             {
                 id: "m05",
-                title: "5. Hipervínculos",
-                desc: "Conectando la web con <a>.",
+                title: "5. El Portal (Links)",
+                desc: "La base de la 'World Wide Web'.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 05</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Enlaces (Anchors)</h1>
-                    <p class="text-slate-400 mb-4">El atributo <code>href</code> define el destino. Usa <code>target="_blank"</code> para nueva pestaña.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Enlaces (Anchor Tags)</h1>
+                    
+                    <p>Sin enlaces, la web sería solo documentos aislados. La etiqueta <span class="code-snippet">&lt;a&gt;</span> (anchor) conecta el mundo.</p>
+
+                    <div class="block-code">
+                        &lt;a href="destino" target="ventana"&gt;Texto Clicable&lt;/a&gt;
+                    </div>
+
+                    <ul class="text-sm text-slate-300 list-disc pl-4 space-y-2 mb-4">
+                        <li><strong>href:</strong> (Hypertext Reference) ¿A dónde vamos?</li>
+                        <li><strong>target="_blank":</strong> Abre en una pestaña nueva (útil para enlaces externos).</li>
+                    </ul>
                 `,
-                codeRef: `<a href="https://google.com">Ir a Google</a>\n<a href="contacto.html">Contacto</a>`,
+                codeRef: `<a href="https://google.com" target="_blank">Ir a Google</a>`,
                 exercise: {
-                    instruction: "Crea un enlace a 'https://bing.com' con el texto 'Buscador' que se abra en una nueva pestaña.",
+                    instruction: "Crea un enlace a 'https://bing.com' con el texto 'Buscador'. Haz que se abra en una nueva pestaña.",
                     placeholder: "<a ...>...</a>",
                     difficulty: "Intermedio",
                     validate: (doc) => {
                         const a = doc.querySelector('a');
-                        if(!a) return {valid:false, msg:"No encuentro el enlace."};
-                        if(a.getAttribute('href') !== 'https://bing.com') return {valid:false, msg:"El href es incorrecto."};
-                        if(a.getAttribute('target') !== '_blank') return {valid:false, msg:"Falta target='_blank'."};
-                        if(a.innerText !== 'Buscador') return {valid:false, msg:"El texto debe ser 'Buscador'."};
-                        return {valid:true, msg:"¡Enlace creado!"};
+                        if(!a) return {valid:false, msg:"No veo ningún ancla <a>."};
+                        if(a.getAttribute('href') !== 'https://bing.com') return {valid:false, msg:"El destino (href) es incorrecto."};
+                        if(a.getAttribute('target') !== '_blank') return {valid:false, msg:"Falta target='_blank' para nueva pestaña."};
+                        if(a.innerText !== 'Buscador') return {valid:false, msg:"El texto visible debe ser 'Buscador'."};
+                        return {valid:true, msg:"¡Enlace interdimensional creado!"};
                     }
                 },
-                quiz: { q: "¿Qué significa 'href'?", options: ["HTML Reference", "Hypertext Reference", "Home Reference"], correct: 1 }
+                quiz: { q: "¿Qué atributo define la URL de destino?", options: ["src", "link", "href"], correct: 2 }
             },
             {
                 id: "m06",
                 title: "6. Imágenes",
-                desc: "Insertando medios visuales.",
+                desc: "Una imagen vale más que mil etiquetas.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 06</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Imágenes</h1>
-                    <p class="text-slate-400 mb-4">Etiqueta <code>&lt;img&gt;</code>. No tiene cierre. Atributos clave: <code>src</code> (fuente) y <code>alt</code> (descripción).</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Etiqueta IMG</h1>
+                    <p>La etiqueta <span class="code-snippet">&lt;img&gt;</span> es especial: es una "etiqueta vacía", no tiene cierre.</p>
+                    <div class="concept-card">
+                        <div class="concept-title"><i data-lucide="image"></i> Atributos Obligatorios</div>
+                        <ul class="text-sm text-slate-300 list-disc pl-4 space-y-2">
+                            <li><strong>src:</strong> La ruta del archivo de imagen.</li>
+                            <li><strong>alt:</strong> Texto alternativo. CRUCIAL para ciegos o si la imagen falla.</li>
+                        </ul>
+                    </div>
                 `,
-                codeRef: `<img src="gato.jpg" alt="Un gato lindo" width="300">`,
+                codeRef: `<img src="gato.jpg" alt="Un gato lindo durmiendo" width="300">`,
                 exercise: {
-                    instruction: "Inserta una imagen con src='logo.png', alt='Mi Logo' y width='100'.",
+                    instruction: "Inserta una imagen. Usa src='logo.png', un alt descriptivo 'Mi Logo' y un ancho (width) de '100'.",
                     difficulty: "Fácil",
                     validate: (doc) => {
                         const img = doc.querySelector('img');
                         if(!img) return {valid:false, msg:"Falta la etiqueta <img>."};
                         if(img.getAttribute('src') !== 'logo.png') return {valid:false, msg:"El src debe ser 'logo.png'."};
-                        if(img.getAttribute('alt') !== 'Mi Logo') return {valid:false, msg:"El alt debe ser 'Mi Logo'."};
-                        if(img.getAttribute('width') !== '100') return {valid:false, msg:"Falta el ancho de 100."};
-                        return {valid:true, msg:"¡Imagen insertada!"};
+                        if(img.getAttribute('alt') !== 'Mi Logo') return {valid:false, msg:"No olvides el texto alternativo (alt='Mi Logo')."};
+                        if(img.getAttribute('width') !== '100') return {valid:false, msg:"Controla el tamaño con width='100'."};
+                        return {valid:true, msg:"¡Imagen renderizada correctamente!"};
                     }
                 },
-                quiz: { q: "¿Por qué es importante el atributo 'alt'?", options: ["Para cargar más rápido", "Para accesibilidad y SEO", "Para dar bordes"], correct: 1 }
+                quiz: { q: "¿La etiqueta img tiene cierre </img>?", options: ["Sí", "No, es auto-contenido", "Depende del navegador"], correct: 1 }
             },
-            // LISTS
             {
                 id: "m07",
                 title: "7. Listas Desordenadas",
-                desc: "Listas con viñetas (bullets).",
+                desc: "Bullets para organizar ideas.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 07</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Listas UL</h1>
-                    <p class="text-slate-400 mb-4">Usa <code>&lt;ul&gt;</code> para el contenedor y <code>&lt;li&gt;</code> para cada ítem.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Listas (UL)</h1>
+                    <p>Para listas donde el orden no importa (como la compra). Usamos <span class="code-snippet">&lt;ul&gt;</span> como contenedor y <span class="code-snippet">&lt;li&gt;</span> (list item) para cada punto.</p>
                 `,
-                codeRef: `<ul>\n  <li>Manzanas</li>\n  <li>Peras</li>\n</ul>`,
+                codeRef: `<ul>\n  <li>Leche</li>\n  <li>Pan</li>\n  <li>Huevos</li>\n</ul>`,
                 exercise: {
-                    instruction: "Crea una lista desordenada con 3 ítems: 'Rojo', 'Verde', 'Azul'.",
+                    instruction: "Crea una lista de colores con 3 ítems: 'Rojo', 'Verde', 'Azul'. Usa UL.",
                     difficulty: "Fácil",
                     validate: (doc) => {
                         const ul = doc.querySelector('ul');
-                        if(!ul) return {valid:false, msg:"Falta el <ul>."};
+                        if(!ul) return {valid:false, msg:"Falta el contenedor <ul>."};
                         const lis = ul.querySelectorAll('li');
-                        if(lis.length !== 3) return {valid:false, msg:"Deben ser exactamente 3 ítems."};
+                        if(lis.length !== 3) return {valid:false, msg:"Deben ser exactamente 3 colores."};
                         if(lis[0].innerText !== 'Rojo') return {valid:false, msg:"El primero debe ser 'Rojo'."};
-                        return {valid:true, msg:"¡Lista creada!"};
+                        return {valid:true, msg:"¡Lista creada con éxito!"};
                     }
                 },
                 quiz: { q: "¿Qué significa UL?", options: ["Underlined List", "Unordered List", "Unique List"], correct: 1 }
@@ -550,41 +691,46 @@
             {
                 id: "m08",
                 title: "8. Listas Ordenadas",
-                desc: "Listas numeradas.",
+                desc: "Paso 1, Paso 2, Paso 3...",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 08</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Listas OL</h1>
-                    <p class="text-slate-400 mb-4">Igual que las anteriores, pero usa <code>&lt;ol&gt;</code>. El navegador las numera automáticamente (1, 2, 3...).</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Listas Numeradas (OL)</h1>
+                    <p>Igual que las anteriores, pero para instrucciones secuenciales. El navegador las numera automáticamente.</p>
                 `,
-                codeRef: `<ol>\n  <li>Primer paso</li>\n  <li>Segundo paso</li>\n</ol>`,
+                codeRef: `<ol>\n  <li>Batir huevos</li>\n  <li>Freír</li>\n  <li>Comer</li>\n</ol>`,
                 exercise: {
                     instruction: "Crea una lista ordenada con 2 pasos: 'Abrir' y 'Cerrar'.",
                     difficulty: "Fácil",
                     validate: (doc) => {
                         const ol = doc.querySelector('ol');
-                        if(!ol) return {valid:false, msg:"Falta el <ol>."};
+                        if(!ol) return {valid:false, msg:"Usa <ol> para listas ordenadas."};
                         const lis = ol.querySelectorAll('li');
                         if(lis.length !== 2) return {valid:false, msg:"Necesitas 2 pasos."};
                         if(lis[0].innerText !== 'Abrir') return {valid:false, msg:"El paso 1 es 'Abrir'."};
-                        return {valid:true, msg:"¡Secuencia correcta!"};
+                        return {valid:true, msg:"¡Secuencia lógica establecida!"};
                     }
                 },
-                quiz: { q: "¿Se puede cambiar el tipo de numeración (A, B, C)?", options: ["No, siempre es 1,2,3", "Sí, con el atributo type", "Sí, con CSS solamente"], correct: 1 }
+                quiz: { q: "¿Puedes cambiar los números por letras (A, B, C)?", options: ["No", "Sí, con el atributo type", "Sí, pero solo con JS"], correct: 1 }
             },
-            // SEMANTICS & STRUCTURE
             {
                 id: "m09",
-                title: "9. Div y Span",
-                desc: "Contenedores genéricos.",
+                title: "9. Divs y Spans",
+                desc: "Las cajas genéricas.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 09</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Bloque vs Línea</h1>
-                    <p class="text-slate-400 mb-4">
-                        <code>&lt;div&gt;</code>: Elemento de bloque (ocupa todo el ancho). Para agrupar secciones.<br>
-                        <code>&lt;span&gt;</code>: Elemento en línea (solo ocupa su contenido). Para estilizar partes de texto.
-                    </p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Contenedores Genéricos</h1>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="concept-card mb-0">
+                            <div class="concept-title text-white">DIV (Block)</div>
+                            <p class="text-xs text-slate-400">Una caja invisible que ocupa todo el ancho. Se usa para agrupar secciones grandes.</p>
+                        </div>
+                        <div class="concept-card mb-0">
+                            <div class="concept-title text-white">SPAN (Inline)</div>
+                            <p class="text-xs text-slate-400">Una caja pequeña que solo envuelve texto sin romper la línea. Ideal para colorear una palabra.</p>
+                        </div>
+                    </div>
                 `,
-                codeRef: `<div>\n  <p>Texto con <span style="color:red">color</span>.</p>\n</div>`,
+                codeRef: `<div>\n  <p>Texto normal con una <span style="color:red">palabra roja</span>.</p>\n</div>`,
                 exercise: {
                     instruction: "Crea un <div>. Dentro pon un <p> que diga 'Hola <span style='color:blue'>Mundo</span>'.",
                     difficulty: "Intermedio",
@@ -594,26 +740,27 @@
                         const p = div.querySelector('p');
                         if(!p) return {valid:false, msg:"Falta el <p> dentro del div."};
                         const span = p.querySelector('span');
-                        if(!span || span.innerText !== 'Mundo') return {valid:false, msg:"Falta el <span> envolviendo 'Mundo'."};
-                        if(span.style.color !== 'blue') return {valid:false, msg:"El span debe tener estilo color:blue."};
-                        return {valid:true, msg:"¡Estructura de contenedores correcta!"};
+                        if(!span || span.innerText !== 'Mundo') return {valid:false, msg:"Envuelve 'Mundo' en un <span>."};
+                        if(span.style.color !== 'blue') return {valid:false, msg:"Ponle style='color:blue' al span."};
+                        return {valid:true, msg:"¡Has dominado los contenedores!"};
                     }
                 },
-                quiz: { q: "¿El <div> fuerza un salto de línea?", options: ["Sí, es elemento de bloque", "No, es elemento en línea", "Depende del contenido"], correct: 0 }
+                quiz: { q: "¿El <span> fuerza un salto de línea?", options: ["Sí", "No, es elemento en línea", "A veces"], correct: 1 }
             },
             {
                 id: "m10",
-                title: "10. Atributos Globales",
-                desc: "Clases e Identificadores.",
+                title: "10. Class e ID",
+                desc: "Identificando elementos.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 10</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Class e ID</h1>
-                    <p class="text-slate-400 mb-4">
-                        <code>id</code>: Identificador ÚNICO en la página.<br>
-                        <code>class</code>: Para agrupar múltiples elementos (usado por CSS).
-                    </p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Atributos Globales</h1>
+                    <p>Para que CSS (estilo) o JS (funcionalidad) encuentren tus elementos, necesitas ponerles nombre.</p>
+                    <ul class="text-sm text-slate-300 list-disc pl-4 space-y-2 mb-4">
+                        <li><strong>id:</strong> Como un DNI. Debe ser ÚNICO en toda la página.</li>
+                        <li><strong>class:</strong> Como un uniforme. Muchos elementos pueden tener la misma clase.</li>
+                    </ul>
                 `,
-                codeRef: `<div id="header" class="caja oscura">\n  ...\n</div>`,
+                codeRef: `<div id="encabezado-principal" class="caja oscura">\n  Contenido...\n</div>`,
                 exercise: {
                     instruction: "Crea un párrafo con id='intro' y class='texto-grande'.",
                     difficulty: "Fácil",
@@ -622,22 +769,21 @@
                         if(!p) return {valid:false, msg:"Falta el <p>."};
                         if(p.id !== 'intro') return {valid:false, msg:"El id debe ser 'intro'."};
                         if(p.className !== 'texto-grande') return {valid:false, msg:"La clase debe ser 'texto-grande'."};
-                        return {valid:true, msg:"¡Atributos asignados!"};
+                        return {valid:true, msg:"¡Elementos identificados!"};
                     }
                 },
-                quiz: { q: "¿Pueden dos elementos tener el mismo ID?", options: ["Sí", "No, es ilegal en HTML", "Solo si son diferentes etiquetas"], correct: 1 }
+                quiz: { q: "¿Pueden dos elementos tener el mismo ID?", options: ["Sí", "No, es ilegal", "Solo si son divs"], correct: 1 }
             },
-            // TABLES
             {
                 id: "m11",
                 title: "11. Tablas Básicas",
                 desc: "Filas y Celdas.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 11</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Tablas</h1>
-                    <p class="text-slate-400 mb-4">Estructura: <code>table</code> > <code>tr</code> (fila) > <code>td</code> (celda de dato) o <code>th</code> (encabezado).</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Tablas</h1>
+                    <p>Excel en HTML. Estructura: <code>table</code> > <code>tr</code> (fila) > <code>td</code> (celda de dato).</p>
                 `,
-                codeRef: `<table border="1">\n  <tr>\n    <th>Nombre</th>\n  </tr>\n  <tr>\n    <td>Juan</td>\n  </tr>\n</table>`,
+                codeRef: `<table border="1">\n  <tr>\n    <td>Celda A</td>\n    <td>Celda B</td>\n  </tr>\n</table>`,
                 exercise: {
                     instruction: "Crea una tabla con 1 fila (tr). Esa fila debe tener 2 celdas (td) con los textos 'A' y 'B'.",
                     difficulty: "Intermedio",
@@ -656,12 +802,12 @@
             },
             {
                 id: "m12",
-                title: "12. Tablas Avanzadas",
-                desc: "Thead, Tbody y fusiones.",
+                title: "12. Tablas Pro",
+                desc: "Organización semántica.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 12</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Organización de Tablas</h1>
-                    <p class="text-slate-400 mb-4">Agrupa el contenido semánticamente en <code>thead</code> (cabecera) y <code>tbody</code> (cuerpo).</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Anatomía de Tabla</h1>
+                    <p>Usa <code>thead</code> para los encabezados y <code>tbody</code> para los datos. Ayuda a los navegadores a imprimir tablas largas.</p>
                 `,
                 codeRef: `<table>\n  <thead>...</thead>\n  <tbody>...</tbody>\n</table>`,
                 exercise: {
@@ -676,15 +822,14 @@
                 },
                 quiz: { q: "¿Para qué sirve rowspan?", options: ["Unir filas verticalmente", "Unir columnas", "Separar celdas"], correct: 0 }
             },
-            // SEMANTICS 2
             {
                 id: "m13",
                 title: "13. Semántica: Cabecera",
-                desc: "Header, Nav y Footer.",
+                desc: "Header y Nav.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 13</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Layout Semántico</h1>
-                    <p class="text-slate-400 mb-4">No uses divs para todo. Usa <code>header</code> para la parte superior y <code>nav</code> para menús.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Layout Semántico</h1>
+                    <p>Antes hacíamos <code>div id='header'</code>. Ahora usamos etiquetas reales: <code>&lt;header&gt;</code> para la cabecera y <code>&lt;nav&gt;</code> para menús.</p>
                 `,
                 codeRef: `<header>\n  <nav>\n    <a href="#">Inicio</a>\n  </nav>\n</header>`,
                 exercise: {
@@ -698,22 +843,24 @@
                         return {valid:true, msg:"¡Semántica aplicada!"};
                     }
                 },
-                quiz: { q: "¿El <footer> debe ir siempre al final del <body>?", options: ["Sí, obligatorio", "No, puede ir dentro de artículos u secciones", "No existe footer en HTML5"], correct: 1 }
+                quiz: { q: "¿El <footer> debe ir siempre al final?", options: ["Sí, obligatorio", "No, puede ir dentro de artículos", "No existe footer"], correct: 1 }
             },
             {
                 id: "m14",
-                title: "14. Semántica: Contenido",
-                desc: "Main, Article, Section.",
+                title: "14. Semántica: Cuerpo",
+                desc: "Main, Section, Article.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 14</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Cuerpo del Documento</h1>
-                    <p class="text-slate-400 mb-4">
-                        <code>main</code>: Contenido principal único.<br>
-                        <code>article</code>: Contenido independiente (blog post).<br>
-                        <code>section</code>: Agrupación temática.
-                    </p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Estructura de Contenido</h1>
+                    <div class="concept-card">
+                        <ul class="text-sm text-slate-300 list-disc pl-4 space-y-2">
+                            <li><strong>main:</strong> El contenido principal único de la página.</li>
+                            <li><strong>article:</strong> Contenido que tiene sentido por sí mismo (un post de blog).</li>
+                            <li><strong>section:</strong> Una agrupación temática (ej: "Sobre Mí").</li>
+                        </ul>
+                    </div>
                 `,
-                codeRef: `<main>\n  <article>\n    <h2>Título</h2>\n  </article>\n</main>`,
+                codeRef: `<main>\n  <section id="intro">\n    <h2>Hola</h2>\n  </section>\n</main>`,
                 exercise: {
                     instruction: "Crea un <main> y dentro una <section> con el id='servicios'.",
                     difficulty: "Intermedio",
@@ -728,15 +875,14 @@
                 },
                 quiz: { q: "¿Cuántos <main> debe haber por página?", options: ["Tantos como quieras", "Solo uno visible", "Ninguno"], correct: 1 }
             },
-            // FORMS
             {
                 id: "m15",
-                title: "15. Formularios Básicos",
-                desc: "Recogiendo datos.",
+                title: "15. Formularios",
+                desc: "Interacción con el usuario.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 15</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Forms & Inputs</h1>
-                    <p class="text-slate-400 mb-4">El contenedor es <code>form</code>. El elemento clave es <code>input</code>.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Formularios</h1>
+                    <p>La etiqueta <span class="code-snippet">&lt;input&gt;</span> es la más versátil de HTML. Sirve para escribir texto, checkboxes, fechas, etc.</p>
                 `,
                 codeRef: `<form>\n  <label>Nombre:</label>\n  <input type="text">\n</form>`,
                 exercise: {
@@ -754,11 +900,12 @@
             {
                 id: "m16",
                 title: "16. Tipos de Input",
-                desc: "Email, Password, Date.",
+                desc: "Validación automática.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 16</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Validación Nativa</h1>
-                    <p class="text-slate-400 mb-4">HTML5 valida formatos por ti. Usa <code>type="email"</code>, <code>type="password"</code>, <code>type="number"</code>.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Inputs Inteligentes</h1>
+                    <p>Si usas el tipo correcto, los móviles mostrarán el teclado correcto (ej: teclado numérico para <code>number</code>).</p>
+                    <div class="block-code">type="email", type="password", type="date", type="color"</div>
                 `,
                 codeRef: `<input type="email" placeholder="tu@email.com">`,
                 exercise: {
@@ -771,19 +918,16 @@
                         return {valid:true, msg:"¡Campo seguro creado!"};
                     }
                 },
-                quiz: { q: "¿Qué hace type='email' en móviles?", options: ["Nada especial", "Cambia el teclado para mostrar @", "Envía el email solo"], correct: 1 }
+                quiz: { q: "¿Qué hace type='email' en móviles?", options: ["Nada", "Muestra @ en el teclado", "Envía el email solo"], correct: 1 }
             },
             {
                 id: "m17",
-                title: "17. Selectores y Áreas",
-                desc: "Select y Textarea.",
+                title: "17. Select & Textarea",
+                desc: "Más allá del input simple.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 17</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Más Controles</h1>
-                    <p class="text-slate-400 mb-4">
-                        <code>select</code> + <code>option</code>: Menú desplegable.<br>
-                        <code>textarea</code>: Texto multilínea.
-                    </p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Otros Controles</h1>
+                    <p><code>select</code> crea menús desplegables (con <code>option</code> dentro). <code>textarea</code> es para textos largos (comentarios).</p>
                 `,
                 codeRef: `<select>\n  <option>Opción A</option>\n</select>\n<textarea></textarea>`,
                 exercise: {
@@ -798,18 +942,18 @@
                         return {valid:true, msg:"¡Menú desplegable listo!"};
                     }
                 },
-                quiz: { q: "¿Textarea usa el atributo 'value' para su texto inicial?", options: ["Sí", "No, va entre las etiquetas", "No tiene texto inicial"], correct: 1 }
+                quiz: { q: "¿Textarea es de cierre automático?", options: ["Sí", "No, requiere </textarea>", "No importa"], correct: 1 }
             },
             {
                 id: "m18",
                 title: "18. Botones",
-                desc: "Interacción y envío.",
+                desc: "¡Acción!",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 18</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Buttons</h1>
-                    <p class="text-slate-400 mb-4">Dentro de un form, <code>type="submit"</code> envía los datos. Fuera, <code>type="button"</code> es para JS.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Buttons</h1>
+                    <p>Dentro de un form, <code>type="submit"</code> envía los datos. Fuera, <code>type="button"</code> no hace nada hasta que usas JavaScript.</p>
                 `,
-                codeRef: `<button type="submit">Enviar</button>`,
+                codeRef: `<button type="submit">Enviar Datos</button>`,
                 exercise: {
                     instruction: "Crea un botón de tipo 'submit' que diga 'Guardar'.",
                     difficulty: "Fácil",
@@ -821,19 +965,18 @@
                         return {valid:true, msg:"¡Botón listo!"};
                     }
                 },
-                quiz: { q: "¿Cuál es el tipo por defecto de un botón dentro de un form?", options: ["button", "reset", "submit"], correct: 2 }
+                quiz: { q: "¿Cuál es el tipo por defecto de un botón en un form?", options: ["button", "reset", "submit"], correct: 2 }
             },
-            // ADVANCED & FINAL
             {
                 id: "m19",
-                title: "19. Multimedia & Embeds",
-                desc: "Iframes y Audio.",
+                title: "19. Iframes",
+                desc: "Ventanas a otros mundos.",
                 content: `
                     <div class="mb-4"><span class="badge-mod">Módulo 19</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Incrustar Contenido</h1>
-                    <p class="text-slate-400 mb-4">Usa <code>iframe</code> para mostrar otras webs o mapas dentro de la tuya.</p>
+                    <h1 class="text-3xl font-bold text-white mb-6">Contenido Incrustado</h1>
+                    <p>Los iframes permiten mostrar otra página web dentro de la tuya (como un video de YouTube o un Mapa).</p>
                 `,
-                codeRef: `<iframe src="https://example.com" height="200"></iframe>`,
+                codeRef: `<iframe src="https://wikipedia.org" height="400"></iframe>`,
                 exercise: {
                     instruction: "Inserta un iframe vacío (src='about:blank') con borde 0 (frameborder='0').",
                     difficulty: "Avanzado",
@@ -845,34 +988,35 @@
                         return {valid:true, msg:"¡Ventana incrustada!"};
                     }
                 },
-                quiz: { q: "¿Qué etiqueta se usa para videos nativos?", options: ["<media>", "<video>", "<movie>"], correct: 1 }
+                quiz: { q: "¿Son peligrosos los iframes?", options: ["No, nunca", "Pueden ser un riesgo de seguridad", "Solo si son de Google"], correct: 1 }
             },
             {
                 id: "m20",
                 title: "20. Proyecto Final",
-                desc: "Construye tu perfil.",
+                desc: "Demuestra lo que vales.",
                 content: `
                     <div class="mb-4"><span class="badge-mod bg-orange-600 text-white animate-pulse">Desafío Final</span></div>
-                    <h1 class="text-3xl font-bold text-white mb-4">Tu Perfil de Desarrollador</h1>
-                    <p class="text-slate-400 mb-4">Combina todo: Estructura, Imagen, Lista y Formulario de contacto.</p>
-                    <div class="bg-slate-900 p-4 border border-slate-700 rounded-lg text-sm text-slate-300">
-                        <strong class="text-orange-400">Requisitos:</strong>
-                        <ul class="list-disc pl-4 mt-2 space-y-1">
-                            <li>Un <code>h1</code> con tu nombre.</li>
-                            <li>Una <code>img</code> (cualquier src).</li>
-                            <li>Una lista <code>ul</code> con 2 habilidades.</li>
-                            <li>Un <code>form</code> con un botón.</li>
+                    <h1 class="text-3xl font-bold text-white mb-6">Tu Perfil de Desarrollador</h1>
+                    <p class="mb-4">Es hora de combinar todo: Estructura, Imágenes, Listas y Formularios.</p>
+                    
+                    <div class="concept-card">
+                        <div class="concept-title">Requisitos del Examen</div>
+                        <ul class="list-disc pl-4 space-y-2 text-sm text-slate-300">
+                            <li>Un <strong>h1</strong> con tu nombre.</li>
+                            <li>Una <strong>img</strong> (cualquier src funciona).</li>
+                            <li>Una lista <strong>ul</strong> con al menos 2 habilidades.</li>
+                            <li>Un <strong>form</strong> con un botón de envío.</li>
                         </ul>
                     </div>
                 `,
-                codeRef: `<h1>Dev</h1>\n<img src="yo.jpg">\n<ul><li>HTML</li></ul>\n<form><button>Hi</button></form>`,
+                codeRef: `<!-- Ejemplo Mínimo -->\n<h1>Dev</h1>\n<img src="yo.jpg">\n<ul><li>HTML</li></ul>\n<form><button>Hi</button></form>`,
                 exercise: {
                     instruction: "Construye el perfil completo cumpliendo los 4 requisitos.",
                     placeholder: "<!-- Tu obra maestra aquí -->",
                     difficulty: "Experto",
                     validate: (doc) => {
-                        if(!doc.querySelector('h1')) return {valid:false, msg:"Falta el h1."};
-                        if(!doc.querySelector('img')) return {valid:false, msg:"Falta la imagen."};
+                        if(!doc.querySelector('h1')) return {valid:false, msg:"Falta el título h1."};
+                        if(!doc.querySelector('img')) return {valid:false, msg:"Falta tu foto (img)."};
                         if(doc.querySelectorAll('ul li').length < 2) return {valid:false, msg:"La lista necesita al menos 2 habilidades."};
                         if(!doc.querySelector('form button')) return {valid:false, msg:"Falta el formulario con botón."};
                         return {valid:true, msg:"¡ERES UN MAESTRO DE HTML5!"};
@@ -882,8 +1026,26 @@
             }
         ];
 
-        // --- 2. ESTADO Y LÓGICA ---
-        const STORAGE_KEY = 'godsplan_html5_v2_data';
+        // --- 2. GLOSARIO DATA ---
+        const glossaryData = [
+            { tag: "<html>", desc: "Raíz del documento." },
+            { tag: "<head>", desc: "Metadatos e información invisible." },
+            { tag: "<body>", desc: "Contenido visible." },
+            { tag: "<h1> - <h6>", desc: "Encabezados por importancia." },
+            { tag: "<p>", desc: "Párrafo de texto." },
+            { tag: "<a>", desc: "Enlace (Hyperlink)." },
+            { tag: "<img>", desc: "Imagen." },
+            { tag: "<ul> / <ol>", desc: "Listas (Desordenada / Ordenada)." },
+            { tag: "<li>", desc: "Elemento de lista." },
+            { tag: "<div>", desc: "Contenedor de bloque genérico." },
+            { tag: "<span>", desc: "Contenedor en línea genérico." },
+            { tag: "<form>", desc: "Formulario." },
+            { tag: "<input>", desc: "Campo de entrada de datos." },
+            { tag: "<button>", desc: "Botón clicable." }
+        ];
+
+        // --- 3. ESTADO Y LÓGICA ---
+        const STORAGE_KEY = 'godsplan_html5_v3_data';
         let state = {
             currentIdx: 0,
             completed: [],
@@ -899,6 +1061,7 @@
             loadLesson(state.currentIdx);
             updateUI();
             lucide.createIcons();
+            renderGlossary();
             
             // Textarea Tab support
             document.getElementById('code-input').addEventListener('keydown', function(e) {
@@ -917,7 +1080,6 @@
             if(saved) {
                 try { 
                     state = JSON.parse(saved); 
-                    // Sanity check
                     if(state.currentIdx >= curriculum.length) state.currentIdx = curriculum.length - 1;
                 } catch(e) { console.error(e); }
             }
@@ -955,7 +1117,6 @@
                 btnNext.classList.add('bg-slate-800');
             }
 
-            // Sidebar active states
             renderSidebar();
         }
 
@@ -982,6 +1143,22 @@
             lucide.createIcons();
         }
 
+        function renderGlossary() {
+            const container = document.getElementById('glossary-content');
+            container.innerHTML = glossaryData.map(item => `
+                <div class="p-3 bg-slate-800/50 rounded border border-slate-700">
+                    <code class="text-orange-400 font-bold">${item.tag.replace('<', '&lt;').replace('>', '&gt;')}</code>
+                    <p class="text-sm text-slate-400 mt-1">${item.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function toggleGlossary() {
+            const modal = document.getElementById('glossary-modal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
         function loadLesson(idx) {
             state.currentIdx = idx;
             saveState();
@@ -1002,7 +1179,7 @@
             // UI Resets
             document.getElementById('workspace-area').classList.remove('hidden');
             document.getElementById('feedback-msg').style.opacity = '0';
-            document.getElementById('feedback-msg').className = ""; // clear styles
+            document.getElementById('feedback-msg').className = ""; 
             document.getElementById('btn-help').classList.toggle('hidden', !mod.exercise.hint);
             document.getElementById('quiz-container').classList.add('hidden');
             
@@ -1017,6 +1194,7 @@
                 document.getElementById('sidebar').classList.add('-translate-x-full');
                 document.getElementById('mobile-overlay').classList.remove('opacity-100', 'pointer-events-auto');
             }
+            lucide.createIcons();
         }
 
         function updatePreview(code) {
@@ -1027,10 +1205,18 @@
                 <style>
                     body { font-family: sans-serif; padding: 10px; color: #1e293b; }
                     h1 { color: #ea580c; border-bottom: 1px solid #fed7aa; padding-bottom: 5px; }
-                    table { border-collapse: collapse; width: 100%; }
-                    td, th { border: 1px solid #cbd5e1; padding: 4px 8px; }
-                    input { border: 1px solid #94a3b8; padding: 5px; border-radius: 4px; display:block; margin: 5px 0;}
-                    button { background: #f97316; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+                    h2 { color: #475569; }
+                    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+                    td, th { border: 1px solid #cbd5e1; padding: 6px 10px; text-align: left; }
+                    th { background: #f1f5f9; }
+                    input, select, textarea { border: 1px solid #94a3b8; padding: 6px; border-radius: 4px; display:block; margin: 5px 0; width: 100%; max-width: 300px; }
+                    button { background: #f97316; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+                    button:hover { background: #ea580c; }
+                    ul, ol { padding-left: 20px; }
+                    li { margin-bottom: 4px; }
+                    a { color: #2563eb; text-decoration: none; }
+                    a:hover { text-decoration: underline; }
+                    img { max-width: 100%; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
                 </style>
                 ${code}
             `);
@@ -1044,7 +1230,6 @@
             
             updatePreview(code);
             
-            // Parser Logic
             const parser = new DOMParser();
             const doc = parser.parseFromString(code, "text/html");
             const result = mod.exercise.validate(doc, code);
@@ -1094,7 +1279,6 @@
             
             lucide.createIcons();
             
-            // Auto scroll
             setTimeout(() => {
                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
@@ -1102,7 +1286,6 @@
 
         function checkQuiz(btn, selected, correct) {
             if(selected === correct) {
-                // Win Module
                 if(!state.completed.includes(state.currentIdx)) {
                     state.completed.push(state.currentIdx);
                     state.xp += 100;
@@ -1114,18 +1297,15 @@
                     }
                 }
                 saveState();
-                showQuiz(curriculum[state.currentIdx].quiz); // Redraw
+                showQuiz(curriculum[state.currentIdx].quiz); 
             } else {
-                // Fail
                 btn.classList.add('bg-red-500/20', 'border-red-500', 'text-red-400', 'animate-shake');
             }
         }
 
         function showHint() {
             const hint = curriculum[state.currentIdx].exercise.hint;
-            if(hint) {
-                alert("PISTA: " + hint); // Simple fallback or use feedback div
-            }
+            if(hint) alert("PISTA: " + hint);
         }
 
         function nextLesson() {
@@ -1184,7 +1364,6 @@
                 content.classList.add('scale-100', 'opacity-100');
             }, 50);
             
-            // Celebration
             var end = Date.now() + 3000;
             (function frame() {
               confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
@@ -1214,6 +1393,15 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+        }
+        /* Modal Animation */
+        @keyframes modal-in {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </body>
