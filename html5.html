@@ -32,6 +32,10 @@
                         blue: { 
                             500: '#3b82f6',
                             600: '#2563eb',
+                        },
+                        purple: {
+                            500: '#a855f7',
+                            600: '#9333ea',
                         }
                     },
                     fontFamily: {
@@ -552,7 +556,7 @@
                 }, quiz: { q: "¿Listo para CSS?", options: ["Sí", "Claro"], correct: 0 }
             },
 
-            // === FASE 2: CSS3 (Módulos 16-30) ===
+            // === FASE 2: CSS3 (Módulos 16-25) ===
             {
                 id: "m16", title: "16. Intro a CSS", desc: "Estilo.",
                 content: `<div class="mb-4"><span class="badge-mod text-blue-400 border-blue-500/30 bg-blue-500/10">CSS: Fase 2</span></div><h1 class="text-3xl font-bold text-white mb-6">Cascading Style Sheets</h1><p>HTML es el esqueleto, CSS es la piel y la ropa. Usamos la etiqueta <code>&lt;style&gt;</code> para escribir CSS.</p><div class="block-code">selector { propiedad: valor; }</div>`,
@@ -676,17 +680,82 @@
                     }
                 }, quiz: { q: "¿Para qué sirve @media?", options: ["Animaciones", "Adaptar a dispositivos"], correct: 1 }
             },
+
+            // === FASE 3: TÉCNICAS AVANZADAS (Módulos 26-30) ===
             {
-                id: "m30", title: "30. Proyecto Final", desc: "Master.",
-                content: `<div class="mb-4"><span class="badge-mod bg-red-600 text-white animate-pulse">GRADUACIÓN</span></div><h1 class="text-3xl font-bold text-white mb-6">Tarjeta de Perfil Completa</h1><p>Combina HTML y CSS para crear una tarjeta bonita.</p><div class="concept-card"><ul class="list-disc pl-4 text-sm text-neutral-300"><li>HTML: div contenedor, img, h2, p.</li><li>CSS: tarjeta con fondo gris, padding, borde redondeado y texto centrado.</li></ul></div>`,
-                codeRef: `<style>.card { background: #333; padding: 20px; border-radius: 10px; text-align: center; color: white; }</style>\n<div class="card">\n  <h2>Yo</h2>\n</div>`,
-                exercise: { instruction: "Crea una '.card' con background, padding, border-radius y text-align: center.", placeholder: "<!-- HTML & CSS -->", difficulty: "Dios", hint: "Revisa el código de referencia y combínalo.",
+                id: "m26", title: "26. Posicionamiento", desc: "Capas.",
+                content: `<div class="mb-4"><span class="badge-mod text-purple-400 border-purple-500/30 bg-purple-500/10">Fase 3: Elite</span></div><h1 class="text-3xl font-bold text-white mb-6">Control Absoluto</h1><p><code>position: absolute</code> saca el elemento del flujo normal. <code>relative</code> es su ancla.</p>`,
+                codeRef: `.box { position: absolute; top: 0; right: 0; }`,
+                exercise: { instruction: "Crea un div con 'position: absolute' y 'top: 0'.", difficulty: "Avanzado", hint: "div { position: absolute; top: 0; }",
+                    validate: (doc) => { 
+                        const css = doc.querySelector('style')?.innerHTML.toLowerCase() || "";
+                        if(css.includes('position: absolute') && css.includes('top: 0')) return {valid:true, msg:"¡Elemento posicionado!"};
+                        return {valid:false, msg:"Falta position o top."};
+                    }
+                }, quiz: { q: "¿Qué hace position: fixed?", options: ["Se fija a la pantalla", "Se fija al padre"], correct: 0 }
+            },
+            {
+                id: "m27", title: "27. CSS Grid", desc: "Matrices.",
+                content: `<div class="mb-4"><span class="badge-mod text-purple-400 border-purple-500/30 bg-purple-500/10">Fase 3: Elite</span></div><h1 class="text-3xl font-bold text-white mb-6">Grillas 2D</h1><p>Grid es más poderoso que Flexbox para estructuras complejas.</p><div class="block-code">display: grid; grid-template-columns: 1fr 1fr;</div>`,
+                codeRef: `.grid { display: grid; gap: 10px; }`,
+                exercise: { instruction: "Crea un contenedor con 'display: grid' y 'grid-template-columns: 1fr 1fr'.", difficulty: "Avanzado", hint: "div { display: grid; grid-template-columns: 1fr 1fr; }",
+                    validate: (doc) => { 
+                        const css = doc.querySelector('style')?.innerHTML.toLowerCase() || "";
+                        if(css.includes('display: grid') && css.includes('grid-template-columns')) return {valid:true, msg:"¡Matriz activada!"};
+                        return {valid:false, msg:"Configuración de grid incompleta."};
+                    }
+                }, quiz: { q: "¿Grid es mejor para?", options: ["Solo una fila", "Diseños 2D (filas y columnas)"], correct: 1 }
+            },
+            {
+                id: "m28", title: "28. Estados (:hover)", desc: "Interacción.",
+                content: `<div class="mb-4"><span class="badge-mod text-purple-400 border-purple-500/30 bg-purple-500/10">Fase 3: Elite</span></div><h1 class="text-3xl font-bold text-white mb-6">Pseudo-clases</h1><p>Cambia el estilo cuando el usuario interactúa.</p>`,
+                codeRef: `button:hover { background: red; }`,
+                exercise: { instruction: "Haz que un botón cambie a 'background: blue' al pasar el mouse (:hover).", difficulty: "Intermedio", hint: "button:hover { background: blue; }",
+                    validate: (doc) => { 
+                        const css = doc.querySelector('style')?.innerHTML.toLowerCase() || "";
+                        if(css.includes(':hover') && css.includes('blue')) return {valid:true, msg:"¡Interacción lista!"};
+                        return {valid:false, msg:"Falta el selector :hover."};
+                    }
+                }, quiz: { q: "¿Cuándo se activa :active?", options: ["Al pasar el mouse", "Al hacer clic"], correct: 1 }
+            },
+            {
+                id: "m29", title: "29. Transiciones", desc: "Suavidad.",
+                content: `<div class="mb-4"><span class="badge-mod text-purple-400 border-purple-500/30 bg-purple-500/10">Fase 3: Elite</span></div><h1 class="text-3xl font-bold text-white mb-6">Animación Básica</h1><p>Evita cambios bruscos.</p>`,
+                codeRef: `div { transition: all 0.3s; }`,
+                exercise: { instruction: "Añade 'transition: all 0.5s' a un div.", difficulty: "Fácil", hint: "div { transition: all 0.5s; }",
+                    validate: (doc) => { 
+                        const css = doc.querySelector('style')?.innerHTML.toLowerCase() || "";
+                        if(css.includes('transition') && css.includes('0.5s')) return {valid:true, msg:"¡Movimiento fluido!"};
+                        return {valid:false, msg:"Falta la propiedad transition."};
+                    }
+                }, quiz: { q: "¿Qué unidad es 's'?", options: ["Segundos", "Size"], correct: 0 }
+            },
+            {
+                id: "m30", title: "30. Variables CSS", desc: "Gestión.",
+                content: `<div class="mb-4"><span class="badge-mod text-purple-400 border-purple-500/30 bg-purple-500/10">Fase 3: Elite</span></div><h1 class="text-3xl font-bold text-white mb-6">Custom Properties</h1><p>Guarda valores para reusarlos.</p><div class="block-code">:root { --main: red; } p { color: var(--main); }</div>`,
+                codeRef: `:root { --bg: black; }`,
+                exercise: { instruction: "Define una variable '--color: red' en :root y úsala en un h1.", difficulty: "Experto", hint: ":root { --color: red; } h1 { color: var(--color); }",
+                    validate: (doc) => { 
+                        const css = doc.querySelector('style')?.innerHTML.toLowerCase() || "";
+                        if(css.includes('--color') && css.includes('var(--color)')) return {valid:true, msg:"¡Código modular!"};
+                        return {valid:false, msg:"Sintaxis de variable incorrecta."};
+                    }
+                }, quiz: { q: "¿Dónde se declaran variables globales?", options: [":root", "body", "html"], correct: 0 }
+            },
+
+            // === FASE 4: PROYECTO FINAL (Módulo 35) ===
+            {
+                id: "m35", title: "35. Misión Final", desc: "Master.",
+                content: `<div class="mb-4"><span class="badge-mod bg-red-600 text-white animate-pulse">GRADUACIÓN</span></div><h1 class="text-3xl font-bold text-white mb-6">Tarjeta de Perfil Definitiva</h1><p>Usa todo lo aprendido: Grid/Flex, Hover, Variables y Semántica.</p><div class="concept-card"><ul class="list-disc pl-4 text-sm text-neutral-300"><li>HTML: Estructura semántica completa.</li><li>CSS: Grid o Flex para centrar, variables para colores y efecto hover.</li></ul></div>`,
+                codeRef: `<style>\n:root { --bg: #222; }\n.card { background: var(--bg); transition: 0.3s; }\n.card:hover { transform: scale(1.05); }\n</style>\n<div class="card">...</div>`,
+                exercise: { instruction: "Crea una tarjeta (.card) que use una variable CSS para el fondo y tenga un efecto :hover.", placeholder: "<!-- HTML & CSS -->", difficulty: "Dios", hint: "Define --color en :root, úsalo en .card y agrega .card:hover.",
                     validate: (doc) => { 
                         const css = doc.querySelector('style')?.innerHTML.toLowerCase() || "";
                         const html = doc.querySelector('.card');
                         if(!html) return {valid:false, msg:"Falta el div class='card'."};
-                        if(!css.includes('border-radius') || !css.includes('padding') || !css.includes('text-align: center')) return {valid:false, msg:"Faltan estilos CSS clave."};
-                        return {valid:true, msg:"¡ERES UN WEB MASTER!"};
+                        if(!css.includes('var(--')) return {valid:false, msg:"Debes usar al menos una variable CSS."};
+                        if(!css.includes(':hover')) return {valid:false, msg:"Falta el efecto :hover."};
+                        return {valid:true, msg:"¡ERES UN WEB MASTER DE ELITE!"};
                     }
                 }, quiz: { q: "¿Curso completado?", options: ["¡SÍ!", "YES"], correct: 0 }
             }
@@ -706,12 +775,14 @@
             { tag: "margin", desc: "Espacio externo (CSS)." },
             { tag: "border", desc: "Borde (CSS)." },
             { tag: "display: flex", desc: "Activa Flexbox." },
-            { tag: "gap", desc: "Espacio entre items flex." },
-            { tag: "@media", desc: "Regla responsiva." }
+            { tag: "display: grid", desc: "Activa Grid." },
+            { tag: "position", desc: "Control de ubicación." },
+            { tag: ":hover", desc: "Estilo al pasar mouse." },
+            { tag: "var(--x)", desc: "Variable CSS." }
         ];
 
         // --- 3. ESTADO Y LÓGICA ---
-        const STORAGE_KEY = 'godsplan_webmaster_v2';
+        const STORAGE_KEY = 'godsplan_webmaster_v3';
         let state = { currentIdx: 0, completed: [], xp: 0 };
         const ranks = ["Novato", "Aprendiz", "Junior", "Operador", "Arquitecto", "Web Master"];
 
@@ -788,7 +859,7 @@
         }
 
         function updateUI() {
-            const rankIdx = Math.min(Math.floor(state.xp / 500), ranks.length - 1);
+            const rankIdx = Math.min(Math.floor(state.xp / 600), ranks.length - 1);
             document.getElementById('user-rank').innerText = ranks[rankIdx];
             document.getElementById('user-xp').innerText = state.xp + " XP";
 
